@@ -16,6 +16,7 @@ import { PerusahaanModule } from './modules/perusahaan/perusahaan.module';
 
 import { ClientSiteModule } from './modules/client_site/client_site.module';
 import { ContractSiteReportController } from './modules/contract_site/contract_site_report.controller';
+import { ContractReportController } from './modules/contract/contract_report.controller';
 
 export const routerConfig = [
     {
@@ -26,6 +27,7 @@ export const routerConfig = [
             { path: 'client', module: ClientModule },
             { path: 'contact_client_use', module: ContactClientUseModule },
             { path: 'contract', module: ContractModule },
+            { path: 'contract_report', module: ContractReportController },
             { path: 'contract_site', module: ContractSiteModule },
             { path: 'contract_site_service', module: ContractSiteServiceModule },
             { path: 'custom_field', module: CustomFieldModule },

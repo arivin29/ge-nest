@@ -12,6 +12,7 @@ npm run crud -- \
   --mode=default
 
 npm run crud-report -- --fromTable=contract_site --nama=contract_site --router=auth
+npm run crud-report -- --fromTable=contract --nama=contract --router=auth
 
 npm run crud -- --fromTable=client --nama=client --db=erp_pelanggan --router=nonauth --mode=expert
 npm run crud -- --fromTable=client_site --nama=client_site --db=erp_pelanggan --router=nonauth --mode=expert

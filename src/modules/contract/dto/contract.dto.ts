@@ -28,7 +28,7 @@ export class ContractDto {
   statusKontrak: string;
   @ApiProperty({ required: false })
   @IsOptional()
-  idKontrakSebelumnya: string;
+  refKontrakSebelumnya: string;
   @ApiProperty({ required: false })
   @IsOptional()
   namaSales: string;

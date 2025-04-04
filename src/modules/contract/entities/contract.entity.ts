@@ -2,7 +2,7 @@ import { Column, Entity, Index } from "typeorm";
 
 @Index("nomor_kontrak", ["nomorKontrak"], { unique: true })
 @Index("id_client", ["idClient"], {})
-@Index("id_kontrak_sebelumnya", ["idKontrakSebelumnya"], {})
+@Index("id_kontrak_sebelumnya", ["refKontrakSebelumnya"], {})
 @Entity("contract", { schema: "erp_pelanggan" })
 export class Contract {
   @Column("varchar", { primary: true, name: "id_contract", length: 36 })
@@ -35,11 +35,11 @@ export class Contract {
   statusKontrak: string | null;
 
   @Column("varchar", {
-    name: "id_kontrak_sebelumnya",
+    name: "ref_kontrak_sebelumnya",
     nullable: true,
     length: 36,
   })
-  idKontrakSebelumnya: string | null;
+  refKontrakSebelumnya: string | null;
 
   @Column("varchar", { name: "nama_sales", nullable: true, length: 255 })
   namaSales: string | null;

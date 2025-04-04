@@ -1,21 +1,22 @@
 import { Body, Controller, Get, Param, Query } from '@nestjs/common';
-import { ContractSiteService } from '../contract_site/contract_site.service';
+import { ContractService } from '../contract/contract.service';
 import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
-import { ContractSiteDto } from '../contract_site/dto/contract_site.dto';
+import { ContractDto } from '../contract/dto/contract.dto';
 import { SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
 import { applySmartInclude } from 'src/common/helpers/smart-include.helper';
+import { ContractReportDto } from '../contract/dto/contract_report.dto';
 
-@ApiTags('contract_site_report')
-@Controller('contract_site_report')
-export class ContractSiteReportController {
-    constructor(private readonly service: ContractSiteService) { }
+@ApiTags('contract_report')
+@Controller('contract_report')
+export class ContractReportController {
+    constructor(private readonly service: ContractService) { }
 
     @Get()
-    @ApiResponseEntity(ContractSiteDto, 'list')
+    @ApiResponseEntity(ContractReportDto, 'list')
     @AutoSwaggerQuery()
     async findAll(
         @Query() query: BaseQueryDtoSmart,
@@ -56,15 +57,16 @@ export class ContractSiteReportController {
                 page: parseInt(String((source as any).pageIndex ?? (source as any).pagination?.page ?? '1'), 10),
                 limit: parseInt(String((source as any).pageSize ?? (source as any).pagination?.limit ?? '10'), 10),
             },
-            include: (source as any).include ?? [] , // mohon di isi denfan default dari id_xxx
+            include: (source as any).include ?? [
+                { name: 'client', type: 'single' },
+                { name: 'kontrak_sebelumnya', type: 'single' },
+            ],   // mohon di isi dengan default dari id_xxx
         };
 
-        // console.log('[DEBUG parsed]', parsed);
-
         try {
-            const result = await this.service.findAllSmart(parsed); 
+            const result = await this.service.findAllSmart(parsed);
             // ⬇️ Inject include handler 
-            await applySmartInclude(result.data, parsed.include, this.service['repo'].manager); 
+            await applySmartInclude(result.data, parsed.include, this.service['repo'].manager);
             return ApiResponseHelper.success(result.data, 'list', undefined, result.total);
 
         } catch (error) {
@@ -73,7 +75,7 @@ export class ContractSiteReportController {
     }
 
     @Get(':id')
-    @ApiResponseEntity(ContractSiteDto, 'get')
+    @ApiResponseEntity(ContractReportDto, 'get')
     async findOne(@Param('id') id: string) {
         try {
             const result = await this.service.findOne(id);
@@ -84,8 +86,8 @@ export class ContractSiteReportController {
 
             // Include semua relasi (bisa dari default config atau didefinisikan di controller)
             const allIncludes: SmartQueryInput['include'] = [
-                { name: 'contract', type: 'single' }, 
-                { name: 'client_site', type: 'single' } 
+                { name: 'client', type: 'single' },
+                { name: 'kontrak_sebelumnya', type: 'single' },
             ];
 
             // Filter hanya yang punya id_<name> di data
@@ -96,17 +98,14 @@ export class ContractSiteReportController {
                     'id' + inc.name[0].toUpperCase() + inc.name.slice(1), // camelCase
                     toCamel(`id_${inc.name}`)  // idClientSite
                 ];
-                console.log(possibleKeys)
                 return possibleKeys.some(key => Object.keys(result).includes(key));
             });
-            
+
             // Jalankan include
             await applySmartInclude([result], filteredIncludes, this.service['repo'].manager);
-             
             return ApiResponseHelper.success(result, 'get');
         } catch (error) {
             return ApiResponseHelper.failed(null, 'Terjadi kesalahan', 500, error);
         }
     }
-    
 }
