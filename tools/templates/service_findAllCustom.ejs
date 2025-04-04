@@ -1,0 +1,65 @@
+async findAllCustom(query: {
+    pageIndex?: number;
+    pageSize?: number;
+    filter?: Record<string, any>;
+    sortKey?: string;
+    sortValue?: 'asc' | 'desc';
+    search_field?: string[];
+    search_keyword?: string;
+    include?: string[];
+    }): Promise<{ data: any[]; total: number }> {
+    const {
+        pageIndex,
+        pageSize,
+        filter = {},
+        sortKey,
+        sortValue,
+        search_field = [],
+        search_keyword = '',
+        include = [],
+    } = query;
+
+    const qb = this.repo.createQueryBuilder('e');
+
+    const joinMap = {
+    <%- joinMap %>
+  };
+
+  applyDynamicJoin(qb, include, joinMap);
+
+  Object.entries(filter).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      if (key.includes('.')) {
+        qb.andWhere(`${key} = :${key.replace('.', '_')}`, {
+          [key.replace('.', '_')]: value,
+        });
+      } else {
+        qb.andWhere(`e.${key} = :${key}`, { [key]: value });
+      }
+    }
+  });
+
+  if (search_keyword && search_field.length > 0) {
+      qb.andWhere(
+          `(${search_field.map((col, i) => col + ' LIKE :search' + i).join(' OR ')})`,
+          Object.fromEntries(
+              search_field.map((_, i) => [`search${i}`, `%${search_keyword}%`]),
+          )
+      );
+  }
+
+  if (sortKey && sortValue) {
+    qb.orderBy(sortKey, sortValue.toUpperCase() as 'ASC' | 'DESC');
+  }
+
+  const total = await qb.getCount();
+
+  if (pageIndex !== undefined && pageSize !== undefined) {
+    qb.skip((pageIndex - 1) * pageSize).take(pageSize);
+  } else {
+    qb.take(100);
+  }
+
+  const data = await qb.getMany();
+  return { data, total };
+}

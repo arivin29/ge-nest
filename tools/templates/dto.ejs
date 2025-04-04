@@ -1,0 +1,10 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsOptional } from "class-validator";
+
+export class <%= className %>Dto {
+<% properties.forEach(prop => { -%>
+  @ApiProperty({ required: <%= !prop.optional %> })
+  <% if (prop.optional) { %>@IsOptional()<% } %>
+  <%= prop.name %>: <%= prop.type %>;
+<% }) -%>
+}

@@ -1,0 +1,11 @@
+import { <%= className %> } from './entities/<%= moduleName %>.entity';
+import { <%= className %>Service } from './<%= moduleName %>.service';
+import { BaseControllerFactory } from 'src/common/base/base.controller';
+
+@ApiTags('<%= moduleName %>')
+@Controller('<%= moduleName %>')
+export class <%= className %>Controller extends BaseControllerFactory(<%= className %>, '<%= moduleName %>') {
+    constructor(public override readonly service: <%= className %>Service) {
+    super(service);
+  }
+}
