@@ -1,17 +1,16 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PerusahaanModule } from './modules/perusahaan/perusahaan.module';
 import { ConfigModule } from '@nestjs/config';
 import { CentralDatabaseModule } from './config/database.config';
 import { TenantService } from './database/tenant/tenant.service';
 import { RouterModule } from '@nestjs/core';
 import { routerConfig } from './router.config';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
+
+import { ClientModule } from './modules/client/client.module';
 import { ClientSiteModule } from './modules/client_site/client_site.module';
 import { CompanyConfigModule } from './modules/company_config/company_config.module';
-import { ClientModule } from './modules/client/client.module';
-
 import { ContactClientUseModule } from './modules/contact_client_use/contact_client_use.module';
 import { ContractModule } from './modules/contract/contract.module';
 import { ContractSiteModule } from './modules/contract_site/contract_site.module';
@@ -28,10 +27,8 @@ import { WorkScheduleTeknisiModule } from './modules/work_schedule_teknisi/work_
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
         CentralDatabaseModule,
-        PerusahaanModule,
-        ClientSiteModule,
     RouterModule.register(routerConfig),
-        CompanyConfigModule, ClientModule, ContactClientUseModule, ContractModule, ContractSiteModule, ContractSiteServiceModule, CustomFieldModule, CustomFieldValueModule, FakturModule, InvoiceModule, KantorModule, ServiceModule, WorkScheduleModule, WorkScheduleTeknisiModule],
+     ClientModule, ClientSiteModule, CompanyConfigModule, ContactClientUseModule, ContractModule, ContractSiteModule, ContractSiteServiceModule, CustomFieldModule, CustomFieldValueModule, FakturModule, InvoiceModule, KantorModule, ServiceModule, WorkScheduleModule, WorkScheduleTeknisiModule],
     controllers: [AppController],
     providers: [AppService, TenantService],
 })

@@ -10,24 +10,18 @@ import { ContractSiteServiceModule } from './modules/contract_site_service/contr
 import { ContractSiteModule } from './modules/contract_site/contract_site.module';
 import { ContractModule } from './modules/contract/contract.module';
 import { ContactClientUseModule } from './modules/contact_client_use/contact_client_use.module';
-import { ClientModule } from './modules/client/client.module';
 import { CompanyConfigModule } from './modules/company_config/company_config.module';
-import { PerusahaanModule } from './modules/perusahaan/perusahaan.module';
-
 import { ClientSiteModule } from './modules/client_site/client_site.module';
-import { ContractSiteReportController } from './modules/contract_site/contract_site_report.controller';
-import { ContractReportController } from './modules/contract/contract_report.controller';
-
+import { ClientModule } from './modules/client/client.module'; 
 export const routerConfig = [
     {
         path: 'nonauth',
         children: [
+            { path: 'client', module: ClientModule },
             { path: 'client_site', module: ClientSiteModule },
             { path: 'company_config', module: CompanyConfigModule },
-            { path: 'client', module: ClientModule },
             { path: 'contact_client_use', module: ContactClientUseModule },
             { path: 'contract', module: ContractModule },
-            { path: 'contract_report', module: ContractReportController },
             { path: 'contract_site', module: ContractSiteModule },
             { path: 'contract_site_service', module: ContractSiteServiceModule },
             { path: 'custom_field', module: CustomFieldModule },
@@ -36,14 +30,13 @@ export const routerConfig = [
             { path: 'invoice', module: InvoiceModule },
             { path: 'kantor', module: KantorModule },
             { path: 'service', module: ServiceModule },
-            { path: 'work_schedule', module: WorkScheduleModule },
-            { path: 'contract_site_report', module: ContractSiteReportController },
-            { path: 'work_schedule_teknisi', module: WorkScheduleTeknisiModule }],
+            { path: 'work_schedule', module: WorkScheduleModule }, 
+            { path: 'work_schedule_teknisi', module: WorkScheduleTeknisiModule }]
     },
     {
         path: 'auth',
         children: [
-            { path: 'perusahaan', module: PerusahaanModule },
+            
         ],
     },
 ];

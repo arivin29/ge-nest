@@ -46,7 +46,7 @@ async function generateEntityFromTable(table: string, className: string, moduleN
     fs.mkdirSync(entityFolder, { recursive: true });
     fs.writeFileSync(path.join(entityFolder, `${moduleName}.entity.ts`), entityContent);
     console.log(`✅ Entity generated for '${table}' as '${moduleName}.entity.ts'`);
-    
+
     const entityTargetPath = path.join(entityFolder, `${moduleName}.entity.ts`);
     await generateDtoFromEntity(entityTargetPath, className, moduleName);
 }
@@ -102,7 +102,7 @@ async function main() {
     if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
 
     await generateEntityFromTable(fromTable, className, moduleName, dbName);
- 
+
     const fileMap = [
         { name: 'service', file: `${moduleName}.service.ts`, tpl: 'service.ejs' },
         {
@@ -162,19 +162,35 @@ async function main() {
     }
 
     // ✅ Smart update app.module.ts
+    const APP_MODULE_PATH = path.join(__dirname, '../src/app.module.ts');
     const appModuleRaw = fs.readFileSync(APP_MODULE_PATH, 'utf-8');
-    const appImport = `import { ${className}Module } from './modules/${moduleName}/${moduleName}.module';`;
-    const appModuleRegex = /@Module\(\{\s+imports: \[(.*?)\]/s;
-    if (!appModuleRaw.includes(appImport)) {
-        const updatedAppModule = appModuleRaw
-            .replace(/(import[^;]+;)(?!.*import)/s, `$1\n${appImport}`)
-            .replace(appModuleRegex, (_, imports) => {
-                return `@Module({\n  imports: [${imports.trim()}, ${className}Module]`;
-            });
 
-        fs.writeFileSync(APP_MODULE_PATH, updatedAppModule);
-        console.log('📦 app.module.ts updated with new module');
+    const appImport = `import { ${className}Module } from './modules/${moduleName}/${moduleName}.module';`;
+    const importRegex = /^(import .+;\s*)+/m;
+    const moduleRegex = /@Module\(\{\s+imports:\s*\[([\s\S]*?)\]/m;
+
+    let updatedAppModule = appModuleRaw;
+
+    // ✅ 1. Inject import statement sebelum semua @Module
+    if (!appModuleRaw.includes(appImport)) {
+        const importSection = appModuleRaw.match(importRegex)?.[0] ?? '';
+        updatedAppModule = updatedAppModule.replace(importSection, `${importSection}${appImport}\n`);
     }
+
+    // ✅ 2. Inject ke dalam array `imports: [ ... ]`
+    if (moduleRegex.test(updatedAppModule)) {
+        updatedAppModule = updatedAppModule.replace(moduleRegex, (match, group) => {
+            const importsList = group.trim().split(',').map(s => s.trim());
+
+            if (!importsList.includes(`${className}Module`)) {
+                return match.replace(group, `${group.trim()}, ${className}Module`);
+            }
+            return match;
+        });
+    }
+
+    fs.writeFileSync(APP_MODULE_PATH, updatedAppModule);
+    console.log('📦 app.module.ts updated with new module');
 
     // path untuk file database.providers.ts
     const DATABASE_PROVIDER_PATH = path.resolve(__dirname, '../src/config/database.config.ts');

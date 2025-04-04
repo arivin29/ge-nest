@@ -24,12 +24,18 @@ export interface SmartQueryInput {
     };
     order?: {
         by: string;
-        direction: 'asc' | 'desc';
+        direction: 'ASC' | 'DESC';
     };
     pagination?: {
         page: number;
         limit: number;
     };
+    select?: {
+        type: 'count' | 'sum' | 'avg' | 'min' | 'max';
+        field: string;
+        alias: string;
+    }[];
+    groupBy?: string[];
     include?: SmartQueryInclude[];
 }
 

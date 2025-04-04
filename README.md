@@ -11,6 +11,7 @@ npm run crud -- \
   --router=nonauth \
   --mode=default
 
+npm run crud-report-widget -- --fromTable=contract_site --nama=contract_site --router=auth
 npm run crud-report -- --fromTable=contract_site --nama=contract_site --router=auth
 npm run crud-report -- --fromTable=contract --nama=contract --router=auth
 

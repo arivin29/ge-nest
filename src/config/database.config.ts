@@ -1,24 +1,25 @@
 // src/database/database.providers.ts
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { WorkScheduleTeknisi } from '../modules/work_schedule_teknisi/entities/work_schedule_teknisi.entity';
-import { WorkSchedule } from '../modules/work_schedule/entities/work_schedule.entity';
-import { Service } from '../modules/service/entities/service.entity';
-import { Kantor } from '../modules/kantor/entities/kantor.entity';
-import { Invoice } from '../modules/invoice/entities/invoice.entity';
-import { Faktur } from '../modules/faktur/entities/faktur.entity';
-import { CustomFieldValue } from '../modules/custom_field_value/entities/custom_field_value.entity';
-import { CustomField } from '../modules/custom_field/entities/custom_field.entity';
-import { ContractSiteService } from '../modules/contract_site_service/entities/contract_site_service.entity';
-import { ContractSite } from '../modules/contract_site/entities/contract_site.entity';
-import { Contract } from '../modules/contract/entities/contract.entity';
-import { ContactClientUse } from '../modules/contact_client_use/entities/contact_client_use.entity';
-import { Client } from '../modules/client/entities/client.entity';
-import { ClientSite } from '../modules/client_site/entities/client_site.entity';
-import { CompanyConfig } from '../modules/company_config/entities/company_config.entity';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Perusahaan } from '../modules/perusahaan/entities/perusahaan.entity'; 
+import { TypeOrmModule } from '@nestjs/typeorm'; 
+import { ConfigModule, ConfigService } from '@nestjs/config'; 
+import { Client } from 'src/modules/client/entities/client.entity';
+import { ClientSite } from 'src/modules/client_site/entities/client_site.entity';
+import { CompanyConfig } from 'src/modules/company_config/entities/company_config.entity';
+import { ContactClientUse } from 'src/modules/contact_client_use/entities/contact_client_use.entity';
+import { Contract } from 'src/modules/contract/entities/contract.entity';
+import { ContractSiteService } from 'src/modules/contract_site/contract_site.service';
+import { ContractSite } from 'src/modules/contract_site/entities/contract_site.entity';
+import { CustomField } from 'src/modules/custom_field/entities/custom_field.entity';
+import { CustomFieldValue } from 'src/modules/custom_field_value/entities/custom_field_value.entity';
+import { Faktur } from 'src/modules/faktur/entities/faktur.entity';
+import { Invoice } from 'src/modules/invoice/entities/invoice.entity';
+import { Kantor } from 'src/modules/kantor/entities/kantor.entity';
+import { WorkSchedule } from 'src/modules/work_schedule/entities/work_schedule.entity';
+import { WorkScheduleTeknisi } from 'tools/__generated__/entities/WorkScheduleTeknisi';
 
-const entt = [Perusahaan, CompanyConfig, ClientSite, Client,
+const entt = [
+    Client,
+    ClientSite,
+    CompanyConfig,
     ContactClientUse,
     Contract,
     ContractSite,
@@ -29,7 +30,7 @@ const entt = [Perusahaan, CompanyConfig, ClientSite, Client,
     Invoice,
     Kantor,
     WorkSchedule,
-    WorkScheduleTeknisi,];
+    WorkScheduleTeknisi];
 
 export const CentralDatabaseModule = TypeOrmModule.forRootAsync({
     imports: [ConfigModule],

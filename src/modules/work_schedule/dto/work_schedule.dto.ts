@@ -5,6 +5,9 @@ export class WorkScheduleDto {
   @ApiProperty({ required: true })
   
   idSchedule: string;
+  @ApiProperty({ required: false })
+  @IsOptional()
+  idContractSite: string;
   @ApiProperty({ required: true })
   
   idContractSiteService: string;

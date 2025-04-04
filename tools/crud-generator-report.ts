@@ -106,34 +106,34 @@ function injectFindAllCustomToService() {
 }
 
 // === Update router.config.ts ===
-function updateRouterConfig() {
-    const ROUTER_CONFIG_PATH = path.resolve(__dirname, '../src/router.config.ts');
-    let routerConfigRaw = fs.readFileSync(ROUTER_CONFIG_PATH, 'utf-8');
-    const importStatement = `import { ${className}Module } from './modules/${moduleName}/${moduleName}.module';`;
-    const routerEntry = `{ path: '${moduleName}', module: ${className}Module }`;
+// function updateRouterConfig() {
+//     const ROUTER_CONFIG_PATH = path.resolve(__dirname, '../src/router.config.ts');
+//     let routerConfigRaw = fs.readFileSync(ROUTER_CONFIG_PATH, 'utf-8');
+//     const importStatement = `import { ${className}Module } from './modules/${moduleName}/${moduleName}.module';`;
+//     const routerEntry = `{ path: '${moduleName}', module: ${className}Module }`;
 
-    // ⛔ Insert import if not exist
-    if (!routerConfigRaw.includes(importStatement)) {
-        routerConfigRaw = `${importStatement}\n${routerConfigRaw}`;
-    }
+//     // ⛔ Insert import if not exist
+//     if (!routerConfigRaw.includes(importStatement)) {
+//         routerConfigRaw = `${importStatement}\n${routerConfigRaw}`;
+//     }
 
-    // 🔍 Replace router group with additional entry
-    const routerGroupRegex = new RegExp(`(path:\\s*'${routerGroup}'\\s*,\\s*children:\\s*\\[)([^\\]]*)\\]`, 'm');
-    if (!routerConfigRaw.includes(routerEntry)) {
-        routerConfigRaw = routerConfigRaw.replace(
-            routerGroupRegex,
-            (_, start, children) => {
-                const newChildren = children.includes(routerEntry)
-                    ? children // skip if already exists
-                    : `${children.trimEnd()},\n      ${routerEntry}`;
-                return `${start}${newChildren}]`;
-            }
-        );
+//     // 🔍 Replace router group with additional entry
+//     const routerGroupRegex = new RegExp(`(path:\\s*'${routerGroup}'\\s*,\\s*children:\\s*\\[)([^\\]]*)\\]`, 'm');
+//     if (!routerConfigRaw.includes(routerEntry)) {
+//         routerConfigRaw = routerConfigRaw.replace(
+//             routerGroupRegex,
+//             (_, start, children) => {
+//                 const newChildren = children.includes(routerEntry)
+//                     ? children // skip if already exists
+//                     : `${children.trimEnd()},\n      ${routerEntry}`;
+//                 return `${start}${newChildren}]`;
+//             }
+//         );
 
-        fs.writeFileSync(ROUTER_CONFIG_PATH, routerConfigRaw);
-        console.log(`🔗 Router entry added to group '${routerGroup}'`);
-    }
-}
+//         fs.writeFileSync(ROUTER_CONFIG_PATH, routerConfigRaw);
+//         console.log(`🔗 Router entry added to group '${routerGroup}'`);
+//     }
+// }
 
 function generateReportDto() {
     const dtoDir = path.join(moduleDir, 'dto');
@@ -210,7 +210,7 @@ if (!fs.existsSync(moduleDir)) {
 
 generateReportController();
 injectFindAllCustomToService();
-updateRouterConfig();
+// updateRouterConfig();
 generateReportDto();
 injectReportControllerToModule();
 

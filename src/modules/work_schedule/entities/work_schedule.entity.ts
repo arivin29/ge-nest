@@ -6,6 +6,9 @@ export class WorkSchedule {
   @Column("varchar", { primary: true, name: "id_schedule", length: 36 })
   idSchedule: string;
 
+  @Column("varchar", { name: "id_contract_site", nullable: true, length: 36 })
+  idContractSite: string | null;
+
   @Column("varchar", { name: "id_contract_site_service", length: 36 })
   idContractSiteService: string;
 
