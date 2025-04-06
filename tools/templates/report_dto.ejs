@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { <%= className %>Dto } from './<%= moduleName %>.dto';
 <% joins.forEach(name => { -%>
-import { <%= pascalCase(name) %>Dto } from '../../<%= name %>/dto/<%= name %>.dto';
+import { <%= pascalCase(name) %>Dto } from 'src/modules/<%= name %>/dto/<%= name %>.dto';
 <% }); -%>
 
 export class <%= className %>ReportDto extends <%= className %>Dto {

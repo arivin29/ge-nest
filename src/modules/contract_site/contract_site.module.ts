@@ -5,10 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContractSiteService } from './contract_site.service';
 import { ContractSiteController } from './contract_site.controller';
 import { ContractSite } from './entities/contract_site.entity';
+import { ContractSiteReportController } from './contract_site_report.controller';
 
 @Module({
     imports: [TypeOrmModule.forFeature([ContractSite])],
-    controllers: [ContractSiteController, ContractSiteWidgetController],
+    controllers: [ContractSiteController, ContractSiteWidgetController, ContractSiteReportController],
     providers: [ContractSiteService, ContractSiteWidgetService],
 })
 export class ContractSiteModule { }

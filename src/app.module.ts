@@ -24,11 +24,27 @@ import { ServiceModule } from './modules/service/service.module';
 import { WorkScheduleModule } from './modules/work_schedule/work_schedule.module';
 import { WorkScheduleTeknisiModule } from './modules/work_schedule_teknisi/work_schedule_teknisi.module';
 
+import { UsersModule } from './modules/users/users.module';
+import { JwtModule } from '@nestjs/jwt';
+import { AppConfigModule } from './config/config.module';
+import { UserTokensModule } from './modules/user_tokens/user_tokens.module';
+import { AuthModule } from './auth/auth.module'; 
+import { ModuleModule } from './modules/module/module.module';
+import { UserGroupAccessModule } from './modules/user_group_access/user_group_access.module';
+import { UserGroupModule } from './modules/user_group/user_group.module';
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }),
+    imports: [JwtModule.registerAsync({
+            useFactory: () => ({
+                secret: process.env.JWT_SECRET,
+                signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
+            }),
+        }),
+        AppConfigModule,
+        ConfigModule.forRoot({ isGlobal: true }),
         CentralDatabaseModule,
-    RouterModule.register(routerConfig),
-     ClientModule, ClientSiteModule, CompanyConfigModule, ContactClientUseModule, ContractModule, ContractSiteModule, ContractSiteServiceModule, CustomFieldModule, CustomFieldValueModule, FakturModule, InvoiceModule, KantorModule, ServiceModule, WorkScheduleModule, WorkScheduleTeknisiModule],
+        RouterModule.register(routerConfig),
+        AuthModule,
+        ClientModule, ClientSiteModule, CompanyConfigModule, ContactClientUseModule, ContractModule, ContractSiteModule, ContractSiteServiceModule, CustomFieldModule, CustomFieldValueModule, FakturModule, InvoiceModule, KantorModule, ServiceModule, WorkScheduleModule, WorkScheduleTeknisiModule, UsersModule, UserTokensModule, ModuleModule, UserGroupAccessModule, UserGroupModule],
     controllers: [AppController],
     providers: [AppService, TenantService],
 })

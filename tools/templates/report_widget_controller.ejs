@@ -13,8 +13,7 @@ import { <%= className %>WidgetReportDto } from './dto/<%= moduleName %>_widget_
 export class <%= className %>WidgetController {
     constructor(private readonly service: <%= className %>WidgetService) { }
 
-    @Get()
-    @AutoSwaggerQuery()
+    @Get() 
     @ApiResponseEntity( <%= className %>WidgetReportDto, 'list')
     async findAll(
         @Query() query: BaseWidgetQueryDto,

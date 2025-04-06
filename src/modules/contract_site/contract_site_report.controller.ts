@@ -1,22 +1,22 @@
 import { Body, Controller, Get, Param, Query } from '@nestjs/common';
-import { <%= className %>Service } from '../<%= moduleName %>/<%= moduleName %>.service';
+import { ContractSiteService } from '../contract_site/contract_site.service';
 import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
-import { <%= className %>Dto } from '../<%= moduleName %>/dto/<%= moduleName %>.dto';
+import { ContractSiteDto } from '../contract_site/dto/contract_site.dto';
 import { SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
 import { applySmartInclude } from 'src/common/helpers/smart-include.helper';
-import { <%= className %>ReportDto } from '../<%= moduleName %>/dto/<%= moduleName %>_report.dto';
+import { ContractSiteReportDto } from '../contract_site/dto/contract_site_report.dto';
 
-@ApiTags('<%= moduleName %>_report')
-@Controller('<%= moduleName %>_report')
-export class <%= className %>ReportController {
-    constructor(private readonly service: <%= className %>Service) { }
+@ApiTags('contract_site_report')
+@Controller('contract_site_report')
+export class ContractSiteReportController {
+    constructor(private readonly service: ContractSiteService) { }
 
     @Get()
-    @ApiResponseEntity(<%= className %>ReportDto, 'list') 
+    @ApiResponseEntity(ContractSiteReportDto, 'list') 
     async findAll(
         @Query() query: BaseQueryDtoSmart,
         @Body() body: BaseQueryDtoSmart
@@ -57,11 +57,10 @@ export class <%= className %>ReportController {
                 limit: parseInt(String((source as any).pageSize ?? (source as any).pagination?.limit ?? '10'), 10),
             },
             include: (source as any).include ?? [
-                <% joins.forEach(name => {
-                                -%>
-                                { name: '<%= name %>', type: 'single' },
-                <% }) -%>
-                ],   // mohon di isi dengan default dari id_xxx
+                                                { name: 'contract', type: 'single' },
+                                                { name: 'site', type: 'single' },
+                                                { name: 'client_site', type: 'single' },
+                                ],   // mohon di isi dengan default dari id_xxx
         };
 
         try {
@@ -76,7 +75,7 @@ export class <%= className %>ReportController {
     }
 
     @Get(':id')
-    @ApiResponseEntity(<%= className %>ReportDto, 'get')
+    @ApiResponseEntity(ContractSiteReportDto, 'get')
     async findOne(@Param('id') id: string) {
         try {
             const result = await this.service.findOne(id);
@@ -87,11 +86,10 @@ export class <%= className %>ReportController {
 
             // Include semua relasi (bisa dari default config atau didefinisikan di controller)
             const allIncludes: SmartQueryInput['include'] = [
-                <% joins.forEach(name => {
-                                -%>
-                                { name: '<%= name %>', type: 'single' },
-                <% }) -%>
-                ];
+                                                { name: 'contract', type: 'single' },
+                                                { name: 'site', type: 'single' },
+                                                { name: 'client_site', type: 'single' },
+                                ];
 
             // Filter hanya yang punya id_<name> di data
             const toCamel = (s: string) => s.replace(/_([a-z])/g, (_, g) => g.toUpperCase());
