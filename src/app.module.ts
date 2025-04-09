@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CentralDatabaseModule } from './config/database.config';
 import { TenantService } from './database/tenant/tenant.service';
 import { RouterModule } from '@nestjs/core';
@@ -28,25 +28,42 @@ import { UsersModule } from './modules/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AppConfigModule } from './config/config.module';
 import { UserTokensModule } from './modules/user_tokens/user_tokens.module';
-import { AuthModule } from './auth/auth.module'; 
+import { AuthModule } from './auth/auth.module';
 import { ModuleModule } from './modules/module/module.module';
 import { UserGroupAccessModule } from './modules/user_group_access/user_group_access.module';
 import { UserGroupModule } from './modules/user_group/user_group.module';
+import { ClientContactModule } from './modules/client_contact/client_contact.module';
+import { ContractJenisModule } from './modules/contract_jenis/contract_jenis.module';
+import { AuthProtectedModule } from './auth/auth-protected.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
 @Module({
-    imports: [JwtModule.registerAsync({
+    imports: [
+        JwtModule.registerAsync({
             useFactory: () => ({
                 secret: process.env.JWT_SECRET,
                 signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
             }),
         }),
         AppConfigModule,
+        PassportModule,
+        JwtModule.registerAsync({
+            inject: [ConfigService],
+            useFactory: (config: ConfigService) => ({
+                secret: config.get('JWT_SECRET'),
+                signOptions: { expiresIn: '6h' },
+            }),
+        }),
         ConfigModule.forRoot({ isGlobal: true }),
         CentralDatabaseModule,
         RouterModule.register(routerConfig),
-        AuthModule,
-        ClientModule, ClientSiteModule, CompanyConfigModule, ContactClientUseModule, ContractModule, ContractSiteModule, ContractSiteServiceModule, CustomFieldModule, CustomFieldValueModule, FakturModule, InvoiceModule, KantorModule, ServiceModule, WorkScheduleModule, WorkScheduleTeknisiModule, UsersModule, UserTokensModule, ModuleModule, UserGroupAccessModule, UserGroupModule],
+        AuthModule, AuthProtectedModule,
+        ClientModule, ClientSiteModule, CompanyConfigModule, ContactClientUseModule, ContractModule, ContractSiteModule, ContractSiteServiceModule,
+        CustomFieldModule, CustomFieldValueModule, FakturModule, InvoiceModule, KantorModule, ServiceModule, WorkScheduleModule,
+        WorkScheduleTeknisiModule, UsersModule, UserTokensModule, ModuleModule, UserGroupAccessModule, UserGroupModule, ClientContactModule, ContractJenisModule
+    ],
     controllers: [AppController],
-    providers: [AppService, TenantService],
+    providers: [AppService, TenantService, JwtStrategy],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {

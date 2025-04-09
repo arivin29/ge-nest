@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ContractService } from '../contract/contract.service';
 import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
@@ -15,37 +15,24 @@ import { ContractReportDto } from '../contract/dto/contract_report.dto';
 export class ContractReportController {
     constructor(private readonly service: ContractService) { }
 
-    @Get()
-    @ApiResponseEntity(ContractReportDto, 'list')
-    @AutoSwaggerQuery()
+    @Post('list')
+    @ApiResponseEntity(ContractReportDto, 'list') 
     async findAll(
-        @Query() query: BaseQueryDtoSmart,
         @Body() body: BaseQueryDtoSmart
     ) {
-        type InputUnion = BaseQueryDtoSmart | SmartQueryInput;
-
-        const isQueryMode = query.filter !== undefined || query.joinWhere !== undefined || query.search_keyword !== undefined;
-
-        const source: InputUnion = isQueryMode ? query : body;
-
+ 
         const isString = (val: any) => typeof val === 'string';
+        const source = body;
 
         const parsed: SmartQueryInput = {
-            where: isString((source as any).filter)
-                ? JSON.parse((source as any).filter)
-                : (source as any).where ?? (source as any).filter ?? {},
-
-            joinWhere: isString((source as any).joinWhere)
-                ? JSON.parse((source as any).joinWhere)
-                : (source as any).joinWhere ?? {},
-
+            where: source.filter ?? {},
+            joinWhere: (source as any).joinWhere ?? {}, 
             fsearch: (source as any).search_keyword
                 ? {
                     keyword: (source as any).search_keyword,
                     fields: (source as any).search_field ?? [],
                 }
-                : (source as any).fsearch,
-
+                : (source as any).fsearch, 
             order: (source as any).sortKey
                 ? {
                     by: (source as any).sortKey,
@@ -58,15 +45,16 @@ export class ContractReportController {
                 limit: parseInt(String((source as any).pageSize ?? (source as any).pagination?.limit ?? '10'), 10),
             },
             include: (source as any).include ?? [
-                                                { name: 'client', type: 'single' },
-                                                { name: 'kontrak_sebelumnya', type: 'single' },
-                                ],   // mohon di isi dengan default dari id_xxx
+                { name: 'client', type: 'single' },
+                { name: 'kontrak_sebelumnya', type: 'single' },
+            ],   // mohon di isi dengan default dari id_xxx
         };
 
+        
         try {
-            const result = await this.service.findAllSmart(parsed); 
-            // ⬇️ Inject include handler 
-            await applySmartInclude(result.data, parsed.include, this.service['repo'].manager); 
+            const result = await this.service.findAllSmart(parsed);
+            // ⬇️ Inject include handler  
+            await applySmartInclude(result.data, parsed.include, this.service['repo'].manager);
             return ApiResponseHelper.success(result.data, 'list', undefined, result.total);
 
         } catch (error) {
@@ -86,9 +74,9 @@ export class ContractReportController {
 
             // Include semua relasi (bisa dari default config atau didefinisikan di controller)
             const allIncludes: SmartQueryInput['include'] = [
-                                                { name: 'client', type: 'single' },
-                                                { name: 'kontrak_sebelumnya', type: 'single' },
-                                ];
+                { name: 'client', type: 'single' },
+                { name: 'kontrak_sebelumnya', type: 'single' },
+            ];
 
             // Filter hanya yang punya id_<name> di data
             const toCamel = (s: string) => s.replace(/_([a-z])/g, (_, g) => g.toUpperCase());
@@ -100,7 +88,7 @@ export class ContractReportController {
                 ];
                 return possibleKeys.some(key => Object.keys(result).includes(key));
             });
-            
+
             // Jalankan include
             await applySmartInclude([result], filteredIncludes, this.service['repo'].manager);
             return ApiResponseHelper.success(result, 'get');
@@ -109,3 +97,5 @@ export class ContractReportController {
         }
     }
 }
+ 
+

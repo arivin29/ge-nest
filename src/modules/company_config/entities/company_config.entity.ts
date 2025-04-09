@@ -2,8 +2,8 @@ import { Column, Entity } from "typeorm";
 
 @Entity("company_config", { schema: "erp_pelanggan" })
 export class CompanyConfig {
-  @Column("varchar", { primary: true, name: "id_config", length: 36 })
-  idConfig: string;
+  @Column("varchar", { primary: true, name: "id_company_config", length: 36 })
+  idCompanyConfig: string;
 
   @Column("varchar", {
     name: "versi_erp",

@@ -1,28 +1,22 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional } from "class-validator";
 
-export class ContactClientUseDto {
+export class ContractJenisDto {
   @ApiProperty({ required: true })
   
-  idContactClientUse: string;
+  idContractJenis: string;
   @ApiProperty({ required: true })
   
-  idClientContact: string;
-  @ApiProperty({ required: true })
-  
-  fromModule: string;
-  @ApiProperty({ required: true })
-  
-  fromModuleId: string;
+  contractJenis: string;
   @ApiProperty({ required: false })
   @IsOptional()
-  peran: string;
+  statusContractJenis: string;
   @ApiProperty({ required: false })
   @IsOptional()
-  isPrimary: boolean;
+  keterangan: string;
   @ApiProperty({ required: false })
   @IsOptional()
-  catatan: string;
+  role: string;
   @ApiProperty({ required: false })
   @IsOptional()
   createdAt: Date;

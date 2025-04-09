@@ -49,17 +49,30 @@ export class AuthService {
             };
         }
 
-        let tokens = this.generateTokens(user)
+        const tokens = this.generateTokens(user);
+
         await this.userTokenRepo.save({
             id: uuidv4(),
             idUser: user.idUsers,
             refresh_token: tokens.refreshToken,
             user_agent: req.headers['user-agent'],
-            ip_address: (req.headers['x-forwarded-for'] || req.connection.remoteAddress) as string,
+            ip_address: (req.headers['x-forwarded-for'] || req.socket.remoteAddress) as string,
         });
 
-        return tokens;
+        // return format lebih clean
+        return {
+            access_token: tokens.accessToken,
+            refresh_token: tokens.refreshToken,
+            user: {
+                idUsers: user.idUsers,
+                email: user.email,
+                name: null,
+                role: null,
+                status: user.status
+            }
+        };
     }
+
 
     private generateTokens(user: Users) {
         const payload = { sub: user.idUsers, email: user.email };

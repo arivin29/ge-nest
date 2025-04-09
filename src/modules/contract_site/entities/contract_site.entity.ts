@@ -1,7 +1,7 @@
 import { Column, Entity, Index } from "typeorm";
 
 @Index("id_contract", ["idContract"], {})
-@Index("id_site", ["idClientSite"], {})
+@Index("id_client_site", ["idClientSite"], {})
 @Entity("contract_site", { schema: "erp_pelanggan" })
 export class ContractSite {
   @Column("varchar", { primary: true, name: "id_contract_site", length: 36 })

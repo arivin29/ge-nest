@@ -1,13 +1,17 @@
 import { Column, Entity, Index } from "typeorm";
 
-@Index("id_contact", ["idContact"], {})
+@Index("id_contact", ["idClientContact"], {})
 @Entity("contact_client_use", { schema: "erp_pelanggan" })
 export class ContactClientUse {
-  @Column("varchar", { primary: true, name: "id_contact_use", length: 36 })
-  idContactUse: string;
+  @Column("varchar", {
+    primary: true,
+    name: "id_contact_client_use",
+    length: 36,
+  })
+  idContactClientUse: string;
 
-  @Column("varchar", { name: "id_contact", length: 36 })
-  idContact: string;
+  @Column("varchar", { name: "id_client_contact", length: 36 })
+  idClientContact: string;
 
   @Column("varchar", { name: "from_module", length: 50 })
   fromModule: string;

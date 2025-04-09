@@ -39,13 +39,27 @@ export interface SmartQueryInput {
     include?: SmartQueryInclude[];
 }
 
+export function applyDefaultSelect<T extends object>(
+    qb: SelectQueryBuilder<T>,
+    dtoClass: new () => T,
+    alias: string
+) {
+    const dtoInstance = new dtoClass();
+    const baseFields = Object.keys(dtoInstance);
+    qb.select(baseFields.map(field => `${alias}.${field}`));
+}
+
 export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
     repo: Repository<T>,
     alias: string,
-    query: SmartQueryInput
+    query: SmartQueryInput,
+    dtoClass: new () => T
 ): Promise<{ data: T[]; total: number }> {
-    const qb = repo.createQueryBuilder(alias);
 
+    const qb = repo.createQueryBuilder(alias);
+    // Ganti default select dengan field eksplisit
+    applyDefaultSelect(qb, dtoClass, alias);
+    
     const {
         where = {},
         joinWhere = {},
@@ -55,14 +69,33 @@ export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
     } = query;
 
     // Inject INNER JOINs
-    Object.keys(joinWhere).forEach((joinName) => {
+    const joinNames = Object.keys(joinWhere);
+    joinNames.forEach((joinName) => {
         const pk = `id_${joinName}`;
         const fk = `${alias}.${pk}`;
         qb.innerJoin(joinName, joinName, `${joinName}.${pk} = ${fk}`);
-    });
 
+        const joinFilter = joinWhere?.[joinName];
+
+        if (joinFilter && Object.keys(joinFilter).length > 0) {
+            // Custom filter dari user
+            Object.entries(joinFilter).forEach(([key, value]) => {
+                const paramKey = `${joinName}_${key}`;
+                qb.andWhere(`${joinName}.${key} = :${paramKey}`, {
+                    [paramKey]: value,
+                });
+            });
+        } else {
+            // Default: pastikan data relasi tidak null
+            qb.andWhere(`${joinName}.${pk} IS NOT NULL`);
+        }
+    });
+    function normalizeKey(key: string): string {
+        return key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+    }
     // Enhanced where filter
-    for (const [key, value] of Object.entries(where)) {
+    for (const [rawKey, value] of Object.entries(where)) {
+        const key = normalizeKey(rawKey);
         const field = `${alias}.${key}`;
         if (typeof value !== 'object' || value === null) {
             qb.andWhere(`${field} = :${key}`, { [key]: value });
@@ -96,21 +129,25 @@ export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
     }
 
     // Filter joinWhere
-    Object.entries(joinWhere).forEach(([joinName, filterObj]) => {
-        Object.entries(filterObj).forEach(([key, value]) => {
-            if (value !== undefined && value !== null && value !== '') {
-                const paramKey = `${joinName}_${key}`;
-                qb.andWhere(`${joinName}.${key} = :${paramKey}`, {
-                    [paramKey]: value,
-                });
-            }
-        });
+    Object.entries(joinWhere).forEach(([rawJoinName, filterObj]) => {
+        const joinName = normalizeKey(rawJoinName);
+        if (filterObj && Object.keys(filterObj).length > 0) {
+            Object.entries(filterObj).forEach(([rawKey, value]) => {
+                const key = normalizeKey(rawKey);
+                if (value !== undefined && value !== null && value !== '') {
+                    const paramKey = `${joinName}_${key}`;
+                    qb.andWhere(`${joinName}.${key} = :${paramKey}`, {
+                        [paramKey]: value,
+                    });
+                }
+            });
+        }
     });
 
     // Fuzzy search
     if (fsearch?.keyword && fsearch.fields?.length > 0) {
         const searchConditions = fsearch.fields.map((field, i) => {
-            return `${field} LIKE :search_${i}`;
+            return `${normalizeKey(field)} LIKE :search_${i}`;
         });
         const searchParams = Object.fromEntries(
             fsearch.fields.map((_, i) => [`search_${i}`, `%${fsearch.keyword}%`])
@@ -119,32 +156,94 @@ export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
     }
 
     // ORDER
-    // ORDER
+
+    
+
+    
     if (order?.by && order?.direction) {
-        const parts = order.by.split('.');
-        const isJoinAlias = parts.length === 2 && joinWhere?.[parts[0]];
+        const parts = order.by.split('.').map(part => normalizeKey(part));
         const isBaseField = parts.length === 1;
+        const isJoinAlias = parts.length === 2;
+
+        console.log('parts', parts);
+        console.log('isJoinAlias', isJoinAlias);
+        console.log('isBaseField', isBaseField);
+        console.log('joinAttributes', qb.expressionMap.joinAttributes.length);
 
         if (isBaseField) {
-            qb.orderBy(order.by, order.direction.toUpperCase() as 'ASC' | 'DESC');
+            if (qb.expressionMap.joinAttributes.length > 0)
+            {  
+                const aliasName = `${alias}_${order.by}`; 
+
+                qb.addSelect(`${alias}.${order.by}`, `${aliasName}xxx`);
+                qb.orderBy(`${aliasName}xxx`, order.direction.toUpperCase() as 'ASC' | 'DESC');
+            }else
+            {
+                qb.orderBy(`${alias}.${order.by}`, order.direction.toUpperCase() as 'ASC' | 'DESC');
+            }
+            
         } else if (isJoinAlias) {
             const [joinAlias, joinField] = parts;
-            const aliasName = `${joinAlias}_${joinField}`;
-            qb.addSelect(`${joinAlias}.${joinField}`, aliasName);
-            qb.orderBy(aliasName, order.direction.toUpperCase() as 'ASC' | 'DESC');
+
+            // ⛔️ Cek apakah sudah di-join
+            const joinedAliases = qb.expressionMap.joinAttributes.map(j => j.alias.name);
+ 
+            if (!joinedAliases.includes(joinAlias)) {
+                console.warn(`[SKIPPED] ORDER BY ${order.by} → alias '${joinAlias}' belum di-join.`);
+                
+                const aliasName = `${joinAlias}_${joinField}`;
+                qb.addSelect(`${joinAlias}.${joinField}`, `${aliasName}xxx`);
+                qb.orderBy(`${aliasName}xxx`, order.direction.toUpperCase() as 'ASC' | 'DESC');
+            }
+            else
+            {
+                const aliasName = `${joinAlias}_${joinField}`;
+                qb.addSelect(`${joinAlias}.${joinField}`, aliasName);
+                qb.orderBy(aliasName, order.direction.toUpperCase() as 'ASC' | 'DESC');
+            }
+
+            
         } else {
-            console.warn(`[SKIPPED] order.by = ${order.by} not allowed without proper join.`);
+            console.warn(`[SKIPPED] ORDER BY ${order.by} → tidak valid karena format.`);
         }
     }
+
+    // ORDER
+    // if (order?.by && order?.direction) {
+    //     const parts = order.by.split('.');
+    //     const isBaseField = parts.length === 1;
+    //     const isJoinAlias = parts.length === 2 || !!joinWhere?.[parts[0]] || Object.keys(joinWhere || {}).includes(parts[0]);
+    //     console.log('isJoinAlias', isJoinAlias)
+    //     if (isBaseField) {
+    //         qb.orderBy(`${alias}.${order.by}`, order.direction.toUpperCase() as 'ASC' | 'DESC');
+    //     } else if (isJoinAlias) {
+    //         const [joinAlias, joinField] = parts;
+    //         console.log('isJoinAlias', isJoinAlias)
+    //         // Cek apakah alias ini memang sudah di-join
+    //         const joinedAliases = qb.expressionMap.joinAttributes.map(j => j.alias.name);
+    //         if (!joinedAliases.includes(joinAlias)) {
+    //             console.warn(`[SKIPPED] order.by = ${order.by} → alias '${joinAlias}' belum di-join.`);
+    //             // return { data: [], total: 0 };
+    //         }
+
+    //         const aliasName = `${alias}.${joinAlias}_${joinField}`;
+    //         // qb.addSelect(`${joinAlias}.${joinField}`, aliasName);
+    //         qb.orderBy(aliasName, order.direction.toUpperCase() as 'ASC' | 'DESC');
+    //     } else {
+    //         console.warn(`[SKIPPED] order.by = ${order.by} not allowed (invalid format)`);
+    //     }
+    // }
+    
+
 
     // PAGINATION
     if (pagination?.page && pagination?.limit) {
         const skip = (pagination.page - 1) * pagination.limit;
         qb.skip(skip).take(pagination.limit);
-    }
- 
+    } 
+    // console.log('SQL =>', qb.getSql())
     const [data, total] = await qb.getManyAndCount();
-
+    
     
     return { data, total };
 }

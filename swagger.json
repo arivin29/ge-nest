@@ -31,12 +31,22 @@
         },
         "responses": {
           "200": {
-            "description": "Login berhasil"
+            "description": "Login berhasil",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User belum aktiv / wajib ganti password"
           }
         },
         "summary": "Login user",
         "tags": [
-          "Auth"
+          "Auth Public"
         ]
       }
     },
@@ -56,12 +66,19 @@
         },
         "responses": {
           "200": {
-            "description": "Token berhasil diperbarui"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenOnlyResponseDto"
+                }
+              }
+            }
           }
         },
-        "summary": "Refresh access token",
+        "summary": "Refresh token",
         "tags": [
-          "Auth"
+          "Auth Public"
         ]
       }
     },
@@ -71,12 +88,19 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Token reset dikirim"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleMessageDto"
+                }
+              }
+            }
           }
         },
-        "summary": "Kirim email reset password",
+        "summary": "Lupa password",
         "tags": [
-          "Auth"
+          "Auth Public"
         ]
       }
     },
@@ -96,12 +120,19 @@
         },
         "responses": {
           "200": {
-            "description": "Password berhasil direset"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleMessageDto"
+                }
+              }
+            }
           }
         },
-        "summary": "Reset password user",
+        "summary": "Reset password",
         "tags": [
-          "Auth"
+          "Auth Public"
         ]
       }
     },
@@ -111,16 +142,23 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Berhasil logout"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleMessageDto"
+                }
+              }
+            }
           }
         },
         "summary": "Logout user",
         "tags": [
-          "Auth"
+          "Auth Public"
         ]
       }
     },
-    "/nonauth/users/users": {
+    "/auth/users/users": {
       "get": {
         "operationId": "UsersController_findAll",
         "parameters": [
@@ -276,7 +314,7 @@
         ]
       }
     },
-    "/nonauth/users/users/{id}": {
+    "/auth/users/users/{id}": {
       "get": {
         "operationId": "UsersController_findOne",
         "parameters": [
@@ -408,7 +446,7 @@
         ]
       }
     },
-    "/nonauth/user_tokens/user_tokens": {
+    "/auth/user_tokens/user_tokens": {
       "get": {
         "operationId": "UserTokensController_findAll",
         "parameters": [
@@ -564,7 +602,7 @@
         ]
       }
     },
-    "/nonauth/user_tokens/user_tokens/{id}": {
+    "/auth/user_tokens/user_tokens/{id}": {
       "get": {
         "operationId": "UserTokensController_findOne",
         "parameters": [
@@ -696,7 +734,51 @@
         ]
       }
     },
-    "/nonauth/client/client": {
+    "/auth/auth-protect/auth-protect/me": {
+      "get": {
+        "operationId": "AuthProtectedController_getMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get current user",
+        "tags": [
+          "Auth Protect"
+        ]
+      }
+    },
+    "/auth/auth-protect/auth-protect/logout": {
+      "post": {
+        "operationId": "AuthProtectedController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleMessageDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Logout user",
+        "tags": [
+          "Auth Protect"
+        ]
+      }
+    },
+    "/auth/client/client": {
       "get": {
         "operationId": "ClientController_findAll",
         "parameters": [
@@ -852,7 +934,7 @@
         ]
       }
     },
-    "/nonauth/client/client/{id}": {
+    "/auth/client/client/{id}": {
       "get": {
         "operationId": "ClientController_findOne",
         "parameters": [
@@ -984,7 +1066,7 @@
         ]
       }
     },
-    "/nonauth/client_site/client_site": {
+    "/auth/client_site/client_site": {
       "get": {
         "operationId": "ClientSiteController_findAll",
         "parameters": [
@@ -1140,7 +1222,7 @@
         ]
       }
     },
-    "/nonauth/client_site/client_site/{id}": {
+    "/auth/client_site/client_site/{id}": {
       "get": {
         "operationId": "ClientSiteController_findOne",
         "parameters": [
@@ -1272,7 +1354,7 @@
         ]
       }
     },
-    "/nonauth/company_config/company_config": {
+    "/auth/company_config/company_config": {
       "get": {
         "operationId": "CompanyConfigController_findAll",
         "parameters": [
@@ -1428,7 +1510,7 @@
         ]
       }
     },
-    "/nonauth/company_config/company_config/{id}": {
+    "/auth/company_config/company_config/{id}": {
       "get": {
         "operationId": "CompanyConfigController_findOne",
         "parameters": [
@@ -1560,7 +1642,7 @@
         ]
       }
     },
-    "/nonauth/contact_client_use/contact_client_use": {
+    "/auth/contact_client_use/contact_client_use": {
       "get": {
         "operationId": "ContactClientUseController_findAll",
         "parameters": [
@@ -1716,7 +1798,7 @@
         ]
       }
     },
-    "/nonauth/contact_client_use/contact_client_use/{id}": {
+    "/auth/contact_client_use/contact_client_use/{id}": {
       "get": {
         "operationId": "ContactClientUseController_findOne",
         "parameters": [
@@ -1848,7 +1930,7 @@
         ]
       }
     },
-    "/nonauth/contract/contract": {
+    "/auth/contract/contract": {
       "get": {
         "operationId": "ContractController_findAll",
         "parameters": [
@@ -2004,7 +2086,7 @@
         ]
       }
     },
-    "/nonauth/contract/contract/{id}": {
+    "/auth/contract/contract/{id}": {
       "get": {
         "operationId": "ContractController_findOne",
         "parameters": [
@@ -2136,114 +2218,10 @@
         ]
       }
     },
-    "/nonauth/contract/contract_report": {
-      "get": {
+    "/auth/contract/contract_report/list": {
+      "post": {
         "operationId": "ContractReportController_findAll",
-        "parameters": [
-          {
-            "name": "filter",
-            "required": false,
-            "in": "query",
-            "description": "JSON.stringify({})",
-            "schema": {
-              "additionalProperties": true,
-              "example": {
-                "id": {
-                  "in": [
-                    "id1",
-                    "id2"
-                  ]
-                },
-                "status": {
-                  "eq": "aktif"
-                },
-                "created_at": {
-                  "between": [
-                    "2024-01-01",
-                    "2024-12-31"
-                  ]
-                }
-              },
-              "type": "string"
-            }
-          },
-          {
-            "name": "joinWhere",
-            "required": false,
-            "in": "query",
-            "description": "Filter untuk relasi/join (JSON string)",
-            "schema": {
-              "example": "{\"contract\": {\"status_kontrak\": \"signed\"}}",
-              "type": "string"
-            }
-          },
-          {
-            "name": "search_field",
-            "required": false,
-            "in": "query",
-            "description": "Fields to search with search_keyword",
-            "schema": {
-              "example": [
-                "contract.nomor_kontrak",
-                "site.kota"
-              ],
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "search_keyword",
-            "required": false,
-            "in": "query",
-            "description": "Search keyword",
-            "schema": {
-              "example": "PT",
-              "type": "string"
-            }
-          },
-          {
-            "name": "sortKey",
-            "required": false,
-            "in": "query",
-            "description": "Sort by field",
-            "schema": {
-              "example": "contract.nomor_kontrak",
-              "type": "string"
-            }
-          },
-          {
-            "name": "sortValue",
-            "required": false,
-            "in": "query",
-            "description": "Sort direction (asc or desc)",
-            "schema": {
-              "example": "asc",
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageIndex",
-            "required": false,
-            "in": "query",
-            "description": "Pagination page index",
-            "schema": {
-              "example": 1,
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "required": false,
-            "in": "query",
-            "description": "Pagination limit per page",
-            "schema": {
-              "example": 20,
-              "type": "number"
-            }
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -2290,7 +2268,7 @@
         ]
       }
     },
-    "/nonauth/contract/contract_report/{id}": {
+    "/auth/contract/contract_report/{id}": {
       "get": {
         "operationId": "ContractReportController_findOne",
         "parameters": [
@@ -2332,7 +2310,114 @@
         ]
       }
     },
-    "/nonauth/contract_site/contract_site": {
+    "/auth/contract/contract_widget": {
+      "get": {
+        "operationId": "ContractWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter JSON",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere JSON",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Group by fields (JSON Array)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields (JSON Array)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ContractWidgetReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ContractWidgetReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contract_widget"
+        ]
+      }
+    },
+    "/auth/contract_site/contract_site": {
       "get": {
         "operationId": "ContractSiteController_findAll",
         "parameters": [
@@ -2488,7 +2573,7 @@
         ]
       }
     },
-    "/nonauth/contract_site/contract_site/{id}": {
+    "/auth/contract_site/contract_site/{id}": {
       "get": {
         "operationId": "ContractSiteController_findOne",
         "parameters": [
@@ -2620,7 +2705,99 @@
         ]
       }
     },
-    "/nonauth/contract_site/contract_site_widget": {
+    "/auth/contract_site/contract_site_report/list": {
+      "post": {
+        "operationId": "ContractSiteReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ContractSiteReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ContractSiteReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contract_site_report"
+        ]
+      }
+    },
+    "/auth/contract_site/contract_site_report/{id}": {
+      "get": {
+        "operationId": "ContractSiteReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ContractSiteReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ContractSiteReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contract_site_report"
+        ]
+      }
+    },
+    "/auth/contract_site/contract_site_widget": {
       "get": {
         "operationId": "ContractSiteWidgetController_findAll",
         "parameters": [
@@ -2727,203 +2904,7 @@
         ]
       }
     },
-    "/nonauth/contract_site/contract_site_report": {
-      "get": {
-        "operationId": "ContractSiteReportController_findAll",
-        "parameters": [
-          {
-            "name": "filter",
-            "required": false,
-            "in": "query",
-            "description": "Where filter (supports >, >=, <, <=, like, notLike,  in, notIn, isNull, isNotNull)",
-            "schema": {
-              "additionalProperties": true,
-              "example": {
-                "id": {
-                  "in": [
-                    "id1",
-                    "id2"
-                  ]
-                },
-                "status": {
-                  "eq": "aktif"
-                },
-                "created_at": {
-                  "between": [
-                    "2024-01-01",
-                    "2024-12-31"
-                  ]
-                }
-              },
-              "type": "object"
-            }
-          },
-          {
-            "name": "joinWhere",
-            "required": false,
-            "in": "query",
-            "description": "Filter untuk relasi/join (JSON string)",
-            "schema": {
-              "example": "{\"contract\": {\"status_kontrak\": \"signed\"}}",
-              "type": "string"
-            }
-          },
-          {
-            "name": "search_field",
-            "required": false,
-            "in": "query",
-            "description": "Fields to search with search_keyword",
-            "schema": {
-              "example": [
-                "contract.nomor_kontrak",
-                "site.kota"
-              ],
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "search_keyword",
-            "required": false,
-            "in": "query",
-            "description": "Search keyword",
-            "schema": {
-              "example": "PT",
-              "type": "string"
-            }
-          },
-          {
-            "name": "sortKey",
-            "required": false,
-            "in": "query",
-            "description": "Sort by field",
-            "schema": {
-              "example": "contract.nomor_kontrak",
-              "type": "string"
-            }
-          },
-          {
-            "name": "sortValue",
-            "required": false,
-            "in": "query",
-            "description": "Sort direction (asc or desc)",
-            "schema": {
-              "example": "asc",
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageIndex",
-            "required": false,
-            "in": "query",
-            "description": "Pagination page index",
-            "schema": {
-              "example": 1,
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "required": false,
-            "in": "query",
-            "description": "Pagination limit per page",
-            "schema": {
-              "example": 20,
-              "type": "number"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BaseQueryDtoSmart"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success response for list ContractSiteReportDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ContractSiteReportDto"
-                      }
-                    },
-                    "total": {
-                      "type": "number",
-                      "example": 123
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "contract_site_report"
-        ]
-      }
-    },
-    "/nonauth/contract_site/contract_site_report/{id}": {
-      "get": {
-        "operationId": "ContractSiteReportController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success response for get ContractSiteReportDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/ContractSiteReportDto"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "contract_site_report"
-        ]
-      }
-    },
-    "/nonauth/contract_site_service/contract_site_service": {
+    "/auth/contract_site_service/contract_site_service": {
       "get": {
         "operationId": "ContractSiteServiceController_findAll",
         "parameters": [
@@ -3079,7 +3060,7 @@
         ]
       }
     },
-    "/nonauth/contract_site_service/contract_site_service/{id}": {
+    "/auth/contract_site_service/contract_site_service/{id}": {
       "get": {
         "operationId": "ContractSiteServiceController_findOne",
         "parameters": [
@@ -3211,7 +3192,7 @@
         ]
       }
     },
-    "/nonauth/custom_field/custom_field": {
+    "/auth/custom_field/custom_field": {
       "get": {
         "operationId": "CustomFieldController_findAll",
         "parameters": [
@@ -3367,7 +3348,7 @@
         ]
       }
     },
-    "/nonauth/custom_field/custom_field/{id}": {
+    "/auth/custom_field/custom_field/{id}": {
       "get": {
         "operationId": "CustomFieldController_findOne",
         "parameters": [
@@ -3499,7 +3480,7 @@
         ]
       }
     },
-    "/nonauth/custom_field_value/custom_field_value": {
+    "/auth/custom_field_value/custom_field_value": {
       "get": {
         "operationId": "CustomFieldValueController_findAll",
         "parameters": [
@@ -3655,7 +3636,7 @@
         ]
       }
     },
-    "/nonauth/custom_field_value/custom_field_value/{id}": {
+    "/auth/custom_field_value/custom_field_value/{id}": {
       "get": {
         "operationId": "CustomFieldValueController_findOne",
         "parameters": [
@@ -3787,7 +3768,7 @@
         ]
       }
     },
-    "/nonauth/faktur/faktur": {
+    "/auth/faktur/faktur": {
       "get": {
         "operationId": "FakturController_findAll",
         "parameters": [
@@ -3943,7 +3924,7 @@
         ]
       }
     },
-    "/nonauth/faktur/faktur/{id}": {
+    "/auth/faktur/faktur/{id}": {
       "get": {
         "operationId": "FakturController_findOne",
         "parameters": [
@@ -4075,7 +4056,7 @@
         ]
       }
     },
-    "/nonauth/invoice/invoice": {
+    "/auth/invoice/invoice": {
       "get": {
         "operationId": "InvoiceController_findAll",
         "parameters": [
@@ -4231,7 +4212,7 @@
         ]
       }
     },
-    "/nonauth/invoice/invoice/{id}": {
+    "/auth/invoice/invoice/{id}": {
       "get": {
         "operationId": "InvoiceController_findOne",
         "parameters": [
@@ -4363,7 +4344,7 @@
         ]
       }
     },
-    "/nonauth/kantor/kantor": {
+    "/auth/kantor/kantor": {
       "get": {
         "operationId": "KantorController_findAll",
         "parameters": [
@@ -4519,7 +4500,7 @@
         ]
       }
     },
-    "/nonauth/kantor/kantor/{id}": {
+    "/auth/kantor/kantor/{id}": {
       "get": {
         "operationId": "KantorController_findOne",
         "parameters": [
@@ -4651,7 +4632,7 @@
         ]
       }
     },
-    "/nonauth/service/service": {
+    "/auth/service/service": {
       "get": {
         "operationId": "ServiceController_findAll",
         "parameters": [
@@ -4807,7 +4788,7 @@
         ]
       }
     },
-    "/nonauth/service/service/{id}": {
+    "/auth/service/service/{id}": {
       "get": {
         "operationId": "ServiceController_findOne",
         "parameters": [
@@ -4939,7 +4920,7 @@
         ]
       }
     },
-    "/nonauth/work_schedule/work_schedule": {
+    "/auth/work_schedule/work_schedule": {
       "get": {
         "operationId": "WorkScheduleController_findAll",
         "parameters": [
@@ -5095,7 +5076,7 @@
         ]
       }
     },
-    "/nonauth/work_schedule/work_schedule/{id}": {
+    "/auth/work_schedule/work_schedule/{id}": {
       "get": {
         "operationId": "WorkScheduleController_findOne",
         "parameters": [
@@ -5227,7 +5208,7 @@
         ]
       }
     },
-    "/nonauth/work_schedule_teknisi/work_schedule_teknisi": {
+    "/auth/work_schedule_teknisi/work_schedule_teknisi": {
       "get": {
         "operationId": "WorkScheduleTeknisiController_findAll",
         "parameters": [
@@ -5383,7 +5364,7 @@
         ]
       }
     },
-    "/nonauth/work_schedule_teknisi/work_schedule_teknisi/{id}": {
+    "/auth/work_schedule_teknisi/work_schedule_teknisi/{id}": {
       "get": {
         "operationId": "WorkScheduleTeknisiController_findOne",
         "parameters": [
@@ -5515,7 +5496,7 @@
         ]
       }
     },
-    "/nonauth/module/module": {
+    "/auth/module/module": {
       "get": {
         "operationId": "ModuleController_findAll",
         "parameters": [
@@ -5671,7 +5652,7 @@
         ]
       }
     },
-    "/nonauth/module/module/{id}": {
+    "/auth/module/module/{id}": {
       "get": {
         "operationId": "ModuleController_findOne",
         "parameters": [
@@ -5803,7 +5784,7 @@
         ]
       }
     },
-    "/nonauth/user_group_access/user_group_access": {
+    "/auth/user_group_access/user_group_access": {
       "get": {
         "operationId": "UserGroupAccessController_findAll",
         "parameters": [
@@ -5959,7 +5940,7 @@
         ]
       }
     },
-    "/nonauth/user_group_access/user_group_access/{id}": {
+    "/auth/user_group_access/user_group_access/{id}": {
       "get": {
         "operationId": "UserGroupAccessController_findOne",
         "parameters": [
@@ -6091,7 +6072,7 @@
         ]
       }
     },
-    "/nonauth/user_group/user_group": {
+    "/auth/user_group/user_group": {
       "get": {
         "operationId": "UserGroupController_findAll",
         "parameters": [
@@ -6247,7 +6228,7 @@
         ]
       }
     },
-    "/nonauth/user_group/user_group/{id}": {
+    "/auth/user_group/user_group/{id}": {
       "get": {
         "operationId": "UserGroupController_findOne",
         "parameters": [
@@ -6378,6 +6359,582 @@
           "user_group"
         ]
       }
+    },
+    "/auth/client_contact/client_contact": {
+      "get": {
+        "operationId": "ClientContactController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list ClientContactDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ClientContactDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "client_contact"
+        ]
+      },
+      "post": {
+        "operationId": "ClientContactController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientContactDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create ClientContactDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ClientContactDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "client_contact"
+        ]
+      }
+    },
+    "/auth/client_contact/client_contact/{id}": {
+      "get": {
+        "operationId": "ClientContactController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ClientContactDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ClientContactDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "client_contact"
+        ]
+      },
+      "put": {
+        "operationId": "ClientContactController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientContactDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put ClientContactDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ClientContactDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "client_contact"
+        ]
+      },
+      "delete": {
+        "operationId": "ClientContactController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete ClientContactDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ClientContactDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "client_contact"
+        ]
+      }
+    },
+    "/auth/contract_jenis/contract_jenis": {
+      "get": {
+        "operationId": "ContractJenisController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list ContractJenisDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ContractJenisDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contract_jenis"
+        ]
+      },
+      "post": {
+        "operationId": "ContractJenisController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractJenisDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create ContractJenisDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ContractJenisDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contract_jenis"
+        ]
+      }
+    },
+    "/auth/contract_jenis/contract_jenis/{id}": {
+      "get": {
+        "operationId": "ContractJenisController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ContractJenisDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ContractJenisDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contract_jenis"
+        ]
+      },
+      "put": {
+        "operationId": "ContractJenisController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractJenisDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put ContractJenisDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ContractJenisDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contract_jenis"
+        ]
+      },
+      "delete": {
+        "operationId": "ContractJenisController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete ContractJenisDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ContractJenisDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "contract_jenis"
+        ]
+      }
     }
   },
   "info": {
@@ -6412,9 +6969,58 @@
           "password"
         ]
       },
+      "Users": {
+        "type": "object",
+        "properties": {}
+      },
+      "AuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string"
+          },
+          "refresh_token": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/Users"
+          }
+        },
+        "required": [
+          "access_token",
+          "refresh_token",
+          "user"
+        ]
+      },
       "RefreshTokenDto": {
         "type": "object",
         "properties": {}
+      },
+      "TokenOnlyResponseDto": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string"
+          },
+          "refresh_token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "access_token",
+          "refresh_token"
+        ]
+      },
+      "SimpleMessageDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
       },
       "ResetPasswordDto": {
         "type": "object",
@@ -6484,6 +7090,33 @@
         },
         "required": [
           "id"
+        ]
+      },
+      "CurrentUserResponseDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/Users"
+          },
+          "role": {
+            "type": "object",
+            "example": {
+              "idRole": "admin",
+              "namaRole": "Administrator"
+            }
+          },
+          "pegawai": {
+            "type": "object",
+            "example": {
+              "idPegawai": "P001",
+              "nama": "Budi"
+            }
+          }
+        },
+        "required": [
+          "user",
+          "role",
+          "pegawai"
         ]
       },
       "ClientDto": {
@@ -6616,7 +7249,7 @@
       "CompanyConfigDto": {
         "type": "object",
         "properties": {
-          "idConfig": {
+          "idCompanyConfig": {
             "type": "string"
           },
           "versiErp": {
@@ -6647,16 +7280,16 @@
           }
         },
         "required": [
-          "idConfig"
+          "idCompanyConfig"
         ]
       },
       "ContactClientUseDto": {
         "type": "object",
         "properties": {
-          "idContactUse": {
+          "idContactClientUse": {
             "type": "string"
           },
-          "idContact": {
+          "idClientContact": {
             "type": "string"
           },
           "fromModule": {
@@ -6684,8 +7317,8 @@
           }
         },
         "required": [
-          "idContactUse",
-          "idContact",
+          "idContactClientUse",
+          "idClientContact",
           "fromModule",
           "fromModuleId"
         ]
@@ -6714,7 +7347,7 @@
           "durasiBulan": {
             "type": "number"
           },
-          "statusKontrak": {
+          "statusContract": {
             "type": "string"
           },
           "refKontrakSebelumnya": {
@@ -6756,6 +7389,12 @@
           },
           "updatedAt": {
             "format": "date-time",
+            "type": "string"
+          },
+          "idContractJenis": {
+            "type": "string"
+          },
+          "idKantor": {
             "type": "string"
           }
         },
@@ -6788,7 +7427,7 @@
           "durasiBulan": {
             "type": "number"
           },
-          "statusKontrak": {
+          "statusContract": {
             "type": "string"
           },
           "refKontrakSebelumnya": {
@@ -6830,6 +7469,12 @@
           },
           "updatedAt": {
             "format": "date-time",
+            "type": "string"
+          },
+          "idContractJenis": {
+            "type": "string"
+          },
+          "idKantor": {
             "type": "string"
           },
           "client": {
@@ -6867,10 +7512,44 @@
             },
             "additionalProperties": true
           },
+          "include": {
+            "type": "array",
+            "description": "Nama tabel beserta tipenya single atau array",
+            "example": [
+              {
+                "name": "contract",
+                "type": "single",
+                "select": [
+                  "idContract",
+                  "idClient",
+                  "nomorKontrak",
+                  "statusKontrak"
+                ]
+              },
+              {
+                "name": "client",
+                "parent": "contract",
+                "type": "single"
+              },
+              {
+                "name": "work_schedule",
+                "type": "array"
+              }
+            ],
+            "additionalProperties": true
+          },
           "joinWhere": {
-            "type": "string",
-            "description": "Filter untuk relasi/join (JSON string)",
-            "example": "{\"contract\": {\"status_kontrak\": \"signed\"}}"
+            "type": "object",
+            "description": "Filter untuk relasi/join",
+            "example": {
+              "contract": {
+                "status_kontrak": "aktif"
+              },
+              "client_site": {
+                "kota": "Jakarta"
+              }
+            },
+            "additionalProperties": true
           },
           "search_field": {
             "description": "Fields to search with search_keyword",
@@ -6907,6 +7586,120 @@
             "type": "number",
             "description": "Pagination limit per page",
             "example": 20
+          }
+        }
+      },
+      "ContractWidgetReportDto": {
+        "type": "object",
+        "properties": {
+          "idContract": {
+            "type": "string"
+          },
+          "idClient": {
+            "type": "string"
+          },
+          "nomorKontrak": {
+            "type": "string"
+          },
+          "tanggalKontrak": {
+            "type": "string"
+          },
+          "tanggalMulai": {
+            "type": "string"
+          },
+          "tanggalAkhir": {
+            "type": "string"
+          },
+          "durasiBulan": {
+            "type": "number"
+          },
+          "statusContract": {
+            "type": "string"
+          },
+          "refKontrakSebelumnya": {
+            "type": "string"
+          },
+          "namaSales": {
+            "type": "string"
+          },
+          "feeSales": {
+            "type": "number"
+          },
+          "presentaseFee": {
+            "type": "number"
+          },
+          "nilaiKontrak": {
+            "type": "number"
+          },
+          "nilaiDiawal": {
+            "type": "number"
+          },
+          "nilaiBulanan": {
+            "type": "number"
+          },
+          "nilaiAkhir": {
+            "type": "number"
+          },
+          "isAutoInvoice": {
+            "type": "boolean"
+          },
+          "catatanKontrak": {
+            "type": "string"
+          },
+          "dokumenUrl": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "idContractJenis": {
+            "type": "string"
+          },
+          "idKantor": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idContract",
+          "idClient"
+        ]
+      },
+      "BaseWidgetQueryDto": {
+        "type": "object",
+        "properties": {
+          "filter": {
+            "type": "string",
+            "description": "Filter JSON"
+          },
+          "joinWhere": {
+            "type": "string",
+            "description": "JoinWhere JSON"
+          },
+          "groupBy": {
+            "type": "string",
+            "description": "Group by fields (JSON Array)"
+          },
+          "select": {
+            "type": "string",
+            "description": "Select fields (JSON Array)"
+          },
+          "sortKey": {
+            "type": "string"
+          },
+          "sortValue": {
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
           }
         }
       },
@@ -6954,85 +7747,6 @@
           "idContract",
           "idClientSite"
         ]
-      },
-      "ContractSiteWidgetReportDto": {
-        "type": "object",
-        "properties": {
-          "idContractSite": {
-            "type": "string"
-          },
-          "idContract": {
-            "type": "string"
-          },
-          "idClientSite": {
-            "type": "string"
-          },
-          "statusContractSite": {
-            "type": "string"
-          },
-          "biayaDiawal": {
-            "type": "number"
-          },
-          "biayaBulanan": {
-            "type": "number"
-          },
-          "biayaAkhir": {
-            "type": "number"
-          },
-          "jumlahJadwalPerBulan": {
-            "type": "number"
-          },
-          "catatan": {
-            "type": "string"
-          },
-          "createdAt": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "updatedAt": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "total": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "idContractSite",
-          "idContract",
-          "idClientSite"
-        ]
-      },
-      "BaseWidgetQueryDto": {
-        "type": "object",
-        "properties": {
-          "filter": {
-            "type": "string",
-            "description": "Filter JSON"
-          },
-          "joinWhere": {
-            "type": "string",
-            "description": "JoinWhere JSON"
-          },
-          "groupBy": {
-            "type": "string",
-            "description": "Group by fields (JSON Array)"
-          },
-          "select": {
-            "type": "string",
-            "description": "Select fields (JSON Array)"
-          },
-          "sortKey": {
-            "type": "string"
-          },
-          "sortValue": {
-            "type": "string",
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
-          }
-        }
       },
       "ContractSiteReportDto": {
         "type": "object",
@@ -7085,6 +7799,54 @@
           "idClientSite",
           "contract",
           "clientSite"
+        ]
+      },
+      "ContractSiteWidgetReportDto": {
+        "type": "object",
+        "properties": {
+          "idContractSite": {
+            "type": "string"
+          },
+          "idContract": {
+            "type": "string"
+          },
+          "idClientSite": {
+            "type": "string"
+          },
+          "statusContractSite": {
+            "type": "string"
+          },
+          "biayaDiawal": {
+            "type": "number"
+          },
+          "biayaBulanan": {
+            "type": "number"
+          },
+          "biayaAkhir": {
+            "type": "number"
+          },
+          "jumlahJadwalPerBulan": {
+            "type": "number"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idContractSite",
+          "idContract",
+          "idClientSite"
         ]
       },
       "ContractSiteServiceDto": {
@@ -7602,6 +8364,82 @@
           "idUserGroup",
           "namaGroup",
           "status"
+        ]
+      },
+      "ClientContactDto": {
+        "type": "object",
+        "properties": {
+          "idClientContact": {
+            "type": "string"
+          },
+          "idClient": {
+            "type": "string"
+          },
+          "namaContact": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telepon": {
+            "type": "string"
+          },
+          "jabatan": {
+            "type": "string"
+          },
+          "divisi": {
+            "type": "string"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "idClientContact",
+          "idClient"
+        ]
+      },
+      "ContractJenisDto": {
+        "type": "object",
+        "properties": {
+          "idContractJenis": {
+            "type": "string"
+          },
+          "contractJenis": {
+            "type": "string"
+          },
+          "statusContractJenis": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "idContractJenis",
+          "contractJenis"
         ]
       }
     }

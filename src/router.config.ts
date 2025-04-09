@@ -1,3 +1,5 @@
+import { ContractJenisModule } from './modules/contract_jenis/contract_jenis.module';
+import { ClientContactModule } from './modules/client_contact/client_contact.module';
 import { UserGroupModule } from './modules/user_group/user_group.module';
 import { UserGroupAccessModule } from './modules/user_group_access/user_group_access.module';
 import { ModuleModule } from './modules/module/module.module';
@@ -19,6 +21,7 @@ import { CompanyConfigModule } from './modules/company_config/company_config.mod
 import { ClientSiteModule } from './modules/client_site/client_site.module';
 import { ClientModule } from './modules/client/client.module';
 import { AuthModule } from './auth/auth.module';
+import { AuthProtectedModule } from './auth/auth-protected.module';
 export const routerConfig = [
     {
         path: 'nonauth',
@@ -26,6 +29,16 @@ export const routerConfig = [
             {
                 path: 'auth', // base route
                 module: AuthModule,
+            },
+
+        ]
+    },
+    {
+        path: 'auth',
+        children: [
+            {
+                path: 'auth-protect', // base route
+                module: AuthProtectedModule,
             },
             { path: 'client', module: ClientModule },
             { path: 'client_site', module: ClientSiteModule },
@@ -44,14 +57,11 @@ export const routerConfig = [
             { path: 'work_schedule_teknisi', module: WorkScheduleTeknisiModule },
             { path: 'users', module: UsersModule },
             { path: 'user_tokens', module: UserTokensModule },
-      { path: 'module', module: ModuleModule },
-      { path: 'user_group_access', module: UserGroupAccessModule },
-      { path: 'user_group', module: UserGroupModule }]
-    },
-    {
-        path: 'auth',
-        children: [
-
+            { path: 'module', module: ModuleModule },
+            { path: 'user_group_access', module: UserGroupAccessModule },
+            { path: 'user_group', module: UserGroupModule },
+            { path: 'client_contact', module: ClientContactModule },
+            { path: 'contract_jenis', module: ContractJenisModule }
         ],
     },
 ];

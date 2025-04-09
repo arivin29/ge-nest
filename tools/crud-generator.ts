@@ -202,7 +202,7 @@ async function main() {
         const dbFile = fs.readFileSync(DATABASE_PROVIDER_PATH, 'utf-8');
 
         const importLine = `import { ${className} } from '../modules/${moduleName}/entities/${moduleName}.entity';`;
-        const insertToEntt = `${className},`;
+        const insertToEntt = `${className}`;
 
         if (!dbFile.includes(importLine)) {
             const updated = dbFile

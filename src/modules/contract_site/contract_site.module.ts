@@ -8,8 +8,8 @@ import { ContractSite } from './entities/contract_site.entity';
 import { ContractSiteReportController } from './contract_site_report.controller';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ContractSite])],
-    controllers: [ContractSiteController, ContractSiteWidgetController, ContractSiteReportController],
-    providers: [ContractSiteService, ContractSiteWidgetService],
+  imports: [TypeOrmModule.forFeature([ContractSite])],
+  controllers: [ContractSiteController, ContractSiteReportController, ContractSiteWidgetController],
+  providers: [ContractSiteService, ContractSiteWidgetService],
 })
-export class ContractSiteModule { }
+export class ContractSiteModule {}

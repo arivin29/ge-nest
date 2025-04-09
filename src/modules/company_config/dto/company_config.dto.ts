@@ -4,7 +4,7 @@ import { IsOptional } from "class-validator";
 export class CompanyConfigDto {
   @ApiProperty({ required: true })
   
-  idConfig: string;
+  idCompanyConfig: string;
   @ApiProperty({ required: false })
   @IsOptional()
   versiErp: string;

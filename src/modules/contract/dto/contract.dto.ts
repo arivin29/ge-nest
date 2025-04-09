@@ -25,7 +25,7 @@ export class ContractDto {
   durasiBulan: number;
   @ApiProperty({ required: false })
   @IsOptional()
-  statusKontrak: string;
+  statusContract: string;
   @ApiProperty({ required: false })
   @IsOptional()
   refKontrakSebelumnya: string;
@@ -65,4 +65,10 @@ export class ContractDto {
   @ApiProperty({ required: false })
   @IsOptional()
   updatedAt: Date;
+  @ApiProperty({ required: false })
+  @IsOptional()
+  idContractJenis: string;
+  @ApiProperty({ required: false })
+  @IsOptional()
+  idKantor: string;
 }

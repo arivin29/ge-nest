@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Contract } from './entities/contract.entity';
 import { BaseService } from 'src/common/base/base.service';
 import { smartQueryEngineJoinMode,SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
+import { ContractDto } from './dto/contract.dto';
 
 @Injectable()
 export class ContractService extends BaseService<Contract> {
@@ -16,6 +17,6 @@ export class ContractService extends BaseService<Contract> {
 
 
     async findAllSmart(query: SmartQueryInput) {
-        return smartQueryEngineJoinMode(this.repo, 'e', query);
+        return smartQueryEngineJoinMode(this.repo, 'e', query,ContractDto);
     }
 }

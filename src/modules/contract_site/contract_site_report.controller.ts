@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ContractSiteService } from '../contract_site/contract_site.service';
 import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
@@ -15,36 +15,23 @@ import { ContractSiteReportDto } from '../contract_site/dto/contract_site_report
 export class ContractSiteReportController {
     constructor(private readonly service: ContractSiteService) { }
 
-    @Get()
+    @Post('list')
     @ApiResponseEntity(ContractSiteReportDto, 'list') 
-    async findAll(
-        @Query() query: BaseQueryDtoSmart,
+    async findAll( 
         @Body() body: BaseQueryDtoSmart
     ) {
-        type InputUnion = BaseQueryDtoSmart | SmartQueryInput;
-
-        const isQueryMode = query.filter !== undefined || query.joinWhere !== undefined || query.search_keyword !== undefined;
-
-        const source: InputUnion = isQueryMode ? query : body;
-
         const isString = (val: any) => typeof val === 'string';
-
+        const source = body;
+  
         const parsed: SmartQueryInput = {
-            where: isString((source as any).filter)
-                ? JSON.parse((source as any).filter)
-                : (source as any).where ?? (source as any).filter ?? {},
-
-            joinWhere: isString((source as any).joinWhere)
-                ? JSON.parse((source as any).joinWhere)
-                : (source as any).joinWhere ?? {},
-
+            where: source.filter ?? {},
+            joinWhere: (source as any).joinWhere ?? {},
             fsearch: (source as any).search_keyword
                 ? {
                     keyword: (source as any).search_keyword,
                     fields: (source as any).search_field ?? [],
                 }
                 : (source as any).fsearch,
-
             order: (source as any).sortKey
                 ? {
                     by: (source as any).sortKey,
@@ -58,7 +45,6 @@ export class ContractSiteReportController {
             },
             include: (source as any).include ?? [
                                                 { name: 'contract', type: 'single' },
-                                                { name: 'site', type: 'single' },
                                                 { name: 'client_site', type: 'single' },
                                 ],   // mohon di isi dengan default dari id_xxx
         };
@@ -87,7 +73,6 @@ export class ContractSiteReportController {
             // Include semua relasi (bisa dari default config atau didefinisikan di controller)
             const allIncludes: SmartQueryInput['include'] = [
                                                 { name: 'contract', type: 'single' },
-                                                { name: 'site', type: 'single' },
                                                 { name: 'client_site', type: 'single' },
                                 ];
 
