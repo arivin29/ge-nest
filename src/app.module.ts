@@ -33,30 +33,29 @@ import { ModuleModule } from './modules/module/module.module';
 import { UserGroupAccessModule } from './modules/user_group_access/user_group_access.module';
 import { UserGroupModule } from './modules/user_group/user_group.module';
 import { ClientContactModule } from './modules/client_contact/client_contact.module';
-import { ContractJenisModule } from './modules/contract_jenis/contract_jenis.module';
 import { AuthProtectedModule } from './auth/auth-protected.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
+import { ContractJenisModule } from './modules/contract_jenis/contract_jenis.module';
 @Module({
-    imports: [
-        JwtModule.registerAsync({
-            useFactory: () => ({
-                secret: process.env.JWT_SECRET,
-                signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
-            }),
+    imports: [JwtModule.registerAsync({
+        useFactory: () => ({
+            secret: process.env.JWT_SECRET,
+            signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
         }),
+    }),
         AppConfigModule,
         PassportModule,
-        JwtModule.registerAsync({
-            inject: [ConfigService],
-            useFactory: (config: ConfigService) => ({
-                secret: config.get('JWT_SECRET'),
-                signOptions: { expiresIn: '6h' },
-            }),
+    JwtModule.registerAsync({
+        inject: [ConfigService],
+        useFactory: (config: ConfigService) => ({
+            secret: config.get('JWT_SECRET'),
+            signOptions: { expiresIn: '6h' },
         }),
-        ConfigModule.forRoot({ isGlobal: true }),
+    }),
+    ConfigModule.forRoot({ isGlobal: true }),
         CentralDatabaseModule,
-        RouterModule.register(routerConfig),
+    RouterModule.register(routerConfig),
         AuthModule, AuthProtectedModule,
         ClientModule, ClientSiteModule, CompanyConfigModule, ContactClientUseModule, ContractModule, ContractSiteModule, ContractSiteServiceModule,
         CustomFieldModule, CustomFieldValueModule, FakturModule, InvoiceModule, KantorModule, ServiceModule, WorkScheduleModule,

@@ -29,8 +29,7 @@ export const routerConfig = [
             {
                 path: 'auth', // base route
                 module: AuthModule,
-            },
-
+            }
         ]
     },
     {
@@ -61,6 +60,7 @@ export const routerConfig = [
             { path: 'user_group_access', module: UserGroupAccessModule },
             { path: 'user_group', module: UserGroupModule },
             { path: 'client_contact', module: ClientContactModule },
+
             { path: 'contract_jenis', module: ContractJenisModule }
         ],
     },
