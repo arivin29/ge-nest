@@ -2,17 +2,13 @@
 
 import { SelectQueryBuilder, Repository, ObjectLiteral } from 'typeorm';
 
-export interface SmartQueryInclude {
-    name: string;               // nama relasi (diambil dari FK: id_<name>)
-    type: 'single' | 'array';   // 'single' untuk one-to-one, 'array' untuk one-to-many
-    parent?: string;                // jika relasi indirect (misalnya client ke contract)
-    select?: string[];          // optional: ambil field tertentu saja
-}
 
 export interface SmartQueryInclude {
     name: string; // nama table/module
     type: 'single' | 'array';
     to?: string; // optional: relasi ke parent (default: base alias)
+    parent?: string; // optional: relasi ke parent (default: base alias)
+    select?: string[]; // optional: relasi ke parent (default: base alias)
 }
 
 export interface SmartQueryInput {
@@ -59,7 +55,7 @@ export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
     const qb = repo.createQueryBuilder(alias);
     // Ganti default select dengan field eksplisit
     applyDefaultSelect(qb, dtoClass, alias);
-    
+
     const {
         where = {},
         joinWhere = {},
@@ -157,9 +153,9 @@ export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
 
     // ORDER
 
-    
 
-    
+
+
     if (order?.by && order?.direction) {
         const parts = order.by.split('.').map(part => normalizeKey(part));
         const isBaseField = parts.length === 1;
@@ -171,38 +167,35 @@ export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
         console.log('joinAttributes', qb.expressionMap.joinAttributes.length);
 
         if (isBaseField) {
-            if (qb.expressionMap.joinAttributes.length > 0)
-            {  
-                const aliasName = `${alias}_${order.by}`; 
+            if (qb.expressionMap.joinAttributes.length > 0) {
+                const aliasName = `${alias}_${order.by}`;
 
                 qb.addSelect(`${alias}.${order.by}`, `${aliasName}xxx`);
                 qb.orderBy(`${aliasName}xxx`, order.direction.toUpperCase() as 'ASC' | 'DESC');
-            }else
-            {
+            } else {
                 qb.orderBy(`${alias}.${order.by}`, order.direction.toUpperCase() as 'ASC' | 'DESC');
             }
-            
+
         } else if (isJoinAlias) {
             const [joinAlias, joinField] = parts;
 
             // ⛔️ Cek apakah sudah di-join
             const joinedAliases = qb.expressionMap.joinAttributes.map(j => j.alias.name);
- 
+
             if (!joinedAliases.includes(joinAlias)) {
                 console.warn(`[SKIPPED] ORDER BY ${order.by} → alias '${joinAlias}' belum di-join.`);
-                
+
                 const aliasName = `${joinAlias}_${joinField}`;
                 qb.addSelect(`${joinAlias}.${joinField}`, `${aliasName}xxx`);
                 qb.orderBy(`${aliasName}xxx`, order.direction.toUpperCase() as 'ASC' | 'DESC');
             }
-            else
-            {
+            else {
                 const aliasName = `${joinAlias}_${joinField}`;
                 qb.addSelect(`${joinAlias}.${joinField}`, aliasName);
                 qb.orderBy(aliasName, order.direction.toUpperCase() as 'ASC' | 'DESC');
             }
 
-            
+
         } else {
             console.warn(`[SKIPPED] ORDER BY ${order.by} → tidak valid karena format.`);
         }
@@ -233,17 +226,149 @@ export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
     //         console.warn(`[SKIPPED] order.by = ${order.by} not allowed (invalid format)`);
     //     }
     // }
-    
+
 
 
     // PAGINATION
     if (pagination?.page && pagination?.limit) {
         const skip = (pagination.page - 1) * pagination.limit;
         qb.skip(skip).take(pagination.limit);
-    } 
+    }
     // console.log('SQL =>', qb.getSql())
     const [data, total] = await qb.getManyAndCount();
-    
-    
+
+
     return { data, total };
+}
+
+
+export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
+    repo: Repository<T>,
+    alias: string,
+    query: SmartQueryInput,
+    dtoClass?: new () => T
+): Promise<{ data: T[]; total: number }> {
+    const metadata = repo.metadata;
+    const schema = metadata.schema;
+    const table = metadata.tableName;
+    const mainTable = schema ? `${schema}.${table}` : table;
+
+    const {
+        where = {},
+        joinWhere = {},
+        fsearch,
+        order,
+        pagination = { page: 1, limit: 20 },
+    } = query;
+
+    const selectFields = dtoClass
+        ? Object.keys(new dtoClass()).map(field => {
+            const dbField = camelToSnake(field);
+            return `${alias}.${dbField} AS ${alias}_${dbField}`;
+        })
+        : [`${alias}.*`];
+
+    const joins: string[] = [];
+    const whereClauses: string[] = [];
+    const params: Record<string, any> = {};
+
+    // JOINs
+    Object.entries(joinWhere).forEach(([joinName, filters]) => {
+        const joinAlias = joinName;
+        const joinKey = `id_${joinName}`;
+        joins.push(`INNER JOIN ${joinName} ${joinAlias} ON ${joinAlias}.${joinKey} = ${alias}.${joinKey}`);
+
+        if (filters && Object.keys(filters).length > 0) {
+            Object.entries(filters).forEach(([field, value]) => {
+                const paramKey = `${joinAlias}_${field}`;
+                whereClauses.push(`${joinAlias}.${field} = :${paramKey}`);
+                params[paramKey] = value;
+            });
+        } else {
+            whereClauses.push(`${joinAlias}.${joinKey} IS NOT NULL`);
+        }
+    });
+
+    // WHEREs
+    Object.entries(where).forEach(([field, value]) => {
+        const paramKey = `${alias}_${field}`;
+        if (typeof value !== 'object' || value === null) {
+            whereClauses.push(`${alias}.${field} = :${paramKey}`);
+            params[paramKey] = value;
+        } else {
+            Object.entries(value).forEach(([op, val]) => {
+                const key = `${paramKey}_${op}`;
+                switch (op) {
+                    case 'eq': whereClauses.push(`${alias}.${field} = :${key}`); params[key] = val; break;
+                    case 'ne': whereClauses.push(`${alias}.${field} != :${key}`); params[key] = val; break;
+                    case 'gt': whereClauses.push(`${alias}.${field} > :${key}`); params[key] = val; break;
+                    case 'gte': whereClauses.push(`${alias}.${field} >= :${key}`); params[key] = val; break;
+                    case 'lt': whereClauses.push(`${alias}.${field} < :${key}`); params[key] = val; break;
+                    case 'lte': whereClauses.push(`${alias}.${field} <= :${key}`); params[key] = val; break;
+                    case 'like': whereClauses.push(`${alias}.${field} LIKE :${key}`); params[key] = `%${val}%`; break;
+                    case 'in': whereClauses.push(`${alias}.${field} IN (:...${key})`); params[key] = val; break;
+                }
+            });
+        }
+    });
+
+    // Fuzzy search
+    if (fsearch?.keyword && fsearch.fields?.length > 0) {
+        const fuzzy = fsearch.fields.map((field, i) => `${alias}.${field} LIKE :fuzzy_${i}`);
+        fsearch.fields.forEach((_, i) => {
+            params[`fuzzy_${i}`] = `%${fsearch.keyword}%`;
+        });
+        whereClauses.push(`(${fuzzy.join(' OR ')})`);
+    }
+
+    // ORDER BY
+    let orderByClause = '';
+    if (order?.by) {
+        const dir = (order.direction || 'ASC').toUpperCase();
+        const [tbl, fld] = order.by.includes('.') ? order.by.split('.') : [alias, order.by];
+        orderByClause = `ORDER BY ${tbl}.${fld} ${dir}`;
+    }
+
+    // PAGINATION
+    const limit = pagination.limit ?? 20;
+    const offset = (pagination.page - 1) * limit;
+
+    const sql = `
+    SELECT ${selectFields.join(', ')}
+    FROM ${mainTable} ${alias}
+    ${joins.join('\n')}
+    ${whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : ''}
+    ${orderByClause}
+    LIMIT ${limit} OFFSET ${offset}
+  `;
+    console.log('sql ', sql)
+
+    const [finalSql, sqlParams] = convertNamedParamsToArray(sql, params);
+    const data = await repo.manager.query(finalSql, sqlParams);
+
+    const countSql = `
+    SELECT COUNT(*) as total
+    FROM ${mainTable} ${alias}
+    ${joins.join('\n')}
+    ${whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : ''}
+  `;
+
+    const [finalCountSql, countParams] = convertNamedParamsToArray(countSql, params);
+    const countResult = await repo.manager.query(finalCountSql, countParams);
+    const total = Number(countResult[0]?.total ?? 0);
+
+    return { data, total };
+}
+
+function camelToSnake(str: string): string {
+    return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+}
+function convertNamedParamsToArray(sql: string, params: Record<string, any>): [string, any[]] {
+    const regex = /:(\w+)/g;
+    const values: any[] = [];
+    const replaced = sql.replace(regex, (_, key) => {
+        values.push(params[key]);
+        return '?';
+    });
+    return [replaced, values];
 }

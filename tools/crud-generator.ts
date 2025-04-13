@@ -47,42 +47,10 @@ async function generateEntityFromTable(table: string, className: string, moduleN
     fs.writeFileSync(path.join(entityFolder, `${moduleName}.entity.ts`), entityContent);
     console.log(`✅ Entity generated for '${table}' as '${moduleName}.entity.ts'`);
 
-    const entityTargetPath = path.join(entityFolder, `${moduleName}.entity.ts`);
-    await generateDtoFromEntity(entityTargetPath, className, moduleName);
+     
 }
 
-async function generateDtoFromEntity(entityPath: string, className: string, moduleName: string) {
-    const raw = fs.readFileSync(entityPath, 'utf-8');
-    const dtoFolder = path.join(MODULES_PATH, moduleName, 'dto');
-    fs.mkdirSync(dtoFolder, { recursive: true });
-
-    const propRegex = /@Column\((?:.|\n)*?\)\s*(public\s+)?(\w+):\s*([\w\[\]\s\|]+);/gm;
-    const properties: { name: string; type: string; optional: boolean }[] = [];
-
-    let match;
-    while ((match = propRegex.exec(raw)) !== null) {
-        const [, , name, typeRaw] = match;
-
-        const isOptional =
-            typeRaw.includes('null') ||
-            name.toLowerCase().includes('created') ||
-            name.toLowerCase().includes('updated');
-
-        const typeClean = typeRaw.replace(/\s*\|\s*null/g, '').trim();
-        const type = typeClean.includes('Date') ? 'Date' : typeClean;
-
-        properties.push({ name, type, optional: isOptional });
-    }
-
-    const dtoContent = await ejs.renderFile(path.join(TEMPLATES_PATH, 'dto.ejs'), {
-        className,
-        properties,
-    });
-
-    const fileName = `${moduleName.replace(/[-\s]/g, '_')}.dto.ts`;
-    fs.writeFileSync(path.join(dtoFolder, fileName), dtoContent);
-    console.log(`📦 DTO generated: ${fileName}`);
-}
+ 
 
 async function main() {
     const args = process.argv.slice(2);

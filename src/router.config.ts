@@ -29,7 +29,8 @@ export const routerConfig = [
             {
                 path: 'auth', // base route
                 module: AuthModule,
-            }
+            },
+            { path: 'contract', module: ContractModule },
         ]
     },
     {
@@ -38,30 +39,7 @@ export const routerConfig = [
             {
                 path: 'auth-protect', // base route
                 module: AuthProtectedModule,
-            },
-            { path: 'client', module: ClientModule },
-            { path: 'client_site', module: ClientSiteModule },
-            { path: 'company_config', module: CompanyConfigModule },
-            { path: 'contact_client_use', module: ContactClientUseModule },
-            { path: 'contract', module: ContractModule },
-            { path: 'contract_site', module: ContractSiteModule },
-            { path: 'contract_site_service', module: ContractSiteServiceModule },
-            { path: 'custom_field', module: CustomFieldModule },
-            { path: 'custom_field_value', module: CustomFieldValueModule },
-            { path: 'faktur', module: FakturModule },
-            { path: 'invoice', module: InvoiceModule },
-            { path: 'kantor', module: KantorModule },
-            { path: 'service', module: ServiceModule },
-            { path: 'work_schedule', module: WorkScheduleModule },
-            { path: 'work_schedule_teknisi', module: WorkScheduleTeknisiModule },
-            { path: 'users', module: UsersModule },
-            { path: 'user_tokens', module: UserTokensModule },
-            { path: 'module', module: ModuleModule },
-            { path: 'user_group_access', module: UserGroupAccessModule },
-            { path: 'user_group', module: UserGroupModule },
-            { path: 'client_contact', module: ClientContactModule },
-
-            { path: 'contract_jenis', module: ContractJenisModule }
+            }, 
         ],
     },
 ];

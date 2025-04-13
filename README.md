@@ -1,15 +1,4 @@
-ts-node tools/crud-generator.ts \
-  --fromTable=contract \
-  --nama=kontrak \
-  --router=auth \
-  --mode=default
-
-npm run crud -- \
-  --fromTable=client_site \
-  --nama=client_site \
-  --db=erp_pelanggan \
-  --router=nonauth \
-  --mode=default
+npx ts-node tools/generate-dto.ts --db=erp_pelanggan --all-tables --with-entity
 
 
 # Stop app

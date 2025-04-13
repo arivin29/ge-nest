@@ -1930,7 +1930,7 @@
         ]
       }
     },
-    "/auth/contract/contract": {
+    "/nonauth/contract/contract": {
       "get": {
         "operationId": "ContractController_findAll",
         "parameters": [
@@ -2086,7 +2086,7 @@
         ]
       }
     },
-    "/auth/contract/contract/{id}": {
+    "/nonauth/contract/contract/{id}": {
       "get": {
         "operationId": "ContractController_findOne",
         "parameters": [
@@ -2218,7 +2218,7 @@
         ]
       }
     },
-    "/auth/contract/contract_report/list": {
+    "/nonauth/contract/contract_report/list": {
       "post": {
         "operationId": "ContractReportController_findAll",
         "parameters": [],
@@ -2268,7 +2268,7 @@
         ]
       }
     },
-    "/auth/contract/contract_report/{id}": {
+    "/nonauth/contract/contract_report/{id}": {
       "get": {
         "operationId": "ContractReportController_findOne",
         "parameters": [
@@ -2310,7 +2310,7 @@
         ]
       }
     },
-    "/auth/contract/contract_widget": {
+    "/nonauth/contract/contract_widget": {
       "get": {
         "operationId": "ContractWidgetController_findAll",
         "parameters": [
