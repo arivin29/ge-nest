@@ -1,16 +1,15 @@
 import { Injectable, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { Request } from 'express';
 import * as bcrypt from 'bcrypt';
-import { LoginDto } from './dto/login.dto';
-import { Users } from 'src/modules/users/entities/users.entity';
+import { LoginDto } from './dto/login.dto'; 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
-import { UserTokens } from 'src/modules/user_tokens/entities/user_tokens.entity';
+import { ResetPasswordDto } from './dto/reset-password.dto'; 
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuidv4 } from 'uuid';
+import { AclUsers, AclUserTokens } from 'src/entities/acl';
 
 
 @Injectable()
@@ -18,10 +17,10 @@ export class AuthService {
     constructor(
         private jwtService: JwtService,
         private config: ConfigService,
-        @InjectRepository(Users)
-        private userRepository: Repository<Users>,
-        @InjectRepository(UserTokens)
-        private readonly userTokenRepo: Repository<UserTokens>,
+        @InjectRepository(AclUsers)
+        private userRepository: Repository<AclUsers>,
+        @InjectRepository(AclUserTokens)
+        private readonly userTokenRepo: Repository<AclUserTokens>,
     ) { }
 
     async login(dto: LoginDto, req: Request) {
@@ -74,7 +73,7 @@ export class AuthService {
     }
 
 
-    private generateTokens(user: Users) {
+    private generateTokens(user: AclUsers) {
         const payload = { sub: user.idUsers, email: user.email };
         return {
             accessToken: this.jwtService.sign(payload),

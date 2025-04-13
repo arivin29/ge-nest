@@ -8,15 +8,14 @@ import {
     Delete,
     Query,
 } from '@nestjs/common';
-import { <%= className %>Service } from './<%= moduleName %>.service';
-import { <%= className %> } from './entities/<%= moduleName %>.entity';
+import { <%= className %>Service } from './<%= moduleName %>.service'; 
 import { BaseRequestPipe } from 'src/common/pipes/base-request.pipe';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper'; 
 import { ApiTags, ApiBody } from '@nestjs/swagger';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
 import { BaseQueryDto } from 'src/common/dto/base-query.dto';
 
-import { <%= className %>Dto } from './dto/<%= moduleName %>.dto'; 
+import { <%= entiryImport %>Dto } from '<%= dtoPath %>';; 
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
  
 @ApiTags('<%= moduleName %>')
@@ -25,7 +24,7 @@ export class <%= className %>Controller {
     constructor(private readonly service: <%= className %>Service) { }
 
     @Get()
-    @ApiResponseEntity(<%= className %>Dto, 'list')
+    @ApiResponseEntity(<%= entiryImport %>Dto, 'list')
     @AutoSwaggerQuery()
     async findAll(@Query() query: BaseQueryDto) {
         const parsed = {
@@ -47,7 +46,7 @@ export class <%= className %>Controller {
     }
 
     @Get(':id')
-    @ApiResponseEntity(<%= className %>Dto, 'get')
+    @ApiResponseEntity(<%= entiryImport %>Dto, 'get')
     async findOne(@Param('id') id: string) {
         try {
             const result = await this.service.findOne(id);
@@ -61,9 +60,9 @@ export class <%= className %>Controller {
     }
 
     @Post()
-    @ApiBody({ type: <%= className %>Dto }) 
-    @ApiResponseEntity(<%= className %>Dto, 'post')
-    async create(@Body() body: <%= className %>Dto) {
+    @ApiBody({ type: <%= entiryImport %>Dto }) 
+    @ApiResponseEntity(<%= entiryImport %>Dto, 'post')
+    async create(@Body() body: <%= entiryImport %>Dto) {
         try {
             const result = await this.service.create(body);
             return ApiResponseHelper.success(result, 'create');
@@ -73,9 +72,9 @@ export class <%= className %>Controller {
     }
 
     @Put(':id')
-    @ApiBody({ type: <%= className %>Dto })
-    @ApiResponseEntity(<%= className %>Dto, 'put')
-    async update(@Param('id') id: string, @Body() body: <%= className %>Dto) {
+    @ApiBody({ type: <%= entiryImport %>Dto })
+    @ApiResponseEntity(<%= entiryImport %>Dto, 'put')
+    async update(@Param('id') id: string, @Body() body: <%= entiryImport %>Dto) {
         try {
             const result = await this.service.update(id, body);
             return ApiResponseHelper.success(result, 'update');
@@ -85,7 +84,7 @@ export class <%= className %>Controller {
     }
 
     @Delete(':id')
-    @ApiResponseEntity(<%= className %>Dto, 'delete')
+    @ApiResponseEntity(<%= entiryImport %>Dto, 'delete')
     async remove(@Param('id') id: string) {
         try {
             const result = await this.service.remove(id);

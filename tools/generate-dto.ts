@@ -26,19 +26,49 @@ function snakeToPascal(str: string) {
 }
 function mapMysqlToTs(mysqlType: string): string {
     switch (mysqlType) {
-        case 'varchar': case 'text': case 'datetime': case 'date': case 'char':
+        case 'varchar':
+        case 'text':
+        case 'char':
+        case 'datetime':
+        case 'date':
+        case 'timestamp':
+        case 'time':
+        case 'enum':
+        case 'set':
             return 'string';
-        case 'int': case 'decimal': case 'float': case 'double': case 'bigint':
+
+        case 'int':
+        case 'smallint':
+        case 'mediumint':
+        case 'decimal':
+        case 'float':
+        case 'double':
+        case 'bigint':
             return 'number';
-        case 'tinyint': return 'boolean';
-        default: return 'any';
+
+        case 'tinyint':
+            return 'boolean';
+
+        case 'json':
+            return 'any'; // or object if you parse manually
+
+        case 'blob':
+        case 'binary':
+        case 'varbinary':
+            return 'Buffer';
+
+        default:
+            console.warn(`⚠️ Unrecognized MySQL type: "${mysqlType}", fallback to 'any'`);
+            return 'any';
     }
 }
+
 function pascalToSnake(str: string) {
     return str.replace(/[A-Z]/g, (letter, index) =>
         (index ? '_' : '') + letter.toLowerCase()
     );
 }
+
 
 (async () => {
     const conn = await mysql.createConnection({
@@ -73,12 +103,12 @@ function pascalToSnake(str: string) {
 
             const tablePascal = snakeToPascal(table);
             const dtoClassName = `${schemaPascal}${tablePascal}Dto`;
-            const entityClassName = tablePascal;
+            const entityClassName = `${schemaPascal}${tablePascal}`; 
 
             const dtoFilename = `${schemaAlias}.${table}.dto.ts`;
             const reportFilename = `${schemaAlias}.${table}-report.dto.ts`;
             const widgetFilename = `${schemaAlias}.${table}-widget.dto.ts`;
-            const entityFilename = `${table}.entity.ts`;
+            const entityFilename = `${schemaAlias}.${table}.entity.ts`;
 
             const fields = (cols as any[]).map(col => ({
                 name: snakeToCamel(col.COLUMN_NAME),
@@ -169,24 +199,27 @@ ${fields.map(f => {
                 !primaryKeys.includes(f.name) // ✅ exclude PK
             );
             const reportClassName = `${schemaPascal}${tablePascal}ReportDto`;
-            const reportImports = idRelasi.map(f => {
-                const relasi = f.name.replace(/^id/, '');
-                const pascalRelasi = snakeToPascal(relasi);
-                const snakeRelasi = pascalToSnake(pascalRelasi);
+            const reportImports = idRelasi
+                .map(f => {
+                    const relasi = f.name.replace(/^id/, '');
+                    const pascalRelasi = snakeToPascal(relasi);
+                    const snakeRelasi = pascalToSnake(pascalRelasi);
 
-                const targetTable = relasi.toLowerCase();
-                const targetSchema = tableToSchemaMap[targetTable] || schema;
-                const targetAlias = targetSchema.replace(/^erp_/, '');
-                const targetPascal = snakeToPascal(targetAlias);
+                    const targetTable = relasi.toLowerCase(); // ex: teknisi
+                    const targetSchema = tableToSchemaMap[targetTable] || schema;
+                    const targetAlias = targetSchema.replace(/^erp_/, '');
+                    const targetPascal = snakeToPascal(targetAlias);
 
-                return {
-                    name: `${targetPascal}${pascalRelasi}Dto`,
-                    path: targetAlias === schemaAlias
-                        ? `./${schemaAlias}.${snakeRelasi}.dto`
-                        : `../${targetAlias}/${targetAlias}.${snakeRelasi}.dto`,
-                    prop: relasi.charAt(0).toLowerCase() + relasi.slice(1),
-                };
-            });
+                    return {
+                        name: `${targetPascal}${pascalRelasi}Dto`,
+                        path: targetAlias === schemaAlias
+                            ? `./${targetAlias}.${snakeRelasi}.dto`
+                            : `../${targetAlias}/${targetAlias}.${snakeRelasi}.dto`,
+                        prop: relasi.charAt(0).toLowerCase() + relasi.slice(1),
+                        tableName: targetTable
+                    };
+                })
+                .filter(rel => tableNames.includes(rel.tableName));
 
 
             const reportContent = `import { ApiProperty } from '@nestjs/swagger';

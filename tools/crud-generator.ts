@@ -14,42 +14,7 @@ const ROUTER_CONFIG_PATH = path.resolve(__dirname, '../src/router.config.ts');
 
 const TEMP_ENTITY_OUTPUT = path.resolve(__dirname, './__generated__/entities');
 
-async function generateEntityFromTable(table: string, className: string, moduleName: string, dbName: string) {
-    const dbConfig = {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USERNAME,
-        pass: process.env.DB_PASSWORD,
-        db: dbName,
-    };
-
-    fs.mkdirSync(TEMP_ENTITY_OUTPUT, { recursive: true }); // ✅ Pastikan folder ada
-
-
-    // ✅ Hapus semua file sebelumnya agar tidak bentrok
-    fs.readdirSync(TEMP_ENTITY_OUTPUT).forEach((f) =>
-        fs.unlinkSync(path.join(TEMP_ENTITY_OUTPUT, f))
-    );
-
-    const command = `typeorm-model-generator -h ${dbConfig.host} -d ${dbConfig.db} -u ${dbConfig.user} -x ${dbConfig.pass} -e mysql --noConfig --cf pascal  -o ${TEMP_ENTITY_OUTPUT} --tables ${table}`;
-
-    console.log('🛠️  Generating entity from table:', table);
-    execSync(command, { stdio: 'inherit' });
-
-    const entityFile = fs.readdirSync(TEMP_ENTITY_OUTPUT).find(f => f.endsWith('.ts'));
-    const generatedFiles = fs.readdirSync(TEMP_ENTITY_OUTPUT);
-    console.log('📁 Generated files:', generatedFiles);
-
-    if (!entityFile) throw new Error('Entity not generated');
-
-    const entityContent = fs.readFileSync(path.join(TEMP_ENTITY_OUTPUT, entityFile), 'utf-8');
-    const entityFolder = path.join(MODULES_PATH, moduleName, 'entities');
-    fs.mkdirSync(entityFolder, { recursive: true });
-    fs.writeFileSync(path.join(entityFolder, `${moduleName}.entity.ts`), entityContent);
-    console.log(`✅ Entity generated for '${table}' as '${moduleName}.entity.ts'`);
-
-     
-}
-
+ 
  
 
 async function main() {
@@ -69,8 +34,7 @@ async function main() {
     const folderPath = path.join(MODULES_PATH, moduleName);
     if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
 
-    await generateEntityFromTable(fromTable, className, moduleName, dbName);
-
+ 
     const fileMap = [
         { name: 'service', file: `${moduleName}.service.ts`, tpl: 'service.ejs' },
         {
@@ -86,6 +50,13 @@ async function main() {
         { name: 'service spec', file: `${moduleName}.service.spec.ts`, tpl: 'service.spec.ejs' },
     ];
 
+    const schemaAlias = dbName.replace(/^erp_/, '');
+    const schemaPascal = pascalCase(schemaAlias);
+    const dtoImport = `${schemaPascal}${className}Dto`;
+    const entiryImport = `${schemaPascal}${className}`;
+    const dtoPath = `src/dto/${schemaAlias}/${schemaAlias}.${moduleName}.dto`;
+    const entityPath = `src/entities/${schemaAlias}`;
+
     for (const item of fileMap) {
         const outPath = path.join(folderPath, item.file);
         const tplPath = path.join(TEMPLATES_PATH, item.tpl);
@@ -94,6 +65,10 @@ async function main() {
             moduleName,
             className,
             kebabName: kebabCase(moduleName),
+            dtoImport,
+            entiryImport,
+            dtoPath,
+            entityPath,
         });
 
         fs.writeFileSync(outPath, content);

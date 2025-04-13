@@ -1,10 +1,10 @@
 // src/modules/auth/dto/current-user-response.dto.ts
-import { ApiProperty } from '@nestjs/swagger';
-import { Users } from 'src/modules/users/entities/users.entity';
+import { ApiProperty } from '@nestjs/swagger'; 
+import { AclUsers } from 'src/entities/acl';
 
 export class CurrentUserResponseDto {
-    @ApiProperty({ type: () => Users })
-    user: Users;
+    @ApiProperty({ type: () => AclUsers })
+    user: AclUsers;
 
     @ApiProperty({ example: { idRole: 'admin', namaRole: 'Administrator' } })
     role: any;

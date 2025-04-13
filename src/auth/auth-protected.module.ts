@@ -4,16 +4,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthProtectedController } from './auth-protected.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { Users } from 'src/modules/users/entities/users.entity';
+import { JwtAuthGuard } from './guards/jwt-auth.guard'; 
 import { ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
-import { UserTokensModule } from 'src/modules/user_tokens/user_tokens.module';
-import { UsersModule } from 'src/modules/users/users.module';
+import { JwtModule } from '@nestjs/jwt'; 
+import { AclModule, AclUsers } from 'src/entities/acl';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Users]),
+        TypeOrmModule.forFeature([AclUsers]),
         JwtModule.registerAsync({
             inject: [ConfigService],
             useFactory: (config: ConfigService) => ({
@@ -23,8 +21,7 @@ import { UsersModule } from 'src/modules/users/users.module';
                 },
             }),
         }),
-        UsersModule,
-        UserTokensModule
+        AclModule
     ],
     controllers: [AuthProtectedController],
     providers: [AuthService, JwtStrategy, JwtAuthGuard],

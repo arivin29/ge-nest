@@ -42,14 +42,14 @@ export class ToolsDataFlowDto {
   dataFlowStatus: number;
 
   @ApiProperty({ required: false })
-  createdAt: any;
+  createdAt: string;
 
   @ApiProperty({ required: false })
-  updatedAt: any;
+  updatedAt: string;
 
   @ApiProperty({ required: false })
   validasi: number;
 
   @ApiProperty({ required: false })
-  idUser: number;
+  idUsers: string;
 }

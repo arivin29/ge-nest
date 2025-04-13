@@ -3,10 +3,10 @@ import { IsOptional } from 'class-validator';
 
 export class PelangganWorkScheduleTeknisiDto {
   @ApiProperty({ required: true })
-  idScheduleTeknisi: string;
+  idWorkScheduleTeknisi: string;
 
   @ApiProperty({ required: true })
-  idSchedule: string;
+  idWorkSchedule: string;
 
   @ApiProperty({ required: true })
   idTeknisi: string;

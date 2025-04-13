@@ -7,18 +7,18 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthResponseDto } from './dto/auth-response.dto';
 import { SimpleMessageDto } from './dto/reset-response.dto';
-import { TokenOnlyResponseDto } from './dto/token-only-response.dto'; 
-import { Users } from 'src/modules/users/entities/users.entity';
+import { TokenOnlyResponseDto } from './dto/token-only-response.dto';  
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm'; 
+import { AclUsers } from 'src/entities/acl';
 
 @ApiTags('Auth Public')
 @Controller('auth')
 export class AuthController {
     constructor(
         private readonly authService: AuthService,
-        @InjectRepository(Users)
-        private userRepo: Repository<Users>,
+        @InjectRepository(AclUsers)
+        private userRepo: Repository<AclUsers>,
 
         // @InjectRepository(Role)
         // private roleRepo: Repository<Role>,

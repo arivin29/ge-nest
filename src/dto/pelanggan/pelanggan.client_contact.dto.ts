@@ -24,7 +24,7 @@ export class PelangganClientContactDto {
   divisi: string;
 
   @ApiProperty({ required: false })
-  jenisContact: any;
+  jenisContact: string;
 
   @ApiProperty({ required: false })
   isPrimary: boolean;

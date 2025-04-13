@@ -18,13 +18,13 @@ export class ToolsDataFlowLogDto {
   pesan: string;
 
   @ApiProperty({ required: false })
-  idUser: string;
+  idUsers: string;
 
   @ApiProperty({ required: false })
-  createdAt: any;
+  createdAt: string;
 
   @ApiProperty({ required: false })
-  updatedAt: any;
+  updatedAt: string;
 
   @ApiProperty({ required: false })
   forModuleId: string;

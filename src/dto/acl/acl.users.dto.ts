@@ -21,10 +21,10 @@ export class AclUsersDto {
   wajibResetPassword: boolean;
 
   @ApiProperty({ required: false })
-  lastLogin: any;
+  lastLogin: string;
 
   @ApiProperty({ required: false })
-  createdAt: any;
+  createdAt: string;
 
   @ApiProperty({ required: false })
   idUserGroup: string;

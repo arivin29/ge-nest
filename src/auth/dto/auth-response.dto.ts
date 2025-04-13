@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger'; 
-import { Users } from 'src/modules/users/entities/users.entity';
+import { ApiProperty } from '@nestjs/swagger';  
+import { AclUsers } from 'src/entities/acl';
 
 export class AuthResponseDto {
     @ApiProperty()
@@ -8,6 +8,6 @@ export class AuthResponseDto {
     @ApiProperty()
     refresh_token: string;
 
-    @ApiProperty({ type: () => Users })
-    user: Partial<Users>; // agar tidak expose password/hash
+    @ApiProperty({ type: () => AclUsers })
+    user: Partial<AclUsers>; // agar tidak expose password/hash
 }

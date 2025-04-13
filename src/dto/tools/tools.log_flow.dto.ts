@@ -15,14 +15,14 @@ export class ToolsLogFlowDto {
   actionFlow: string;
 
   @ApiProperty({ required: false })
-  idUser: number;
+  idUsers: string;
 
   @ApiProperty({ required: false })
   idPegawai: string;
 
   @ApiProperty({ required: false })
-  createdAt: any;
+  createdAt: string;
 
   @ApiProperty({ required: false })
-  updatedAt: any;
+  updatedAt: string;
 }

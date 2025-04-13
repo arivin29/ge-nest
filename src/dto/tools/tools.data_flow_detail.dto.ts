@@ -42,7 +42,7 @@ export class ToolsDataFlowDetailDto {
   keterangan: string;
 
   @ApiProperty({ required: false })
-  createdAt: any;
+  createdAt: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;

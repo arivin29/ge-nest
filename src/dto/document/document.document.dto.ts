@@ -45,5 +45,5 @@ export class DocumentDocumentDto {
   createdAt: string;
 
   @ApiProperty({ required: false })
-  updatedAt: any;
+  updatedAt: string;
 }

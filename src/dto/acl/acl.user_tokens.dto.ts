@@ -18,5 +18,5 @@ export class AclUserTokensDto {
   ipAddress: string;
 
   @ApiProperty({ required: false })
-  createdAt: any;
+  createdAt: string;
 }

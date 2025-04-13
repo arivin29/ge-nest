@@ -3,20 +3,20 @@ import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { User } from './user.decorator';
-import { Users } from 'src/modules/users/entities/users.entity';
+import { User } from './user.decorator'; 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CurrentUserResponseDto } from './dto/current-user-response.dto';
 import { SimpleMessageDto } from './dto/reset-response.dto';
+import { AclUsers } from 'src/entities/acl';
 
 @ApiTags('Auth Protect')
 @Controller('auth-protect')
 export class AuthProtectedController {
     constructor(
         private readonly authService: AuthService,
-        @InjectRepository(Users)
-        private userRepo: Repository<Users>,
+        @InjectRepository(AclUsers)
+        private userRepo: Repository<AclUsers>,
     ) { }
 
 

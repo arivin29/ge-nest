@@ -21,7 +21,8 @@
         "crud": "ts-node tools/crud-generator.ts",
         "crud-report": "ts-node tools/crud-generator-report.ts",
         "crud-report-widget": "ts-node tools/crud-generator-report-widget.ts",
-        "crud-model": "ts-node tools/dto-entity-generator.ts"
+        "crud-model": "ts-node tools/dto-entity-generator.ts",
+        "ge-dto-entity": "npx ts-node tools/generate-dto.ts --db=erp_pelanggan --all-tables --with-entity && npx ts-node tools/generate-entity-index.ts"
     },
     "dependencies": {
         "@nestjs/common": "^11.0.1",

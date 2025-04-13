@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { <%= className %> } from './entities/<%= moduleName %>.entity';
+import { <%= entiryImport %> } from '<%= entityPath %>';
 import { BaseService } from 'src/common/base/base.service';
 
 @Injectable()
-export class <%= className %>Service extends BaseService<<%= className %>> {
+export class <%= className %>Service extends BaseService<<%= entiryImport %>> {
   constructor(
-    @InjectRepository(<%= className %>)
-    repo: Repository<<%= className %>>,
+    @InjectRepository(<%= entiryImport %>)
+    repo: Repository<<%= entiryImport %>>,
   ) {
     super(repo);
   }

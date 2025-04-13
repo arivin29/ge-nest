@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { <%= className %>Service } from './<%= moduleName %>.service';
 import { <%= className %>Controller } from './<%= moduleName %>.controller';
-import { <%= className %> } from './entities/<%= moduleName %>.entity';
-
+import { <%= entiryImport %> } from '<%= entityPath %>';
+ 
 @Module({
-  imports: [TypeOrmModule.forFeature([<%= className %>])],
+  imports: [TypeOrmModule.forFeature([<%= entiryImport %>])],
   controllers: [<%= className %>Controller],
   providers: [<%= className %>Service],
 })

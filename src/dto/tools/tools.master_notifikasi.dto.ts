@@ -45,8 +45,8 @@ export class ToolsMasterNotifikasiDto {
   validasi: number;
 
   @ApiProperty({ required: false })
-  createdAt: any;
+  createdAt: string;
 
   @ApiProperty({ required: false })
-  updatedAt: any;
+  updatedAt: string;
 }

@@ -3,9 +3,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './strategies/jwt.strategy';
-import { UsersModule } from 'src/modules/users/users.module';
-import { UserTokensModule } from 'src/modules/user_tokens/user_tokens.module';
+import { JwtStrategy } from './strategies/jwt.strategy'; 
+import { AclModule } from 'src/entities/acl';
 
 @Module({
     imports: [
@@ -18,8 +17,7 @@ import { UserTokensModule } from 'src/modules/user_tokens/user_tokens.module';
                 },
             }),
         }),
-        UsersModule,
-        UserTokensModule
+        AclModule 
     ],
     controllers: [AuthController],
     providers: [AuthService, JwtStrategy],
