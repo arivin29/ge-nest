@@ -1,6 +1,8 @@
 import { EntityManager, In } from 'typeorm';
 import { SmartQueryInput } from './smart-query-engine-join-mode';
-
+import { dataSourceMap } from 'src/config/data-source-map';
+import { EntityDatabaseMap } from 'src/config/entity-database-map';
+import { pascalCase } from 'change-case';
 const toCamel = (s: string) => s.replace(/_([a-z])/g, (_, g) => g.toUpperCase());
 
 export async function applySmartInclude(
@@ -20,14 +22,35 @@ export async function applySmartInclude(
     for (const inc of include) {
         const relation = inc.name;
         const parent: string = inc.parent!;
-        const relationRepo = repoManager.getRepository(relation);
         const camel = toCamel(relation);
+        const pascal = pascalCase(relation); // 🔥 fix utama
 
+        // 🔍 Ambil database dari entity (support alias)
+        const foundEntry = Object.entries(EntityDatabaseMap).find(
+            ([entityName, meta]) => {
+                return entityName === pascal || meta.aliases?.includes(relation);
+            }
+        );
+       
+
+        if (!foundEntry) {
+            console.warn(`⚠️ Repo untuk '${relation}' tidak ditemukan di EntityDatabaseMap.`);
+            continue;
+        }
+
+        const [entityName, meta] = foundEntry;
+        const dbName = meta.db;
+       
+        if (!dataSourceMap[dbName]) {
+            console.warn(`⚠️ Database source untuk '${dbName}' tidak ditemukan di dataSourceMap.`);
+            continue;
+        } 
+        const relationRepo = dataSourceMap[dbName].getRepository(entityName);
+       
         if (inc.type === 'single') {
             const fk = toCamel(`id_${relation}`);
             const pk = toCamel(`id_${relation}`);
 
-            // Ambil list ref ID dari parent field
             const parents = data.flatMap((d) => {
                 if (parent === baseAlias) return [d];
                 return d[parent] ? [d[parent]] : [];
@@ -42,7 +65,6 @@ export async function applySmartInclude(
             });
 
             const map = new Map(rows.map(r => [r[pk], r]));
-
             data.forEach(d => {
                 const parentRef = parent === baseAlias ? d : d[parent];
                 if (!parentRef) return;

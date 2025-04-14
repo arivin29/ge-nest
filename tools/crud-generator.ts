@@ -7,7 +7,7 @@ import { execSync } from 'child_process';
 import { pascalCase, kebabCase } from 'change-case';
 import 'dotenv/config';
 
-const MODULES_PATH = path.resolve(__dirname, '../src/modules');
+// const MODULES_PATH = path.resolve(__dirname, '../src/modules');
 const TEMPLATES_PATH = path.resolve(__dirname, './templates');
 const APP_MODULE_PATH = path.resolve(__dirname, '../src/app.module.ts');
 const ROUTER_CONFIG_PATH = path.resolve(__dirname, '../src/router.config.ts');
@@ -23,15 +23,16 @@ async function main() {
     const moduleName = args.find(a => a.startsWith('--nama='))?.split('=')[1];
     const routerGroup = args.find(a => a.startsWith('--router='))?.split('=')[1] ?? 'auth';
     const mode = args.find(a => a.startsWith('--mode='))?.split('=')[1] ?? 'default';
-    const dbName = args.find(a => a.startsWith('--db='))?.split('=')[1];
+    const dbName = args.find(a => a.startsWith('--db='))?.split('=')[1]; 
 
     if (!fromTable || !moduleName || !dbName) {
         console.log('❌ Gunakan: --fromTable=nama_tabel --nama=nama_module [--db=nama_database] [--router=auth|nonauth] [--mode=default|expert]');
         process.exit(1);
     }
-
+    const schemaAlias = dbName.replace(/^erp_/, '');
     const className = pascalCase(moduleName);
-    const folderPath = path.join(MODULES_PATH, moduleName);
+    const folderPath = path.join(path.resolve(__dirname, `../src/modules/${schemaAlias}`), moduleName);
+    // const folderPath = path.join(MODULES_PATH, moduleName);
     if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
 
  
@@ -50,7 +51,7 @@ async function main() {
         { name: 'service spec', file: `${moduleName}.service.spec.ts`, tpl: 'service.spec.ejs' },
     ];
 
-    const schemaAlias = dbName.replace(/^erp_/, '');
+    
     const schemaPascal = pascalCase(schemaAlias);
     const dtoImport = `${schemaPascal}${className}Dto`;
     const entiryImport = `${schemaPascal}${className}`;
@@ -66,6 +67,7 @@ async function main() {
             className,
             kebabName: kebabCase(moduleName),
             dtoImport,
+            schemaAlias,
             entiryImport,
             dtoPath,
             entityPath,
@@ -79,7 +81,7 @@ async function main() {
     // Update router.config.ts
     // ✅ Smart update router.config.ts
     let routerConfigRaw = fs.readFileSync(ROUTER_CONFIG_PATH, 'utf-8');
-    const importStatement = `import { ${className}Module } from './modules/${moduleName}/${moduleName}.module';`;
+    const importStatement = `import { ${className}Module } from './modules/${schemaAlias}/${moduleName}/${moduleName}.module';`;
     const routerEntry = `{ path: '${moduleName}', module: ${className}Module }`;
 
     // ⛔ Insert import if not exist
@@ -108,9 +110,8 @@ async function main() {
     const APP_MODULE_PATH = path.join(__dirname, '../src/app.module.ts');
     const appModuleRaw = fs.readFileSync(APP_MODULE_PATH, 'utf-8');
 
-    const appImport = `import { ${className}Module } from './modules/${moduleName}/${moduleName}.module';`;
-    const importRegex = /^(import .+;\s*)+/m;
-    const moduleRegex = /@Module\(\{\s+imports:\s*\[([\s\S]*?)\]/m;
+    const appImport = `import { ${className}Module } from './modules/${schemaAlias}/${moduleName}/${moduleName}.module';`;
+    const importRegex = /^(import .+;\s*)+/m; 
 
     let updatedAppModule = appModuleRaw;
 
@@ -121,54 +122,27 @@ async function main() {
     }
 
     // ✅ 2. Inject ke dalam array `imports: [ ... ]`
-    if (moduleRegex.test(updatedAppModule)) {
-        updatedAppModule = updatedAppModule.replace(moduleRegex, (match, group) => {
-            const importsList = group.trim().split(',').map(s => s.trim());
+    const importMarker = 'PassportModule],';
+    if (updatedAppModule.includes(importMarker)) {
+        const [before, after] = updatedAppModule.split(importMarker);
 
-            if (!importsList.includes(`${className}Module`)) {
-                return match.replace(group, `${group.trim()}, ${className}Module`);
-            }
-            return match;
-        });
-    }
+        const alreadyExists = before.includes(`${className}Module`);
+        if (!alreadyExists) {
+            // cari posisi akhir array imports: [ ... ]
+            const updatedBefore = before.replace(/imports\s*:\s*\[((.|\n)*?)\]$/, (match, p1) => {
+                return `imports: [${p1.trim()},\n  ${className}Module]`;
+            });
 
-    fs.writeFileSync(APP_MODULE_PATH, updatedAppModule);
-    console.log('📦 app.module.ts updated with new module');
-
-    // path untuk file database.providers.ts
-    const DATABASE_PROVIDER_PATH = path.resolve(__dirname, '../src/config/database.config.ts');
-
-    injectEntityToDatabaseProviders(className, moduleName);
-
-    // inject entity ke dalam database.providers.ts
-    function injectEntityToDatabaseProviders(className: string, moduleName: string) {
-        const dbFile = fs.readFileSync(DATABASE_PROVIDER_PATH, 'utf-8');
-
-        const importLine = `import { ${className} } from '../modules/${moduleName}/entities/${moduleName}.entity';`;
-        const insertToEntt = `${className}`;
-
-        if (!dbFile.includes(importLine)) {
-            const updated = dbFile
-                .replace(
-                    /(import\s+\{.*?\}\s+from\s+['"].*?['"];[\r\n]+)/,
-                    `$1${importLine}\n`
-                )
-                .replace(
-                    /(const\s+entt\s*=\s*\[)([\s\S]*?)(\];)/m,
-                    (_, start, middle, end) => {
-                        if (middle.includes(insertToEntt)) return `${start}${middle}${end}`;
-                        return `${start}${middle.trimEnd()},\n    ${insertToEntt}${end}`;
-                    }
-                );
-
-            fs.writeFileSync(DATABASE_PROVIDER_PATH, updated);
-            console.log(`📦 Entity '${className}' injected to database.providers.ts`);
+            updatedAppModule = updatedBefore + importMarker + after;
         }
     }
 
 
+    fs.writeFileSync(APP_MODULE_PATH, updatedAppModule);
+    console.log('📦 app.module.ts updated with new module');
 
-
+      
+  
 }
 
 main().catch((err) => console.error('❌ Generator failed:', err));

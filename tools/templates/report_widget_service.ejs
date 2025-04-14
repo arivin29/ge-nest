@@ -2,10 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { SmartQueryWidget } from 'src/common/helpers/smart_query_widget.helper'; 
 import { SmartQueryInputWidget } from 'src/common/helpers/smart-query-input-widget';
+import { InjectDataSource } from '@nestjs/typeorm';
 
 @Injectable()
 export class <%= className %>WidgetService {
-  constructor(private readonly dataSource: DataSource) {}
+  constructor(
+      @InjectDataSource('<%= schemaAlias %>') 
+      private readonly dataSource: DataSource
+    ) {}
 
   async findAllWidget(query: SmartQueryInputWidget) {
     const helper = new SmartQueryWidget(this.dataSource, '<%= tableName %>', '<%= tableName %>');

@@ -1,34 +1,31 @@
-import { Body, Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { <%= className %>WidgetService } from './<%= moduleName %>_widget.service';
-import { ApiResponseHelper } from 'src/common/helpers/response.helper';
-import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator'; 
+import { ApiResponseHelper } from 'src/common/helpers/response.helper';  
 import { BaseWidgetQueryDto } from 'src/common/dto/base-widget-query.dto';
 import { SmartQueryInputWidget } from 'src/common/helpers/smart-query-input-widget';
-import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
-import { <%= className %>WidgetReportDto } from './dto/<%= moduleName %>_widget_report.dto';
+import { ApiResponseEntity } from 'src/common/decorators/api-response-entity'; 
+import { <%= dtoImport_widget %> } from '<%= dtoPath_widget %>';
 
 @ApiTags('<%= moduleName %>_widget')
 @Controller('<%= moduleName %>_widget')
 export class <%= className %>WidgetController {
     constructor(private readonly service: <%= className %>WidgetService) { }
 
-    @Get() 
-    @ApiResponseEntity( <%= className %>WidgetReportDto, 'list')
+    @Post() 
+    @ApiResponseEntity( <%= dtoImport_widget %>, 'list')
     async findAll(
         @Query() query: BaseWidgetQueryDto,
         @Body() body: BaseWidgetQueryDto
     ) {
-        const isString = (val: any) => typeof val === 'string';
-
         const parsed: SmartQueryInputWidget = {
-            where: isString(query.filter) ? JSON.parse(query.filter) : {},
-            joinWhere: isString(query.joinWhere) ? JSON.parse(query.joinWhere) : {},
-            order: query.sortKey
-                ? { by: query.sortKey, direction: query.sortValue ?? 'asc' }
+            where: body.filter ?? {},
+            joinWhere: body.joinWhere ?? {},
+            order: body.sortKey
+                ? { by: body.sortKey, direction: body.sortValue ?? 'asc' }
                 : undefined,
-            select: isString(query.select) ? JSON.parse(query.select) : undefined,
-            groupBy: isString(query.groupBy) ? JSON.parse(query.groupBy) : [],
+            select: body.select,
+            groupBy: body.groupBy ?? [],
         };
 
         const result = await this.service.findAllWidget(parsed);

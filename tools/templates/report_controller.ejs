@@ -4,11 +4,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
-import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
-import { <%= className %>Dto } from '../<%= moduleName %>/dto/<%= moduleName %>.dto';
+import { ApiResponseEntity } from 'src/common/decorators/api-response-entity'; 
 import { SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
-import { applySmartInclude } from 'src/common/helpers/smart-include.helper';
-import { <%= className %>ReportDto } from '../<%= moduleName %>/dto/<%= moduleName %>_report.dto';
+import { applySmartInclude } from 'src/common/helpers/smart-include.helper';  
+import { <%= dtoImport_report %> } from '<%= dtoPath_report %>';;
 
 @ApiTags('<%= moduleName %>_report')
 @Controller('<%= moduleName %>_report')
@@ -16,7 +15,7 @@ export class <%= className %>ReportController {
     constructor(private readonly service: <%= className %>Service) { }
 
     @Post('list')
-    @ApiResponseEntity(<%= className %>ReportDto, 'list') 
+    @ApiResponseEntity(<%= dtoImport_report %>, 'list') 
     async findAll( 
         @Body() body: BaseQueryDtoSmart
     ) {
@@ -63,7 +62,7 @@ export class <%= className %>ReportController {
     }
 
     @Get(':id')
-    @ApiResponseEntity(<%= className %>ReportDto, 'get')
+    @ApiResponseEntity(<%= dtoImport_report %>, 'get')
     async findOne(@Param('id') id: string) {
         try {
             const result = await this.service.findOne(id);

@@ -291,22 +291,24 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
 
     // WHEREs
     Object.entries(where).forEach(([field, value]) => {
-        const paramKey = `${alias}_${field}`;
+        const dbField = camelToSnake(field); // 🔁 konversi ke snake_case
+        const paramKey = `${alias}_${dbField}`;
+
         if (typeof value !== 'object' || value === null) {
-            whereClauses.push(`${alias}.${field} = :${paramKey}`);
+            whereClauses.push(`${alias}.${dbField} = :${paramKey}`);
             params[paramKey] = value;
         } else {
             Object.entries(value).forEach(([op, val]) => {
                 const key = `${paramKey}_${op}`;
                 switch (op) {
-                    case 'eq': whereClauses.push(`${alias}.${field} = :${key}`); params[key] = val; break;
-                    case 'ne': whereClauses.push(`${alias}.${field} != :${key}`); params[key] = val; break;
-                    case 'gt': whereClauses.push(`${alias}.${field} > :${key}`); params[key] = val; break;
-                    case 'gte': whereClauses.push(`${alias}.${field} >= :${key}`); params[key] = val; break;
-                    case 'lt': whereClauses.push(`${alias}.${field} < :${key}`); params[key] = val; break;
-                    case 'lte': whereClauses.push(`${alias}.${field} <= :${key}`); params[key] = val; break;
-                    case 'like': whereClauses.push(`${alias}.${field} LIKE :${key}`); params[key] = `%${val}%`; break;
-                    case 'in': whereClauses.push(`${alias}.${field} IN (:...${key})`); params[key] = val; break;
+                    case 'eq': whereClauses.push(`${alias}.${dbField} = :${key}`); params[key] = val; break;
+                    case 'ne': whereClauses.push(`${alias}.${dbField} != :${key}`); params[key] = val; break;
+                    case 'gt': whereClauses.push(`${alias}.${dbField} > :${key}`); params[key] = val; break;
+                    case 'gte': whereClauses.push(`${alias}.${dbField} >= :${key}`); params[key] = val; break;
+                    case 'lt': whereClauses.push(`${alias}.${dbField} < :${key}`); params[key] = val; break;
+                    case 'lte': whereClauses.push(`${alias}.${dbField} <= :${key}`); params[key] = val; break;
+                    case 'like': whereClauses.push(`${alias}.${dbField} LIKE :${key}`); params[key] = `%${val}%`; break;
+                    case 'in': whereClauses.push(`${alias}.${dbField} IN (:...${key})`); params[key] = val; break;
                 }
             });
         }
@@ -341,10 +343,11 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
     ${orderByClause}
     LIMIT ${limit} OFFSET ${offset}
   `;
-    console.log('sql ', sql)
+    // console.log('sql ', sql)
 
     const [finalSql, sqlParams] = convertNamedParamsToArray(sql, params);
-    const data = await repo.manager.query(finalSql, sqlParams);
+    const rawData = await repo.manager.query(finalSql, sqlParams);
+    const data = rawData.map(row => normalizeRawRow(row, alias));
 
     const countSql = `
     SELECT COUNT(*) as total
@@ -360,6 +363,7 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
     return { data, total };
 }
 
+
 function camelToSnake(str: string): string {
     return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 }
@@ -371,4 +375,19 @@ function convertNamedParamsToArray(sql: string, params: Record<string, any>): [s
         return '?';
     });
     return [replaced, values];
+}
+
+function normalizeRawRow(row: any, alias: string): any {
+    const result: any = {};
+    const prefix = alias + '_';
+    for (const key in row) {
+        if (key.startsWith(prefix)) {
+            const rawKey = key.slice(prefix.length); // buang 'e_'
+            const camelKey = rawKey.replace(/_([a-z])/g, (_, g) => g.toUpperCase());
+            result[camelKey] = row[key];
+        } else {
+            result[key] = row[key];
+        }
+    }
+    return result;
 }

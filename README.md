@@ -80,18 +80,20 @@ npm run crud-report -- --fromTable=contract_site --nama=contract_site --router=a
 }
 
 MODEL -->
-npm run crud-model -- --fromTable=contract --nama=contract --db=erp_pelanggan
-npm run crud-model -- --fromTable=users --nama=users --db=erp_pelanggan
-npm run crud-model -- --fromTable=contact_client_use --nama=contact_client_use --db=erp_pelanggan
-npm run crud-model -- --fromTable=company_config --nama=company_config --db=erp_pelanggan
+ 
 
 REPORT -->
-npm run crud-report -- --fromTable=contract_site --nama=contract_site --router=auth
-npm run crud-report -- --fromTable=contract --nama=contract --router=auth
-
+npm run crud-report -- --fromTable=contract_site --nama=contract_site --db=erp_pelanggan --router=auth
+npm run crud-report -- --fromTable=contract --nama=contract --db=erp_pelanggan --router=nonauth
+npm run crud-report -- --fromTable=contract_site --nama=contract_site --db=erp_pelanggan --router=nonauth --mode=expert
 WIDGET -->
-npm run crud-report-widget -- --fromTable=contract_site --nama=contract_site --router=auth
-npm run crud-report-widget -- --fromTable=contract --nama=contract --router=auth
+npm run crud-report-widget -- --fromTable=contract_site --nama=contract_site --db=erp_pelanggan --router=auth
+npm run crud-report-widget -- --fromTable=contract --nama=contract --db=erp_pelanggan --router=auth 
+
+
+npm run crud -- --fromTable=workflow --nama=workflow --db=erp_tools --router=auth --mode=expert  
+npm run crud -- --fromTable=workflow_step --nama=workflow_step --db=erp_tools --router=auth --mode=expert  
+npm run crud -- --fromTable=workflow_log --nama=workflow_log --db=erp_tools --router=auth --mode=expert  
 
 
 npm run crud -- --fromTable=module --nama=module --db=erp --router=nonauth --mode=expert  
@@ -102,8 +104,8 @@ npm run crud -- --fromTable=client_contact --nama=client_contact --db=erp_pelang
 npm run crud -- --fromTable=client_site --nama=client_site --db=erp_pelanggan --router=nonauth --mode=expert
 npm run crud -- --fromTable=company_config --nama=company_config --db=erp_pelanggan --router=nonauth --mode=expert 
 
-npm run crud -- --fromTable=user_tokens --nama=user_tokens --db=erp_pelanggan --router=nonauth --mode=expert
-npm run crud -- --fromTable=users --nama=users --db=erp_pelanggan --router=nonauth --mode=expert
+npm run crud -- --fromTable=user_tokens --nama=user_tokens --db=erp_acl --router=nonauth --mode=expert
+npm run crud -- --fromTable=users --nama=users --db=erp_acl --router=nonauth --mode=expert
 
 npm run crud -- --fromTable=company_config --nama=company_config --db=erp_pelanggan --router=nonauth --mode=expert
 

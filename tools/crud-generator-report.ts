@@ -9,6 +9,7 @@ import { pascalCase } from 'change-case-all';
 const args = yargs(hideBin(process.argv))
     .option('fromTable', { type: 'string', demandOption: true })
     .option('nama', { type: 'string', demandOption: true })
+    .option('db', { type: 'string', demandOption: true })
     .option('router', { type: 'string', choices: ['auth', 'nonauth'], default: 'auth' })
     .argv as any;
 
@@ -18,12 +19,21 @@ const moduleName = args.nama;
 const tableName = args.fromTable;
 const className = pascalCase(moduleName);
 const controllerName = `${moduleName}_report.controller.ts`;
+const dbName = args.db;
+
+const schemaAlias = dbName.replace(/^erp_/, '');
+const schemaPascal = pascalCase(schemaAlias);
 
 const moduleDir = path.resolve('src/modules', moduleName);
-const dtoPath = path.join(moduleDir, 'dto', `${moduleName}.dto.ts`);
-const entityPath = path.join(moduleDir, 'entities', `${moduleName}.entity.ts`);
+const entityPath = path.join('src/entities', schemaAlias, `${schemaAlias}.${moduleName}.entity.ts`);
+console.log(entityPath)
 const servicePath = path.join(moduleDir, `${moduleName}.service.ts`);
 const controllerPath = path.join(moduleDir, controllerName);
+const dtoImport = `${schemaPascal}${className}Dto`;
+const dtoImport_report = `${schemaPascal}${className}ReportDto`;
+const entiryImport = `${schemaPascal}${className}`;
+const dtoPath = `src/dto/${schemaAlias}/${schemaAlias}.${moduleName}.dto`;
+const dtoPath_report = `src/dto/${schemaAlias}/${schemaAlias}.${moduleName}-report.dto`;
 
 // === Utility: Get Join Map from Entity File ===
 function parseEntityJoins(): string[] {
@@ -42,7 +52,9 @@ function generateReportController() {
     } else {
         console.log(`✅ Membuat baru: ${controllerName}`);
     }
-
+ 
+    
+    const entityPath = `src/entities/${schemaAlias}`;
 
     const dtoName = `${className}Dto`;
     const serviceName = `${className}Service`;
@@ -55,6 +67,13 @@ function generateReportController() {
         dtoName,
         serviceName,
         joins,
+        schemaPascal,
+        dtoImport,
+        dtoPath,
+        dtoImport_report,
+        dtoPath_report,
+        entityPath,
+        entiryImport,
     });
 
     fs.writeFileSync(controllerPath, output);
@@ -64,13 +83,18 @@ function generateReportController() {
 // === Step 2: Inject findAllCustom() to service.ts ===
 function injectFindAllCustomToService() {
     let serviceContent = fs.readFileSync(servicePath, 'utf-8');
-
+    // 🛡️ Cegah duplikasi jika method sudah ada
+    if (serviceContent.includes('async findAllSmart')) {
+        console.log('⚠️ findAllSmart() already exists, skipping inject');
+        return;
+    }
     // 🧹 Hapus method lama kalau ada
-    const methodRegex = /async\s+findAllCustom\s*\([\s\S]*?\n\}/gm;
+    const methodRegex = /async\s+findAllSmart\s*\([\s\S]*?\n\}/gm;
     if (methodRegex.test(serviceContent)) {
         serviceContent = serviceContent.replace(methodRegex, '');
-        console.log(`🧹 Removed existing findAllCustom() method`);
+        console.log(`🧹 Removed existing findAllSmart() method`);
     }
+  
 
     // 🔍 Auto generate joinMap
     const joins = parseEntityJoins();
@@ -80,10 +104,13 @@ function injectFindAllCustomToService() {
 
     // 🧩 Generate method code
     const templatePath = path.join(__dirname, 'templates', 'service_findAllCustom.ejs');
-    const methodCode = ejs.render(fs.readFileSync(templatePath, 'utf8'), { joinMap });
+    const methodCode = ejs.render(fs.readFileSync(templatePath, 'utf8'), { joinMap, schemaAlias, className, dtoImport_report, dtoImport });
 
     // ✅ Inject import if needed
-    const importStatement = `import { smartQueryEngineJoinMode,SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';`;
+    const importStatement = `
+            import { smartQueryEngineJoinMode,smartQueryRawJoinMode,SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
+            import { ${dtoImport} } from '${dtoPath}';
+            `;
     if (!serviceContent.includes(importStatement)) {
         const lines = serviceContent.split('\n');
         const firstNonImportIndex = lines.findIndex(line => !line.trim().startsWith('import '));
@@ -135,34 +162,6 @@ function injectFindAllCustomToService() {
 //     }
 // }
 
-function generateReportDto() {
-    const dtoDir = path.join(moduleDir, 'dto');
-    const reportDtoName = `${moduleName}_report.dto.ts`;
-    const reportDtoPath = path.join(dtoDir, reportDtoName);
-    const baseDtoName = `${className}Dto`;
-
-    const joinNames = parseEntityJoins();
-    const relImports = joinNames.map(rel => {
-        const relPascal = pascalCase(rel);
-        return {
-            import: `import { ${relPascal}Dto } from '../../${rel}/dto/${rel}.dto';`,
-            property: `  @ApiProperty({ type: ${relPascal}Dto })\n  ${relPascal.charAt(0).toLowerCase() + relPascal.slice(1)}: ${relPascal}Dto;`,
-        };
-    });
-
-    const output = `
-                import { ApiProperty } from '@nestjs/swagger';
-                import { ${baseDtoName} } from './${moduleName}.dto';
-                ${relImports.map(r => r.import).join('\n')}
-
-                export class ${className}ReportDto extends ${baseDtoName} {
-                ${relImports.map(r => r.property).join('\n\n')}
-                }
-                `;
-
-    fs.writeFileSync(reportDtoPath, output);
-    console.log(`✅ Generated ${reportDtoName}`);
-}
 
 function injectReportControllerToModule() {
     const modulePath = path.join(moduleDir, `${moduleName}.module.ts`);
@@ -210,8 +209,7 @@ if (!fs.existsSync(moduleDir)) {
 
 generateReportController();
 injectFindAllCustomToService();
-// updateRouterConfig();
-generateReportDto();
+// updateRouterConfig(); 
 injectReportControllerToModule();
 
 

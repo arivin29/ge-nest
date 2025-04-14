@@ -15,7 +15,7 @@ import { AclUsers } from 'src/entities/acl';
 export class AuthProtectedController {
     constructor(
         private readonly authService: AuthService,
-        @InjectRepository(AclUsers)
+        @InjectRepository(AclUsers,'acl')
         private userRepo: Repository<AclUsers>,
     ) { }
 
@@ -26,11 +26,15 @@ export class AuthProtectedController {
     @ApiOperation({ summary: 'Get current user' })
     @ApiResponse({ status: 200, type: CurrentUserResponseDto })
     async getMe(@User() userJwt: any) {
-        const user = await this.userRepo.findOneBy({ idUsers: userJwt.sub });
+        let user = await this.userRepo.findOneBy({ idUsers: userJwt.sub });
 
         // const role = await this.roleRepo.findOneBy({ idRole: user.idRole }); // sesuaikan kolom
         // const pegawai = await this.pegawaiRepo.findOneBy({ idPegawai: user.idPegawai }); // jika ada
-
+        
+        if (user) {
+            delete (user as any).password;
+            delete (user as any).wajibResetPassword;
+        }
         return {
             user: user,
             // role,

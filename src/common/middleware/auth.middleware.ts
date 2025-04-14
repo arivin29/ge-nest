@@ -10,7 +10,7 @@ export class AuthMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
-        console.log(token)
+      
         if (!token) {
             return res.status(401).json({ code: 401, pesan: 'Token tidak ditemukan' });
         }

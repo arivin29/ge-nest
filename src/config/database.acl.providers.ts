@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AclEntities } from '../entities/acl';
 
 export const DatabaseAclModule = TypeOrmModule.forRootAsync({
+  name: 'acl',
   imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (config: ConfigService) => ({

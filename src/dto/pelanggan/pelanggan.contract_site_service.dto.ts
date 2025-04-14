@@ -15,7 +15,7 @@ export class PelangganContractSiteServiceDto {
   deskripsiService: string;
 
   @ApiProperty({ required: false })
-  spesifikasiService: any;
+  spesifikasiService: string;
 
   @ApiProperty({ required: false })
   createdAt: string;

@@ -3,19 +3,30 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TenantService } from './database/tenant/tenant.service';
-import { RouterModule } from '@nestjs/core';
+import { ModuleRef, RouterModule } from '@nestjs/core';
 import { routerConfig } from './router.config';
-import { AuthMiddleware } from './common/middleware/auth.middleware'; 
+import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
-import { AppConfigModule } from './config/config.module'; 
-import { AuthModule } from './auth/auth.module'; 
+import { AppConfigModule } from './config/config.module';
+import { AuthModule } from './auth/auth.module';
 import { AuthProtectedModule } from './auth/auth-protected.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
-import { DatabaseAclModule } from './config/database.acl.providers';
-import { DatabaseDocumentModule } from './config/database.document.providers';
-import { DatabasePelangganModule } from './config/database.pelanggan.providers';
-import { DatabaseToolsModule } from './config/database.tools.providers';
+import { UserTokensModule } from './modules/acl/user_tokens/user_tokens.module';
+import { UsersModule } from './modules/acl/users/users.module';
+import { DatabaseProviders } from './config/database.providers';
+import { getDataSourceToken } from '@nestjs/typeorm';
+import { dataSourceMap } from './config/data-source-map';
+import { ContractSiteModule } from './modules/pelanggan/contract_site/contract_site.module';
+import { KantorModule } from './modules/pelanggan/kantor/kantor.module';
+import { ContractJenisModule } from './modules/pelanggan/contract_jenis/contract_jenis.module';
+import { ClientSiteModule } from './modules/pelanggan/client_site/client_site.module';
+import { WorkflowModule } from './modules/acl/workflow/workflow.module';
+import { WorkflowStepModule } from './modules/acl/workflow_step/workflow_step.module';
+import { WorkflowLogModule } from './modules/acl/workflow_log/workflow_log.module';
+import { ClientModule } from './modules/acl/client/client.module';
+import { ContractModule } from './modules/pelanggan/contract/contract.module';
+import { ClientContactModule } from './modules/pelanggan/client_contact/client_contact.module';
 @Module({
     imports: [JwtModule.registerAsync({
         useFactory: () => ({
@@ -24,7 +35,7 @@ import { DatabaseToolsModule } from './config/database.tools.providers';
         }),
     }),
         AppConfigModule,
-        PassportModule,
+
     JwtModule.registerAsync({
         inject: [ConfigService],
         useFactory: (config: ConfigService) => ({
@@ -33,13 +44,14 @@ import { DatabaseToolsModule } from './config/database.tools.providers';
         }),
     }),
     ConfigModule.forRoot({ isGlobal: true }),
-        DatabaseAclModule,
-         DatabaseDocumentModule,
-         DatabasePelangganModule,
-         DatabaseToolsModule,
+    ...DatabaseProviders,
     RouterModule.register(routerConfig),
-        AuthModule, AuthProtectedModule, 
-    ],
+        AuthModule, AuthProtectedModule,
+        UserTokensModule, UsersModule,
+        ContractModule, ContractJenisModule, KantorModule, ContractSiteModule, ClientModule,
+        ClientSiteModule,
+        WorkflowModule, WorkflowLogModule, WorkflowStepModule, ClientContactModule,
+        PassportModule],
     controllers: [AppController],
     providers: [AppService, TenantService, JwtStrategy],
 })
@@ -48,5 +60,17 @@ export class AppModule {
         consumer
             .apply(AuthMiddleware)
             .forRoutes('auth');
+    }
+    constructor(private moduleRef: ModuleRef) { }
+
+    async onModuleInit() {
+        const dbNames = ['acl', 'document', 'pelanggan', 'tools'];
+
+        for (const db of dbNames) {
+            const ds = await this.moduleRef.get(getDataSourceToken(db), { strict: false });
+            dataSourceMap[db] = ds;
+        }
+
+        console.log('✅ DataSourceMap is ready:', Object.keys(dataSourceMap));
     }
 }

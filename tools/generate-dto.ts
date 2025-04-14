@@ -50,7 +50,7 @@ function mapMysqlToTs(mysqlType: string): string {
             return 'boolean';
 
         case 'json':
-            return 'any'; // or object if you parse manually
+            return 'string'; // or object if you parse manually
 
         case 'blob':
         case 'binary':
@@ -59,7 +59,7 @@ function mapMysqlToTs(mysqlType: string): string {
 
         default:
             console.warn(`⚠️ Unrecognized MySQL type: "${mysqlType}", fallback to 'any'`);
-            return 'any';
+            return 'string';
     }
 }
 
@@ -243,7 +243,42 @@ export class ${widgetClassName} extends ${dtoClassName} {
 `;
             await fs.writeFile(path.join(dtoDir, widgetFilename), widgetContent);
         }
+
+
+//         // === ✅ Generate database.<schema>.providers.ts ===
+//         const providerFile = `database.${schemaAlias}.providers.ts`;
+//         const providerPath = path.resolve(__dirname, `../src/config/${providerFile}`);
+//         const entityImportName = `${schemaPascal}Entities`;
+//         const providerModuleName = `Database${schemaPascal}Module`;
+
+//         const providerContent = `import { TypeOrmModule } from '@nestjs/typeorm';
+// import { ConfigModule, ConfigService } from '@nestjs/config';
+// import { ${entityImportName} } from '../entities/${schemaAlias}';
+
+// export const ${providerModuleName} = TypeOrmModule.forRootAsync({
+//   name: '${schemaAlias}', // ✅ multi-db name
+//   imports: [ConfigModule],
+//   inject: [ConfigService],
+//   useFactory: (config: ConfigService) => ({
+//     type: 'mysql',
+//     host: config.get('DB_HOST'),
+//     port: +config.get('DB_PORT'),
+//     username: config.get('DB_USERNAME'),
+//     password: config.get('DB_PASSWORD'),
+//     database: 'erp_${schemaAlias}',
+//     entities: ${entityImportName},
+//     synchronize: false,
+//   }),
+// });
+// `;
+
+//         fs.writeFileSync(providerPath, providerContent);
+//         console.log(`🔌 Generated database provider: ${providerFile}`);
+
     }
+
+
+    
 
     conn.end();
 })();

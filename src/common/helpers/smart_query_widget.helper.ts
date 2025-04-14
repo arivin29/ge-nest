@@ -88,16 +88,34 @@ export class SmartQueryWidget {
             input.groupBy.forEach((field) => {
                 qb.addGroupBy(`${this.alias}.${field}`);
             });
-        }
-
+        } 
+ 
         // SELECT
         if (input.select && Array.isArray(input.select)) {
+
+           
+
             qb.select([]); // ⬅️ Clear all default selects first
-            input.select.forEach((sel) => {
+            input.select.forEach((sel,i) => {
                 const { type, field, alias } = sel;
                 qb.addSelect(`${type.toUpperCase()}(${this.alias}.${field})`, alias);
             });
+            if (input.groupBy && Array.isArray(input.groupBy)) {
+                input.groupBy.forEach((field,i) => {
+                    if (i == 0)
+                    {
+                        qb.addSelect(`${this.alias}.${field}`, 'status'); // <-- ini penting!
+                    }
+                    else
+                    {
+                        qb.addSelect(`${this.alias}.${field}`, field); // <-- ini penting!
+                    }
+                    
+                });
+            }
         }
+
+        const [sql, params] = qb.getQueryAndParameters(); 
 
         // ORDER
         // ORDER

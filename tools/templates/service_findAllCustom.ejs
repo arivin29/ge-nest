@@ -1,4 +1,4 @@
     async findAllSmart(query: SmartQueryInput) {
-    // return smartQueryEngineJoinMode(this.repo, 'e', query,<%= className %>Dto);
-        return smartQueryEngineJoinMode(this.repo, 'e', query,<%= className %>Dto);
+    // return smartQueryEngineJoinMode(this.repo, 'e', query,<%= dtoImport %>);
+    return smartQueryRawJoinMode(this.repo, 'e', query,<%= dtoImport %>);
     }

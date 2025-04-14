@@ -19,6 +19,7 @@
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json",
         "crud": "ts-node tools/crud-generator.ts",
+        "generate:crud": "ts-node tools/crud-generator.ts",
         "crud-report": "ts-node tools/crud-generator-report.ts",
         "crud-report-widget": "ts-node tools/crud-generator-report-widget.ts",
         "crud-model": "ts-node tools/dto-entity-generator.ts",

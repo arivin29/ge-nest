@@ -17,7 +17,7 @@ import { AclUsers } from 'src/entities/acl';
 export class AuthController {
     constructor(
         private readonly authService: AuthService,
-        @InjectRepository(AclUsers)
+        @InjectRepository(AclUsers,'acl')
         private userRepo: Repository<AclUsers>,
 
         // @InjectRepository(Role)

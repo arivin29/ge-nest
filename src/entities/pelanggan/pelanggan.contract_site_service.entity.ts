@@ -15,7 +15,7 @@ export class PelangganContractSiteService {
   deskripsiService: string;
 
   @Column({ name: 'spesifikasi_service' })
-  spesifikasiService: any;
+  spesifikasiService: string;
 
   @Column({ name: 'created_at' })
   createdAt: string;

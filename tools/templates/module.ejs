@@ -5,7 +5,7 @@ import { <%= className %>Controller } from './<%= moduleName %>.controller';
 import { <%= entiryImport %> } from '<%= entityPath %>';
  
 @Module({
-  imports: [TypeOrmModule.forFeature([<%= entiryImport %>])],
+  imports: [TypeOrmModule.forFeature([<%= entiryImport %>],'<%= schemaAlias %>')],
   controllers: [<%= className %>Controller],
   providers: [<%= className %>Service],
 })

@@ -21,9 +21,8 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
             search_field = [],
             search_keyword = '',
         } = query;
-
-        const qb = this.repo.createQueryBuilder('e');
-
+ 
+        const qb = this.repo.createQueryBuilder('e'); 
         // Filter
         // Object.entries(filter).forEach(([key, value]) => {
         //     if (value !== undefined && value !== null && value !== '') {
@@ -38,6 +37,8 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
             filter: Record<string, any>,
             alias: string = 'e'
         ): void {
+          
+
             for (const [key, value] of Object.entries(filter)) {
                 const field = `${alias}.${key}`;
 

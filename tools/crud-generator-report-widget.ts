@@ -6,6 +6,7 @@ import * as minimist from 'minimist';
 
 const args = minimist(process.argv.slice(2));
 const nama = args.nama;
+const dbName = args.db;
 
 if (!nama) {
     console.error('❌ Parameter --nama harus diisi (contoh: --nama=invoice_summary)');
@@ -22,14 +23,20 @@ const rootPath = path.resolve('src/modules', moduleName);
 const controllerTarget = path.join(rootPath, `${moduleName}_widget.controller.ts`);
 const serviceTarget = path.join(rootPath, `${moduleName}_widget.service.ts`);
 const specTarget = path.join(rootPath, `${moduleName}_widget.service.spec.ts`);
-const moduleTarget = path.join(rootPath, `${moduleName}.module.ts`);
-const dtoTarget = path.join(rootPath, `dto`, `${moduleName}_widget_report.dto.ts`);
+const moduleTarget = path.join(rootPath, `${moduleName}.module.ts`); 
 
 const rootPathTemplate = path.resolve(__dirname);
 const controllerTemplate = path.join(rootPathTemplate, 'templates', 'report_widget_controller.ejs');
 const serviceTemplate = path.join(rootPathTemplate, 'templates', 'report_widget_service.ejs'); 
-const specTemplate = path.join(rootPathTemplate, 'templates', 'report_widget_service.spec.ejs');
-const dtoTemplate = path.join(rootPathTemplate, 'templates', 'report_widget_dto.ejs');
+const specTemplate = path.join(rootPathTemplate, 'templates', 'report_widget_service.spec.ejs'); 
+
+const schemaAlias = dbName.replace(/^erp_/, '');
+const schemaPascal = pascalCase(schemaAlias);
+const dtoImport = `${schemaPascal}${className}Dto`;
+const dtoImport_widget = `${schemaPascal}${className}WidgetDto`;
+const entiryImport = `${schemaPascal}${className}`;
+const dtoPath = `src/dto/${schemaAlias}/${schemaAlias}.${moduleName}.dto`;
+const dtoPath_widget = `src/dto/${schemaAlias}/${schemaAlias}.${moduleName}-widget.dto`; 
 
 // Utility: write file from template
 async function writeFromTemplate(templatePath: string, outputPath: string, data: any) {
@@ -77,10 +84,9 @@ function injectToModule() {
  
 
 (async () => {
-    await writeFromTemplate(controllerTemplate, controllerTarget, { className, moduleName, tableName });
-    await writeFromTemplate(serviceTemplate, serviceTarget, { className, moduleName, tableName });
-    await writeFromTemplate(specTemplate, specTarget, { className, moduleName });
-    await writeFromTemplate(dtoTemplate, dtoTarget, { className, moduleName });
+    await writeFromTemplate(controllerTemplate, controllerTarget, { className, moduleName, tableName,dtoImport_widget,dtoPath_widget });
+    await writeFromTemplate(serviceTemplate, serviceTarget, { className, moduleName, tableName, dtoImport_widget, dtoPath_widget, schemaAlias });
+    await writeFromTemplate(specTemplate, specTarget, { className, moduleName }); 
     // await injectToRouterConfig();
     injectToModule();
 })();

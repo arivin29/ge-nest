@@ -4,7 +4,8 @@ import { AuthController } from './auth.controller';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy'; 
-import { AclModule } from 'src/entities/acl';
+import { UserTokensModule } from 'src/modules/acl/user_tokens/user_tokens.module';
+import { UsersModule } from 'src/modules/acl/users/users.module';
 
 @Module({
     imports: [
@@ -17,7 +18,8 @@ import { AclModule } from 'src/entities/acl';
                 },
             }),
         }),
-        AclModule 
+        UsersModule,
+        UserTokensModule 
     ],
     controllers: [AuthController],
     providers: [AuthService, JwtStrategy],

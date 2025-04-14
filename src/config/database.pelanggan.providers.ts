@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PelangganEntities } from '../entities/pelanggan';
 
 export const DatabasePelangganModule = TypeOrmModule.forRootAsync({
+  name: 'pelanggan',
   imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (config: ConfigService) => ({

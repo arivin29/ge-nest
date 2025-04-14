@@ -17,14 +17,15 @@ export class AuthService {
     constructor(
         private jwtService: JwtService,
         private config: ConfigService,
-        @InjectRepository(AclUsers)
+        @InjectRepository(AclUsers, 'acl')
         private userRepository: Repository<AclUsers>,
-        @InjectRepository(AclUserTokens)
+        @InjectRepository(AclUserTokens,'acl')
         private readonly userTokenRepo: Repository<AclUserTokens>,
     ) { }
 
     async login(dto: LoginDto, req: Request) {
         const user = await this.userRepository.findOneBy({ email: dto.email });
+         
         if (!user) {
             throw new UnauthorizedException('Email atau password salah');
         }

@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DocumentEntities } from '../entities/document';
 
 export const DatabaseDocumentModule = TypeOrmModule.forRootAsync({
+  name: 'document',
   imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (config: ConfigService) => ({
