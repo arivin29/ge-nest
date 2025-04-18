@@ -14,12 +14,12 @@ export class PelangganWorkScheduleTeknisi {
   @Column({ name: 'nama_teknisi' })
   namaTeknisi: string;
 
-  @Column({ name: 'peran' })
+  @Column({ name: 'peran', nullable: true })
   peran: string;
 
-  @Column({ name: 'catatan' })
+  @Column({ name: 'catatan', nullable: true })
   catatan: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 }

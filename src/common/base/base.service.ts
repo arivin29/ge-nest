@@ -1,4 +1,5 @@
 import { Repository, DeepPartial, ObjectLiteral, getMetadataArgsStorage, SelectQueryBuilder } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
 export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
     constructor(protected readonly repo: Repository<T>) { }
@@ -90,7 +91,7 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
         if (sortKey && sortValue) {
             qb.orderBy(`e.${sortKey}`, sortValue.toUpperCase() as 'ASC' | 'DESC');
         }
-
+        // console.log(qb.getSql())
         // Pagination
         const total = await qb.getCount();
         if (pageIndex !== undefined && pageSize !== undefined) {
@@ -120,7 +121,22 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
         return this.repo.findOne({ where: whereClause });
     }
 
-    create(data: D): Promise<T> {
+    async create(data: D): Promise<T> {
+        const entityTarget = this.repo.target as any;
+        const primaryKey = getMetadataArgsStorage().columns.find(
+            (col) => col.target === entityTarget && col.options.primary
+        )?.propertyName;
+
+        if (!primaryKey) {
+            throw new Error(`Primary key not found in ${entityTarget.name}`);
+        }
+
+        if (!(data as any)[primaryKey]) {
+            (data as any)[primaryKey] = uuidv4();
+        }
+
+        sanitizeEmptyStrings(data as any);
+
         return this.repo.save(data as any);
     }
 
@@ -130,5 +146,13 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
 
     async remove(id: any): Promise<void> {
         await this.repo.delete(id);
+    }
+}
+
+function sanitizeEmptyStrings(obj: any) {
+    for (const [key, val] of Object.entries(obj)) {
+        if (val === '') {
+            obj[key] = null;
+        }
     }
 }

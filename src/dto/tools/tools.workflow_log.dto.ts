@@ -3,19 +3,25 @@ import { IsOptional } from 'class-validator';
 
 export class ToolsWorkflowLogDto {
   @ApiProperty({ required: true })
-  idLog: string;
+  idWorkflowLog: string;
+
+  @ApiProperty({ required: false })
+  idWorkflow: string;
 
   @ApiProperty({ required: true })
   forModule: string;
 
   @ApiProperty({ required: true })
-  idData: string;
+  fromModuleId: string;
 
   @ApiProperty({ required: true })
-  idStep: string;
+  idWorkflowStep: string;
 
   @ApiProperty({ required: true })
   idUsers: string;
+
+  @ApiProperty({ required: false })
+  namaUser: string;
 
   @ApiProperty({ required: false })
   statusBefore: string;

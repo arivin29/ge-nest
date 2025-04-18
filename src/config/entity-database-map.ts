@@ -138,6 +138,24 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "work_schedule_teknisi"
     ]
   },
+  "ToolsCustomField": {
+    "db": "tools",
+    "aliases": [
+      "custom_field"
+    ]
+  },
+  "ToolsCustomFieldGroup": {
+    "db": "tools",
+    "aliases": [
+      "custom_field_group"
+    ]
+  },
+  "ToolsCustomFieldValue": {
+    "db": "tools",
+    "aliases": [
+      "custom_field_value"
+    ]
+  },
   "ToolsDataFlow": {
     "db": "tools",
     "aliases": [
@@ -178,6 +196,12 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
     "db": "tools",
     "aliases": [
       "workflow"
+    ]
+  },
+  "ToolsWorkflowAggregator": {
+    "db": "tools",
+    "aliases": [
+      "workflow_aggregator"
     ]
   },
   "ToolsWorkflowLog": {

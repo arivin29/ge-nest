@@ -11,21 +11,21 @@ export class AclUsers {
   @Column({ name: 'password' })
   password: string;
 
-  @Column({ name: 'nama' })
+  @Column({ name: 'nama', nullable: true })
   nama: string;
 
-  @Column({ name: 'status' })
+  @Column({ name: 'status', nullable: true })
   status: string;
 
-  @Column({ name: 'wajib_reset_password' })
+  @Column({ name: 'wajib_reset_password', nullable: true })
   wajibResetPassword: boolean;
 
-  @Column({ name: 'last_login' })
+  @Column({ name: 'last_login', nullable: true })
   lastLogin: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'id_user_group' })
+  @Column({ name: 'id_user_group', nullable: true })
   idUserGroup: string;
 }

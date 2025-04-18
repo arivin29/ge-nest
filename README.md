@@ -79,6 +79,27 @@ npm run crud-report -- --fromTable=contract_site --nama=contract_site --router=a
     }
 }
 
+TOOLS -->
+npm run crud -- --fromTable=workflow --nama=workflow --db=erp_tools --router=auth --mode=expert  
+npm run crud -- --fromTable=workflow_step --nama=workflow_step --db=erp_tools --router=auth --mode=expert  
+npm run crud -- --fromTable=workflow_log --nama=workflow_log --db=erp_tools --router=auth --mode=expert 
+npm run crud -- --fromTable=workflow_aggregator --nama=workflow_aggregator --db=erp_tools --router=auth --mode=expert 
+npm run crud -- --fromTable=custom_field_group --nama=custom_field_group --db=erp_tools --router=auth --mode=expert 
+npm run crud -- --fromTable=custom_field --nama=custom_field --db=erp_tools --router=auth --mode=expert 
+npm run crud -- --fromTable=custom_field_value --nama=custom_field_value --db=erp_tools --router=auth --mode=expert 
+
+npm run crud-report -- --fromTable=workflow --nama=workflow --db=erp_tools --router=auth  
+npm run crud-report -- --fromTable=workflow_step --nama=workflow_step --db=erp_tools --router=auth  
+npm run crud-report -- --fromTable=workflow_log --nama=workflow_log --db=erp_tools --router=auth 
+npm run crud-report -- --fromTable=custom_field_group --nama=custom_field_group --db=erp_tools --router=auth 
+npm run crud-report -- --fromTable=custom_field_value --nama=custom_field_value --db=erp_tools --router=auth 
+
+npm run crud-report-widget -- --fromTable=workflow --nama=workflow --db=erp_tools --router=auth  
+npm run crud-report-widget -- --fromTable=workflow_step --nama=workflow_step --db=erp_tools --router=auth  
+npm run crud-report-widget -- --fromTable=workflow_log --nama=workflow_log --db=erp_tools --router=auth 
+npm run crud-report-widget -- --fromTable=custom_field_group --nama=custom_field_group --db=erp_tools --router=auth 
+npm run crud-report-widget -- --fromTable=custom_field_value --nama=custom_field_value --db=erp_tools --router=auth 
+
 MODEL -->
  
 
@@ -86,16 +107,15 @@ REPORT -->
 npm run crud-report -- --fromTable=contract_site --nama=contract_site --db=erp_pelanggan --router=auth
 npm run crud-report -- --fromTable=contract --nama=contract --db=erp_pelanggan --router=nonauth
 npm run crud-report -- --fromTable=contract_site --nama=contract_site --db=erp_pelanggan --router=nonauth --mode=expert
+npm run crud-report -- --fromTable=client --nama=client --db=erp_pelanggan --router=nonauth --mode=expert
+npm run crud-report -- --fromTable=invoice --nama=invoice --db=erp_pelanggan --router=nonauth --mode=expert
 WIDGET -->
 npm run crud-report-widget -- --fromTable=contract_site --nama=contract_site --db=erp_pelanggan --router=auth
 npm run crud-report-widget -- --fromTable=contract --nama=contract --db=erp_pelanggan --router=auth 
+npm run crud-report-widget -- --fromTable=client --nama=client --db=erp_pelanggan --router=auth 
+npm run crud-report-widget -- --fromTable=invoice --nama=invoice --db=erp_pelanggan --router=auth 
 
-
-npm run crud -- --fromTable=workflow --nama=workflow --db=erp_tools --router=auth --mode=expert  
-npm run crud -- --fromTable=workflow_step --nama=workflow_step --db=erp_tools --router=auth --mode=expert  
-npm run crud -- --fromTable=workflow_log --nama=workflow_log --db=erp_tools --router=auth --mode=expert  
-
-
+ 
 npm run crud -- --fromTable=module --nama=module --db=erp --router=nonauth --mode=expert  
 
 npm run crud -- --fromTable=contract_jenis --nama=contract_jenis --db=erp_pelanggan --router=nonauth --mode=expert
@@ -132,6 +152,14 @@ npm run crud -- --fromTable=service --nama=service --db=erp_pelanggan --router=n
 npm run crud -- --fromTable=work_schedule --nama=work_schedule --db=erp_pelanggan --router=nonauth --mode=expert
 
 npm run crud -- --fromTable=work_schedule_teknisi --nama=work_schedule_teknisi --db=erp_pelanggan --router=nonauth --mode=expert
+
+
+ACL
+npm run crud -- --fromTable=user_group --nama=user_group --db=erp_acl --router=auth --mode=expert
+
+
+DOCUMENT
+npm run crud -- --fromTable=document --nama=document --db=erp_document --router=nonauth --mode=expert  
 
 
 

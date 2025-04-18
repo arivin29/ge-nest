@@ -5,27 +5,27 @@ export class PelangganCompanyConfig {
   @PrimaryColumn({ name: 'id_company_config' })
   idCompanyConfig: string;
 
-  @Column({ name: 'versi_erp' })
+  @Column({ name: 'versi_erp', nullable: true })
   versiErp: string;
 
-  @Column({ name: 'nama_perusahaan' })
+  @Column({ name: 'nama_perusahaan', nullable: true })
   namaPerusahaan: string;
 
-  @Column({ name: 'logo_url' })
+  @Column({ name: 'logo_url', nullable: true })
   logoUrl: string;
 
-  @Column({ name: 'alamat' })
+  @Column({ name: 'alamat', nullable: true })
   alamat: string;
 
-  @Column({ name: 'kontak' })
+  @Column({ name: 'kontak', nullable: true })
   kontak: string;
 
-  @Column({ name: 'catatan' })
+  @Column({ name: 'catatan', nullable: true })
   catatan: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 }

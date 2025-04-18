@@ -17,18 +17,21 @@ export class ToolsWorkflow {
   @Column({ name: 'target_table' })
   targetTable: string;
 
-  @Column({ name: 'is_default' })
+  @Column({ name: 'is_default', nullable: true })
   isDefault: boolean;
 
-  @Column({ name: 'id_kantor' })
+  @Column({ name: 'id_kantor', nullable: true })
   idKantor: string;
 
-  @Column({ name: 'keterangan' })
+  @Column({ name: 'keterangan', nullable: true })
   keterangan: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
+
+  @Column({ name: 'status_workflow', nullable: true })
+  statusWorkflow: string;
 }

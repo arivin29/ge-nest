@@ -14,18 +14,18 @@ export class PelangganContactClientUse {
   @Column({ name: 'from_module_id' })
   fromModuleId: string;
 
-  @Column({ name: 'peran' })
+  @Column({ name: 'peran', nullable: true })
   peran: string;
 
-  @Column({ name: 'is_primary' })
+  @Column({ name: 'is_primary', nullable: true })
   isPrimary: boolean;
 
-  @Column({ name: 'catatan' })
+  @Column({ name: 'catatan', nullable: true })
   catatan: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 }

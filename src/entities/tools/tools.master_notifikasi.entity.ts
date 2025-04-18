@@ -23,30 +23,30 @@ export class ToolsMasterNotifikasi {
   @Column({ name: 'fild_status' })
   fildStatus: string;
 
-  @Column({ name: 'icon' })
+  @Column({ name: 'icon', nullable: true })
   icon: string;
 
-  @Column({ name: 'id_kantor' })
+  @Column({ name: 'id_kantor', nullable: true })
   idKantor: string;
 
-  @Column({ name: 'id_departemen' })
+  @Column({ name: 'id_departemen', nullable: true })
   idDepartemen: string;
 
-  @Column({ name: 'id_divisi' })
+  @Column({ name: 'id_divisi', nullable: true })
   idDivisi: string;
 
-  @Column({ name: 'id_section' })
+  @Column({ name: 'id_section', nullable: true })
   idSection: string;
 
-  @Column({ name: 'cron_job' })
+  @Column({ name: 'cron_job', nullable: true })
   cronJob: string;
 
-  @Column({ name: 'validasi' })
+  @Column({ name: 'validasi', nullable: true })
   validasi: number;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true })
   updatedAt: string;
 }

@@ -11,9 +11,9 @@ export class AclUserGroup {
   @Column({ name: 'status' })
   status: string;
 
-  @Column({ name: 'deskripsi' })
+  @Column({ name: 'deskripsi', nullable: true })
   deskripsi: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 }

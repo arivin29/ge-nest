@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TenantService } from './database/tenant/tenant.service';
-import { ModuleRef, RouterModule } from '@nestjs/core';
+import { APP_GUARD, ModuleRef, RouterModule } from '@nestjs/core';
 import { routerConfig } from './router.config';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
@@ -21,12 +21,21 @@ import { ContractSiteModule } from './modules/pelanggan/contract_site/contract_s
 import { KantorModule } from './modules/pelanggan/kantor/kantor.module';
 import { ContractJenisModule } from './modules/pelanggan/contract_jenis/contract_jenis.module';
 import { ClientSiteModule } from './modules/pelanggan/client_site/client_site.module';
-import { WorkflowModule } from './modules/acl/workflow/workflow.module';
-import { WorkflowStepModule } from './modules/acl/workflow_step/workflow_step.module';
-import { WorkflowLogModule } from './modules/acl/workflow_log/workflow_log.module';
-import { ClientModule } from './modules/acl/client/client.module';
+import { WorkflowModule } from './modules/tools/workflow/workflow.module';
+import { WorkflowStepModule } from './modules/tools/workflow_step/workflow_step.module';
+import { WorkflowLogModule } from './modules/tools/workflow_log/workflow_log.module';
 import { ContractModule } from './modules/pelanggan/contract/contract.module';
 import { ClientContactModule } from './modules/pelanggan/client_contact/client_contact.module';
+import { UserGroupModule } from './modules/acl/user_group/user_group.module';
+import { ClientModule } from './modules/pelanggan/client/client.module';
+import { InvoiceModule } from './modules/pelanggan/invoice/invoice.module';
+import { WorkflowAggregatorModule } from './modules/tools/workflow_aggregator/workflow_aggregator.module';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { CustomFieldGroupModule } from './modules/tools/custom_field_group/custom_field_group.module';
+import { CustomFieldModule } from './modules/tools/custom_field/custom_field.module';
+import { CustomFieldValueModule } from './modules/tools/custom_field_value/custom_field_value.module';
+import { ModuleModule } from './modules/acl/module/module.module';
+import { DocumentModule } from './modules/document/document/document.module';
 @Module({
     imports: [JwtModule.registerAsync({
         useFactory: () => ({
@@ -49,11 +58,19 @@ import { ClientContactModule } from './modules/pelanggan/client_contact/client_c
         AuthModule, AuthProtectedModule,
         UserTokensModule, UsersModule,
         ContractModule, ContractJenisModule, KantorModule, ContractSiteModule, ClientModule,
-        ClientSiteModule,
-        WorkflowModule, WorkflowLogModule, WorkflowStepModule, ClientContactModule,
+        ClientSiteModule, DocumentModule,
+        WorkflowModule, WorkflowLogModule, WorkflowStepModule, ClientContactModule, UserGroupModule, InvoiceModule,
+        WorkflowAggregatorModule, ModuleModule,
+        CustomFieldGroupModule, CustomFieldModule, CustomFieldValueModule,
         PassportModule],
     controllers: [AppController],
-    providers: [AppService, TenantService, JwtStrategy],
+    providers: [
+        AppService, TenantService, JwtStrategy,
+        {
+            provide: APP_GUARD,
+            useClass: JwtAuthGuard
+        }
+    ],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {

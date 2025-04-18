@@ -24,7 +24,7 @@ export class <%= className %>ReportController {
   
         const parsed: SmartQueryInput = {
             where: source.filter ?? {},
-            joinWhere: (source as any).joinWhere ?? {},
+            joinWhere: (source as any).joinWhere ?? [],
             fsearch: (source as any).search_keyword
                 ? {
                     keyword: (source as any).search_keyword,

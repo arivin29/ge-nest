@@ -11,18 +11,18 @@ export class AclUserGroupAccess {
   @Column({ name: 'id_module' })
   idModule: string;
 
-  @Column({ name: 'can_list' })
+  @Column({ name: 'can_list', nullable: true })
   canList: boolean;
 
-  @Column({ name: 'can_add' })
+  @Column({ name: 'can_add', nullable: true })
   canAdd: boolean;
 
-  @Column({ name: 'can_edit' })
+  @Column({ name: 'can_edit', nullable: true })
   canEdit: boolean;
 
-  @Column({ name: 'can_delete' })
+  @Column({ name: 'can_delete', nullable: true })
   canDelete: boolean;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 }

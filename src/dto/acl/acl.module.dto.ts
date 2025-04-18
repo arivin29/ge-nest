@@ -15,6 +15,9 @@ export class AclModuleDto {
   namaTabel: string;
 
   @ApiProperty({ required: false })
+  namaDb: string;
+
+  @ApiProperty({ required: false })
   deskripsi: string;
 
   @ApiProperty({ required: false })

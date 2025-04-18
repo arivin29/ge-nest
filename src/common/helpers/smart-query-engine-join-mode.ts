@@ -5,7 +5,7 @@ import { SelectQueryBuilder, Repository, ObjectLiteral } from 'typeorm';
 
 export interface SmartQueryInclude {
     name: string; // nama table/module
-    type: 'single' | 'array';
+    type: 'single' | 'array'; 
     to?: string; // optional: relasi ke parent (default: base alias)
     parent?: string; // optional: relasi ke parent (default: base alias)
     select?: string[]; // optional: relasi ke parent (default: base alias)
@@ -13,7 +13,7 @@ export interface SmartQueryInclude {
 
 export interface SmartQueryInput {
     where?: Record<string, any>;
-    joinWhere?: Record<string, Record<string, any>>;
+    joinWhere?: Array<Record<string, any> & { type?: 'inner' | 'left' | 'right' }>;
     fsearch?: {
         keyword: string;
         fields: string[];
@@ -255,7 +255,7 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
 
     const {
         where = {},
-        joinWhere = {},
+        joinWhere = [],
         fsearch,
         order,
         pagination = { page: 1, limit: 20 },
@@ -273,20 +273,31 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
     const params: Record<string, any> = {};
 
     // JOINs
-    Object.entries(joinWhere).forEach(([joinName, filters]) => {
+    (joinWhere || []).forEach((joinItem) => {
+        const [joinName, filters] = Object.entries(joinItem).find(([k]) => k !== 'type')!;
         const joinAlias = joinName;
         const joinKey = `id_${joinName}`;
-        joins.push(`INNER JOIN ${joinName} ${joinAlias} ON ${joinAlias}.${joinKey} = ${alias}.${joinKey}`);
+        const joinType = joinItem.type?.toUpperCase() ?? 'INNER';
+        const schema = getSchemaForTable(joinName);
+
+        const filterConditions: string[] = [];
 
         if (filters && Object.keys(filters).length > 0) {
             Object.entries(filters).forEach(([field, value]) => {
-                const paramKey = `${joinAlias}_${field}`;
-                whereClauses.push(`${joinAlias}.${field} = :${paramKey}`);
+                const paramKey = `${joinAlias}_${snakeCase(field)}`;
+                filterConditions.push(`${joinAlias}.${snakeCase(field)} = :${paramKey}`);
                 params[paramKey] = value;
             });
         } else {
-            whereClauses.push(`${joinAlias}.${joinKey} IS NOT NULL`);
+            filterConditions.push(`${joinAlias}.${joinKey} IS NOT NULL`);
         }
+
+        const onClause = [
+            `${joinAlias}.${joinKey} = ${alias}.${joinKey}`,
+            ...filterConditions
+        ].join(' AND ');
+
+        joins.push(`${joinType} JOIN erp_${schema}.${joinName} ${joinAlias} ON ${onClause}`);
     });
 
     // WHEREs
@@ -328,7 +339,7 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
     if (order?.by) {
         const dir = (order.direction || 'ASC').toUpperCase();
         const [tbl, fld] = order.by.includes('.') ? order.by.split('.') : [alias, order.by];
-        orderByClause = `ORDER BY ${tbl}.${fld} ${dir}`;
+        orderByClause = `ORDER BY ${tbl}.${snakeCase(fld)} ${dir}`;
     }
 
     // PAGINATION
@@ -390,4 +401,24 @@ function normalizeRawRow(row: any, alias: string): any {
         }
     }
     return result;
+}
+
+
+import { EntityDatabaseMap } from 'src/config/entity-database-map';
+import { snakeCase } from 'change-case';
+
+export function getSchemaForTable(tableName: string): string {
+    const found = Object.entries(EntityDatabaseMap).find(([entity, meta]) => {
+        return (
+            entity.toLowerCase() === tableName.toLowerCase() ||
+            meta.aliases.includes(tableName.toLowerCase())
+        );
+    });
+
+    if (!found) {
+        console.warn(`⚠️ Tidak ditemukan schema untuk tabel '${tableName}', fallback ke 'erp'`);
+        return 'erp';
+    }
+
+    return found[1].db;
 }

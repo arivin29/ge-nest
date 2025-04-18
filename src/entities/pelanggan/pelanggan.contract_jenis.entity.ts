@@ -8,18 +8,18 @@ export class PelangganContractJenis {
   @Column({ name: 'nama_contract_jenis' })
   namaContractJenis: string;
 
-  @Column({ name: 'status_contract_jenis' })
+  @Column({ name: 'status_contract_jenis', nullable: true })
   statusContractJenis: string;
 
-  @Column({ name: 'keterangan' })
+  @Column({ name: 'keterangan', nullable: true })
   keterangan: string;
 
-  @Column({ name: 'role' })
+  @Column({ name: 'role', nullable: true })
   role: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true })
   updatedAt: string;
 }

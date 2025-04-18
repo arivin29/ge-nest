@@ -31,4 +31,7 @@ export class ToolsWorkflowDto {
 
   @ApiProperty({ required: false })
   updatedAt: string;
+
+  @ApiProperty({ required: false })
+  statusWorkflow: string;
 }

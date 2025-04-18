@@ -3,7 +3,7 @@ import { IsOptional } from 'class-validator';
 
 export class ToolsWorkflowStepDto {
   @ApiProperty({ required: true })
-  idStep: string;
+  idWorkflowStep: string;
 
   @ApiProperty({ required: true })
   idWorkflow: string;

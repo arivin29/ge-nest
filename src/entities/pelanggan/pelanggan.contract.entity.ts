@@ -8,69 +8,69 @@ export class PelangganContract {
   @Column({ name: 'id_client' })
   idClient: string;
 
-  @Column({ name: 'nomor_kontrak' })
+  @Column({ name: 'nomor_kontrak', nullable: true })
   nomorKontrak: string;
 
-  @Column({ name: 'tanggal_kontrak' })
+  @Column({ name: 'tanggal_kontrak', nullable: true })
   tanggalKontrak: string;
 
-  @Column({ name: 'tanggal_mulai' })
+  @Column({ name: 'tanggal_mulai', nullable: true })
   tanggalMulai: string;
 
-  @Column({ name: 'tanggal_akhir' })
+  @Column({ name: 'tanggal_akhir', nullable: true })
   tanggalAkhir: string;
 
-  @Column({ name: 'durasi_bulan' })
+  @Column({ name: 'durasi_bulan', nullable: true })
   durasiBulan: number;
 
-  @Column({ name: 'status_contract' })
+  @Column({ name: 'status_contract', nullable: true })
   statusContract: string;
 
-  @Column({ name: 'ref_kontrak_sebelumnya' })
+  @Column({ name: 'ref_kontrak_sebelumnya', nullable: true })
   refKontrakSebelumnya: string;
 
-  @Column({ name: 'nama_sales' })
+  @Column({ name: 'nama_sales', nullable: true })
   namaSales: string;
 
-  @Column({ name: 'fee_sales' })
+  @Column({ name: 'fee_sales', nullable: true })
   feeSales: number;
 
-  @Column({ name: 'presentase_fee' })
+  @Column({ name: 'presentase_fee', nullable: true })
   presentaseFee: number;
 
-  @Column({ name: 'nilai_kontrak' })
+  @Column({ name: 'nilai_kontrak', nullable: true })
   nilaiKontrak: number;
 
-  @Column({ name: 'nilai_diawal' })
+  @Column({ name: 'nilai_diawal', nullable: true })
   nilaiDiawal: number;
 
-  @Column({ name: 'nilai_bulanan' })
+  @Column({ name: 'nilai_bulanan', nullable: true })
   nilaiBulanan: number;
 
-  @Column({ name: 'nilai_akhir' })
+  @Column({ name: 'nilai_akhir', nullable: true })
   nilaiAkhir: number;
 
-  @Column({ name: 'is_auto_invoice' })
+  @Column({ name: 'is_auto_invoice', nullable: true })
   isAutoInvoice: boolean;
 
-  @Column({ name: 'catatan_kontrak' })
+  @Column({ name: 'catatan_kontrak', nullable: true })
   catatanKontrak: string;
 
-  @Column({ name: 'dokumen_url' })
+  @Column({ name: 'dokumen_url', nullable: true })
   dokumenUrl: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 
-  @Column({ name: 'id_contract_jenis' })
+  @Column({ name: 'id_contract_jenis', nullable: true })
   idContractJenis: string;
 
-  @Column({ name: 'id_kantor' })
+  @Column({ name: 'id_kantor', nullable: true })
   idKantor: string;
 
-  @Column({ name: 'id_document' })
+  @Column({ name: 'id_document', nullable: true })
   idDocument: string;
 }

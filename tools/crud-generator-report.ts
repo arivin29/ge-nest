@@ -24,9 +24,9 @@ const dbName = args.db;
 const schemaAlias = dbName.replace(/^erp_/, '');
 const schemaPascal = pascalCase(schemaAlias);
 
-const moduleDir = path.resolve('src/modules', moduleName);
+const moduleDir = path.resolve('src/modules', schemaAlias, moduleName);
 const entityPath = path.join('src/entities', schemaAlias, `${schemaAlias}.${moduleName}.entity.ts`);
-console.log(entityPath)
+ 
 const servicePath = path.join(moduleDir, `${moduleName}.service.ts`);
 const controllerPath = path.join(moduleDir, controllerName);
 const dtoImport = `${schemaPascal}${className}Dto`;

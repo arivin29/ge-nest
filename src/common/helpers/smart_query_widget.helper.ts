@@ -16,6 +16,7 @@ export class SmartQueryWidget {
             Object.entries(input.where).forEach(([key, val]) => {
                 const col = `${this.alias}.${key}`;
                 const paramKey = `where_${key}`;
+                console.log(input.where)
 
                 if (val && typeof val === 'object' && !Array.isArray(val)) {
                     Object.entries(val).forEach(([op, v]) => {

@@ -11,6 +11,9 @@ import { TokenOnlyResponseDto } from './dto/token-only-response.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm'; 
 import { AclUsers } from 'src/entities/acl';
+import { Public } from 'src/common/decorators/public.decorator';
+
+@Public()
 
 @ApiTags('Auth Public')
 @Controller('auth')
@@ -33,7 +36,7 @@ export class AuthController {
     @ApiOperation({ summary: 'Login user' })
     @ApiResponse({ status: 200, type: AuthResponseDto, description: 'Login berhasil' })
     @ApiResponse({ status: 403, description: 'User belum aktiv / wajib ganti password' })
-    login(@Body() dto: LoginDto, @Req() req: Request) {
+    login(@Body() dto: LoginDto, @Req() req: Request) { 
         return this.authService.login(dto, req);
     }
 

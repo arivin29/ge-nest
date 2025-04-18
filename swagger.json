@@ -2277,7 +2277,7 @@
         ]
       }
     },
-    "/auth/client/client": {
+    "/client": {
       "get": {
         "operationId": "ClientController_findAll",
         "parameters": [
@@ -2433,7 +2433,7 @@
         ]
       }
     },
-    "/auth/client/client/{id}": {
+    "/client/{id}": {
       "get": {
         "operationId": "ClientController_findOne",
         "parameters": [
@@ -2565,7 +2565,120 @@
         ]
       }
     },
-    "/auth/client/client_report/list": {
+    "/client_widget": {
+      "post": {
+        "operationId": "ClientWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganClientWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganClientWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "client_widget"
+        ]
+      }
+    },
+    "/client_report/list": {
       "post": {
         "operationId": "ClientReportController_findAll",
         "parameters": [],
@@ -2615,7 +2728,7 @@
         ]
       }
     },
-    "/auth/client/client_report/{id}": {
+    "/client_report/{id}": {
       "get": {
         "operationId": "ClientReportController_findOne",
         "parameters": [
@@ -2657,7 +2770,7 @@
         ]
       }
     },
-    "/nonauth/client_site/client_site": {
+    "/auth/client_site/client_site": {
       "get": {
         "operationId": "ClientSiteController_findAll",
         "parameters": [
@@ -2813,7 +2926,7 @@
         ]
       }
     },
-    "/nonauth/client_site/client_site/{id}": {
+    "/auth/client_site/client_site/{id}": {
       "get": {
         "operationId": "ClientSiteController_findOne",
         "parameters": [
@@ -2942,6 +3055,362 @@
         },
         "tags": [
           "client_site"
+        ]
+      }
+    },
+    "/auth/document/document": {
+      "get": {
+        "operationId": "DocumentController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list DocumentDocumentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DocumentDocumentDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      },
+      "post": {
+        "operationId": "DocumentController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentDocumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create DocumentDocumentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DocumentDocumentDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      }
+    },
+    "/auth/document/document/upload": {
+      "post": {
+        "operationId": "DocumentController_uploadFile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Upload dokumen dengan metadata",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "idDocument": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "nomor": {
+                    "type": "string"
+                  },
+                  "tanggal": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "forModule": {
+                    "type": "string"
+                  },
+                  "forModuleId": {
+                    "type": "string"
+                  },
+                  "fileExt": {
+                    "type": "string"
+                  },
+                  "fileName": {
+                    "type": "string"
+                  },
+                  "fileLocation": {
+                    "type": "string"
+                  },
+                  "enableDownload": {
+                    "type": "string"
+                  },
+                  "idUser": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      }
+    },
+    "/auth/document/document/{id}": {
+      "get": {
+        "operationId": "DocumentController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get DocumentDocumentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DocumentDocumentDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      },
+      "put": {
+        "operationId": "DocumentController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentDocumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put DocumentDocumentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DocumentDocumentDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      },
+      "delete": {
+        "operationId": "DocumentController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete DocumentDocumentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DocumentDocumentDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
         ]
       }
     },
@@ -3233,6 +3702,236 @@
         ]
       }
     },
+    "/auth/workflow/workflow/apply": {
+      "post": {
+        "operationId": "WorkflowApplyController_applyStep",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkflowApplyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Apply workflow step",
+        "tags": [
+          "workflow-apply"
+        ]
+      }
+    },
+    "/auth/workflow/workflow_report/list": {
+      "post": {
+        "operationId": "WorkflowReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsWorkflowReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsWorkflowReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_report"
+        ]
+      }
+    },
+    "/auth/workflow/workflow_report/{id}": {
+      "get": {
+        "operationId": "WorkflowReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsWorkflowReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsWorkflowReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_report"
+        ]
+      }
+    },
+    "/auth/workflow/workflow_widget": {
+      "post": {
+        "operationId": "WorkflowWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsWorkflowWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsWorkflowWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_widget"
+        ]
+      }
+    },
     "/auth/workflow_log/workflow_log": {
       "get": {
         "operationId": "WorkflowLogController_findAll",
@@ -3518,6 +4217,211 @@
         },
         "tags": [
           "workflow_log"
+        ]
+      }
+    },
+    "/auth/workflow_log/workflow_log_report/list": {
+      "post": {
+        "operationId": "WorkflowLogReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsWorkflowLogReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsWorkflowLogReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_log_report"
+        ]
+      }
+    },
+    "/auth/workflow_log/workflow_log_report/{id}": {
+      "get": {
+        "operationId": "WorkflowLogReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsWorkflowLogReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsWorkflowLogReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_log_report"
+        ]
+      }
+    },
+    "/auth/workflow_log/workflow_log_widget": {
+      "post": {
+        "operationId": "WorkflowLogWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsWorkflowLogWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsWorkflowLogWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_log_widget"
         ]
       }
     },
@@ -3809,7 +4713,212 @@
         ]
       }
     },
-    "/nonauth/client_contact/client_contact": {
+    "/auth/workflow_step/workflow_step_report/list": {
+      "post": {
+        "operationId": "WorkflowStepReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsWorkflowStepReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsWorkflowStepReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_step_report"
+        ]
+      }
+    },
+    "/auth/workflow_step/workflow_step_report/{id}": {
+      "get": {
+        "operationId": "WorkflowStepReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsWorkflowStepReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsWorkflowStepReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_step_report"
+        ]
+      }
+    },
+    "/auth/workflow_step/workflow_step_widget": {
+      "post": {
+        "operationId": "WorkflowStepWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsWorkflowStepWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsWorkflowStepWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_step_widget"
+        ]
+      }
+    },
+    "/auth/client_contact/client_contact": {
       "get": {
         "operationId": "ClientContactController_findAll",
         "parameters": [
@@ -3965,7 +5074,7 @@
         ]
       }
     },
-    "/nonauth/client_contact/client_contact/{id}": {
+    "/auth/client_contact/client_contact/{id}": {
       "get": {
         "operationId": "ClientContactController_findOne",
         "parameters": [
@@ -4094,6 +5203,2637 @@
         },
         "tags": [
           "client_contact"
+        ]
+      }
+    },
+    "/auth/user_group/user_group": {
+      "get": {
+        "operationId": "UserGroupController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list AclUserGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AclUserGroupDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user_group"
+        ]
+      },
+      "post": {
+        "operationId": "UserGroupController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AclUserGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create AclUserGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AclUserGroupDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user_group"
+        ]
+      }
+    },
+    "/auth/user_group/user_group/{id}": {
+      "get": {
+        "operationId": "UserGroupController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get AclUserGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AclUserGroupDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user_group"
+        ]
+      },
+      "put": {
+        "operationId": "UserGroupController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AclUserGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put AclUserGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AclUserGroupDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user_group"
+        ]
+      },
+      "delete": {
+        "operationId": "UserGroupController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete AclUserGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AclUserGroupDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user_group"
+        ]
+      }
+    },
+    "/auth/invoice/invoice": {
+      "get": {
+        "operationId": "InvoiceController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganInvoiceDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice"
+        ]
+      },
+      "post": {
+        "operationId": "InvoiceController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganInvoiceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create PelangganInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice"
+        ]
+      }
+    },
+    "/auth/invoice/invoice/{id}": {
+      "get": {
+        "operationId": "InvoiceController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice"
+        ]
+      },
+      "put": {
+        "operationId": "InvoiceController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganInvoiceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put PelangganInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice"
+        ]
+      },
+      "delete": {
+        "operationId": "InvoiceController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete PelangganInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice"
+        ]
+      }
+    },
+    "/auth/invoice/invoice_widget": {
+      "post": {
+        "operationId": "InvoiceWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganInvoiceWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganInvoiceWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_widget"
+        ]
+      }
+    },
+    "/auth/invoice/invoice_report/list": {
+      "post": {
+        "operationId": "InvoiceReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganInvoiceReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganInvoiceReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_report"
+        ]
+      }
+    },
+    "/auth/invoice/invoice_report/{id}": {
+      "get": {
+        "operationId": "InvoiceReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganInvoiceReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_report"
+        ]
+      }
+    },
+    "/auth/workflow_aggregator/workflow_aggregator": {
+      "get": {
+        "operationId": "WorkflowAggregatorController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsWorkflowAggregatorDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsWorkflowAggregatorDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_aggregator"
+        ]
+      },
+      "post": {
+        "operationId": "WorkflowAggregatorController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolsWorkflowAggregatorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create ToolsWorkflowAggregatorDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsWorkflowAggregatorDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_aggregator"
+        ]
+      }
+    },
+    "/auth/workflow_aggregator/workflow_aggregator/{id}": {
+      "get": {
+        "operationId": "WorkflowAggregatorController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsWorkflowAggregatorDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsWorkflowAggregatorDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_aggregator"
+        ]
+      },
+      "put": {
+        "operationId": "WorkflowAggregatorController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolsWorkflowAggregatorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put ToolsWorkflowAggregatorDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsWorkflowAggregatorDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_aggregator"
+        ]
+      },
+      "delete": {
+        "operationId": "WorkflowAggregatorController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete ToolsWorkflowAggregatorDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsWorkflowAggregatorDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "workflow_aggregator"
+        ]
+      }
+    },
+    "/auth/module/module": {
+      "get": {
+        "operationId": "ModuleController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list AclModuleDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AclModuleDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "module"
+        ]
+      },
+      "post": {
+        "operationId": "ModuleController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AclModuleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create AclModuleDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AclModuleDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "module"
+        ]
+      }
+    },
+    "/auth/module/module/{id}": {
+      "get": {
+        "operationId": "ModuleController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get AclModuleDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AclModuleDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "module"
+        ]
+      },
+      "put": {
+        "operationId": "ModuleController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AclModuleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put AclModuleDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AclModuleDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "module"
+        ]
+      },
+      "delete": {
+        "operationId": "ModuleController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete AclModuleDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/AclModuleDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "module"
+        ]
+      }
+    },
+    "/auth/custom_field_group/custom_field_group": {
+      "get": {
+        "operationId": "CustomFieldGroupController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsCustomFieldGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsCustomFieldGroupDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_group"
+        ]
+      },
+      "post": {
+        "operationId": "CustomFieldGroupController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolsCustomFieldGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create ToolsCustomFieldGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldGroupDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_group"
+        ]
+      }
+    },
+    "/auth/custom_field_group/custom_field_group/{id}": {
+      "get": {
+        "operationId": "CustomFieldGroupController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsCustomFieldGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldGroupDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_group"
+        ]
+      },
+      "put": {
+        "operationId": "CustomFieldGroupController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolsCustomFieldGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put ToolsCustomFieldGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldGroupDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_group"
+        ]
+      },
+      "delete": {
+        "operationId": "CustomFieldGroupController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete ToolsCustomFieldGroupDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldGroupDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_group"
+        ]
+      }
+    },
+    "/auth/custom_field_group/custom_field_group_report/list": {
+      "post": {
+        "operationId": "CustomFieldGroupReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsCustomFieldGroupReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsCustomFieldGroupReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_group_report"
+        ]
+      }
+    },
+    "/auth/custom_field_group/custom_field_group_report/{id}": {
+      "get": {
+        "operationId": "CustomFieldGroupReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsCustomFieldGroupReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldGroupReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_group_report"
+        ]
+      }
+    },
+    "/auth/custom_field_group/custom_field_group_widget": {
+      "post": {
+        "operationId": "CustomFieldGroupWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsCustomFieldGroupWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsCustomFieldGroupWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_group_widget"
+        ]
+      }
+    },
+    "/auth/custom_field/custom_field": {
+      "get": {
+        "operationId": "CustomFieldController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsCustomFieldDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsCustomFieldDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field"
+        ]
+      },
+      "post": {
+        "operationId": "CustomFieldController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolsCustomFieldDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create ToolsCustomFieldDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field"
+        ]
+      }
+    },
+    "/auth/custom_field/custom_field/{id}": {
+      "get": {
+        "operationId": "CustomFieldController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsCustomFieldDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field"
+        ]
+      },
+      "put": {
+        "operationId": "CustomFieldController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolsCustomFieldDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put ToolsCustomFieldDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field"
+        ]
+      },
+      "delete": {
+        "operationId": "CustomFieldController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete ToolsCustomFieldDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field"
+        ]
+      }
+    },
+    "/auth/custom_field_value/custom_field_value": {
+      "get": {
+        "operationId": "CustomFieldValueController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsCustomFieldValueDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsCustomFieldValueDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_value"
+        ]
+      },
+      "post": {
+        "operationId": "CustomFieldValueController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolsCustomFieldValueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create ToolsCustomFieldValueDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldValueDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_value"
+        ]
+      }
+    },
+    "/auth/custom_field_value/custom_field_value/{id}": {
+      "get": {
+        "operationId": "CustomFieldValueController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsCustomFieldValueDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldValueDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_value"
+        ]
+      },
+      "put": {
+        "operationId": "CustomFieldValueController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolsCustomFieldValueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put ToolsCustomFieldValueDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldValueDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_value"
+        ]
+      },
+      "delete": {
+        "operationId": "CustomFieldValueController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete ToolsCustomFieldValueDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldValueDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_value"
+        ]
+      }
+    },
+    "/auth/custom_field_value/custom_field_value_report/list": {
+      "post": {
+        "operationId": "CustomFieldValueReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsCustomFieldValueReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsCustomFieldValueReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_value_report"
+        ]
+      }
+    },
+    "/auth/custom_field_value/custom_field_value_report/{id}": {
+      "get": {
+        "operationId": "CustomFieldValueReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get ToolsCustomFieldValueReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ToolsCustomFieldValueReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_value_report"
+        ]
+      }
+    },
+    "/auth/custom_field_value/custom_field_value_widget": {
+      "post": {
+        "operationId": "CustomFieldValueWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list ToolsCustomFieldValueWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ToolsCustomFieldValueWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "custom_field_value_widget"
         ]
       }
     }
@@ -4607,17 +8347,22 @@
             "additionalProperties": true
           },
           "joinWhere": {
-            "type": "object",
-            "description": "Filter untuk relasi/join",
-            "example": {
-              "contract": {
-                "status_kontrak": "aktif"
+            "type": "array",
+            "description": "Filter + jenis JOIN (inner/left/right)",
+            "example": [
+              {
+                "contract": {
+                  "status_kontrak": "aktif"
+                },
+                "type": "inner"
               },
-              "client_site": {
-                "kota": "Jakarta"
+              {
+                "client_site": {
+                  "kota": "Jakarta"
+                },
+                "type": "left"
               }
-            },
-            "additionalProperties": true
+            ]
           },
           "search_field": {
             "description": "Fields to search with search_keyword",
@@ -4962,6 +8707,75 @@
         "type": "object",
         "properties": {}
       },
+      "PelangganClientWidgetDto": {
+        "type": "object",
+        "properties": {
+          "idClient": {
+            "type": "string"
+          },
+          "kodeClient": {
+            "type": "string"
+          },
+          "jenisClient": {
+            "type": "string"
+          },
+          "namaResmi": {
+            "type": "string"
+          },
+          "namaFamiliar": {
+            "type": "string"
+          },
+          "npwp": {
+            "type": "string"
+          },
+          "emailPerusahaan": {
+            "type": "string"
+          },
+          "telepon": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "alamat": {
+            "type": "string"
+          },
+          "kota": {
+            "type": "string"
+          },
+          "provinsi": {
+            "type": "string"
+          },
+          "kodePos": {
+            "type": "string"
+          },
+          "primaryPic": {
+            "type": "string"
+          },
+          "logoUrl": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "isAktif": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idClient",
+          "namaResmi"
+        ]
+      },
       "PelangganClientReportDto": {
         "type": "object",
         "properties": {
@@ -5085,6 +8899,59 @@
           "idClient"
         ]
       },
+      "DocumentDocumentDto": {
+        "type": "object",
+        "properties": {
+          "idDocument": {
+            "type": "string"
+          },
+          "forModule": {
+            "type": "string"
+          },
+          "forTable": {
+            "type": "string"
+          },
+          "forModuleId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "revisi": {
+            "type": "string"
+          },
+          "nomor": {
+            "type": "string"
+          },
+          "tanggal": {
+            "type": "string"
+          },
+          "idUsers": {
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "fileExt": {
+            "type": "string"
+          },
+          "fileLocation": {
+            "type": "string"
+          },
+          "enableDownload": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idDocument"
+        ]
+      },
       "ToolsWorkflowDto": {
         "type": "object",
         "properties": {
@@ -5117,6 +8984,129 @@
           },
           "updatedAt": {
             "type": "string"
+          },
+          "statusWorkflow": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idWorkflow",
+          "namaWorkflow",
+          "forModule",
+          "targetDb",
+          "targetTable"
+        ]
+      },
+      "WorkflowApplyDto": {
+        "type": "object",
+        "properties": {
+          "from_module": {
+            "type": "string"
+          },
+          "from_module_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "from_module",
+          "from_module_id",
+          "status",
+          "catatan",
+          "user_id"
+        ]
+      },
+      "ToolsWorkflowReportDto": {
+        "type": "object",
+        "properties": {
+          "idWorkflow": {
+            "type": "string"
+          },
+          "namaWorkflow": {
+            "type": "string"
+          },
+          "forModule": {
+            "type": "string"
+          },
+          "targetDb": {
+            "type": "string"
+          },
+          "targetTable": {
+            "type": "string"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "idKantor": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "statusWorkflow": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idWorkflow",
+          "namaWorkflow",
+          "forModule",
+          "targetDb",
+          "targetTable"
+        ]
+      },
+      "ToolsWorkflowWidgetDto": {
+        "type": "object",
+        "properties": {
+          "idWorkflow": {
+            "type": "string"
+          },
+          "namaWorkflow": {
+            "type": "string"
+          },
+          "forModule": {
+            "type": "string"
+          },
+          "targetDb": {
+            "type": "string"
+          },
+          "targetTable": {
+            "type": "string"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "idKantor": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "statusWorkflow": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
           }
         },
         "required": [
@@ -5130,19 +9120,25 @@
       "ToolsWorkflowLogDto": {
         "type": "object",
         "properties": {
-          "idLog": {
+          "idWorkflowLog": {
+            "type": "string"
+          },
+          "idWorkflow": {
             "type": "string"
           },
           "forModule": {
             "type": "string"
           },
-          "idData": {
+          "fromModuleId": {
             "type": "string"
           },
-          "idStep": {
+          "idWorkflowStep": {
             "type": "string"
           },
           "idUsers": {
+            "type": "string"
+          },
+          "namaUser": {
             "type": "string"
           },
           "statusBefore": {
@@ -5162,17 +9158,120 @@
           }
         },
         "required": [
-          "idLog",
+          "idWorkflowLog",
           "forModule",
-          "idData",
-          "idStep",
+          "fromModuleId",
+          "idWorkflowStep",
+          "idUsers"
+        ]
+      },
+      "ToolsWorkflowLogReportDto": {
+        "type": "object",
+        "properties": {
+          "idWorkflowLog": {
+            "type": "string"
+          },
+          "idWorkflow": {
+            "type": "string"
+          },
+          "forModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "idWorkflowStep": {
+            "type": "string"
+          },
+          "idUsers": {
+            "type": "string"
+          },
+          "namaUser": {
+            "type": "string"
+          },
+          "statusBefore": {
+            "type": "string"
+          },
+          "statusAfter": {
+            "type": "string"
+          },
+          "approvedBy": {
+            "type": "string"
+          },
+          "approvedAt": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "workflow": {
+            "$ref": "#/components/schemas/ToolsWorkflowDto"
+          }
+        },
+        "required": [
+          "idWorkflowLog",
+          "forModule",
+          "fromModuleId",
+          "idWorkflowStep",
+          "idUsers",
+          "workflow"
+        ]
+      },
+      "ToolsWorkflowLogWidgetDto": {
+        "type": "object",
+        "properties": {
+          "idWorkflowLog": {
+            "type": "string"
+          },
+          "idWorkflow": {
+            "type": "string"
+          },
+          "forModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "idWorkflowStep": {
+            "type": "string"
+          },
+          "idUsers": {
+            "type": "string"
+          },
+          "namaUser": {
+            "type": "string"
+          },
+          "statusBefore": {
+            "type": "string"
+          },
+          "statusAfter": {
+            "type": "string"
+          },
+          "approvedBy": {
+            "type": "string"
+          },
+          "approvedAt": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idWorkflowLog",
+          "forModule",
+          "fromModuleId",
+          "idWorkflowStep",
           "idUsers"
         ]
       },
       "ToolsWorkflowStepDto": {
         "type": "object",
         "properties": {
-          "idStep": {
+          "idWorkflowStep": {
             "type": "string"
           },
           "idWorkflow": {
@@ -5216,7 +9315,122 @@
           }
         },
         "required": [
-          "idStep",
+          "idWorkflowStep",
+          "idWorkflow",
+          "statusFrom",
+          "statusTo",
+          "urutan"
+        ]
+      },
+      "ToolsWorkflowStepReportDto": {
+        "type": "object",
+        "properties": {
+          "idWorkflowStep": {
+            "type": "string"
+          },
+          "idWorkflow": {
+            "type": "string"
+          },
+          "statusFrom": {
+            "type": "string"
+          },
+          "statusTo": {
+            "type": "string"
+          },
+          "urutan": {
+            "type": "number"
+          },
+          "ruleJson": {
+            "type": "string"
+          },
+          "triggerJson": {
+            "type": "string"
+          },
+          "customCheckSql": {
+            "type": "string"
+          },
+          "messageBefore": {
+            "type": "string"
+          },
+          "statusRejectTo": {
+            "type": "string"
+          },
+          "allowUserIds": {
+            "type": "string"
+          },
+          "allowRoles": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "workflow": {
+            "$ref": "#/components/schemas/ToolsWorkflowDto"
+          }
+        },
+        "required": [
+          "idWorkflowStep",
+          "idWorkflow",
+          "statusFrom",
+          "statusTo",
+          "urutan",
+          "workflow"
+        ]
+      },
+      "ToolsWorkflowStepWidgetDto": {
+        "type": "object",
+        "properties": {
+          "idWorkflowStep": {
+            "type": "string"
+          },
+          "idWorkflow": {
+            "type": "string"
+          },
+          "statusFrom": {
+            "type": "string"
+          },
+          "statusTo": {
+            "type": "string"
+          },
+          "urutan": {
+            "type": "number"
+          },
+          "ruleJson": {
+            "type": "string"
+          },
+          "triggerJson": {
+            "type": "string"
+          },
+          "customCheckSql": {
+            "type": "string"
+          },
+          "messageBefore": {
+            "type": "string"
+          },
+          "statusRejectTo": {
+            "type": "string"
+          },
+          "allowUserIds": {
+            "type": "string"
+          },
+          "allowRoles": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idWorkflowStep",
           "idWorkflow",
           "statusFrom",
           "statusTo",
@@ -5266,6 +9480,677 @@
         "required": [
           "idClientContact",
           "idClient"
+        ]
+      },
+      "AclUserGroupDto": {
+        "type": "object",
+        "properties": {
+          "idUserGroup": {
+            "type": "string"
+          },
+          "namaUserGroup": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "deskripsi": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idUserGroup",
+          "namaUserGroup",
+          "status"
+        ]
+      },
+      "PelangganInvoiceDto": {
+        "type": "object",
+        "properties": {
+          "idInvoice": {
+            "type": "string"
+          },
+          "idContract": {
+            "type": "string"
+          },
+          "nomorInvoice": {
+            "type": "string"
+          },
+          "periode": {
+            "type": "string"
+          },
+          "jenisInvoice": {
+            "type": "string"
+          },
+          "dpp": {
+            "type": "number"
+          },
+          "ppn": {
+            "type": "number"
+          },
+          "nilaiInvoice": {
+            "type": "number"
+          },
+          "statusInvoice": {
+            "type": "string"
+          },
+          "npwp": {
+            "type": "string"
+          },
+          "alamatPenagihan": {
+            "type": "string"
+          },
+          "picPenagihan": {
+            "type": "string"
+          },
+          "tanggalTerbit": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "tanggalDibayar": {
+            "type": "string"
+          },
+          "metodePembayaran": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idInvoice"
+        ]
+      },
+      "PelangganInvoiceWidgetDto": {
+        "type": "object",
+        "properties": {
+          "idInvoice": {
+            "type": "string"
+          },
+          "idContract": {
+            "type": "string"
+          },
+          "nomorInvoice": {
+            "type": "string"
+          },
+          "periode": {
+            "type": "string"
+          },
+          "jenisInvoice": {
+            "type": "string"
+          },
+          "dpp": {
+            "type": "number"
+          },
+          "ppn": {
+            "type": "number"
+          },
+          "nilaiInvoice": {
+            "type": "number"
+          },
+          "statusInvoice": {
+            "type": "string"
+          },
+          "npwp": {
+            "type": "string"
+          },
+          "alamatPenagihan": {
+            "type": "string"
+          },
+          "picPenagihan": {
+            "type": "string"
+          },
+          "tanggalTerbit": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "tanggalDibayar": {
+            "type": "string"
+          },
+          "metodePembayaran": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idInvoice"
+        ]
+      },
+      "PelangganInvoiceReportDto": {
+        "type": "object",
+        "properties": {
+          "idInvoice": {
+            "type": "string"
+          },
+          "idContract": {
+            "type": "string"
+          },
+          "nomorInvoice": {
+            "type": "string"
+          },
+          "periode": {
+            "type": "string"
+          },
+          "jenisInvoice": {
+            "type": "string"
+          },
+          "dpp": {
+            "type": "number"
+          },
+          "ppn": {
+            "type": "number"
+          },
+          "nilaiInvoice": {
+            "type": "number"
+          },
+          "statusInvoice": {
+            "type": "string"
+          },
+          "npwp": {
+            "type": "string"
+          },
+          "alamatPenagihan": {
+            "type": "string"
+          },
+          "picPenagihan": {
+            "type": "string"
+          },
+          "tanggalTerbit": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "tanggalDibayar": {
+            "type": "string"
+          },
+          "metodePembayaran": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "contract": {
+            "$ref": "#/components/schemas/PelangganContractDto"
+          }
+        },
+        "required": [
+          "idInvoice",
+          "contract"
+        ]
+      },
+      "ToolsWorkflowAggregatorDto": {
+        "type": "object",
+        "properties": {
+          "idWorkflowAggregator": {
+            "type": "string"
+          },
+          "fromModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "idWorkflow": {
+            "type": "string"
+          },
+          "lastWorkflowStep": {
+            "type": "string"
+          },
+          "lastApprovalNote": {
+            "type": "string"
+          },
+          "lastApprovalUser": {
+            "type": "string"
+          },
+          "lastApprovalDate": {
+            "type": "string"
+          },
+          "lastApprovalStatus": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idWorkflowAggregator",
+          "fromModule",
+          "fromModuleId",
+          "idWorkflow"
+        ]
+      },
+      "AclModuleDto": {
+        "type": "object",
+        "properties": {
+          "idModule": {
+            "type": "string"
+          },
+          "kodeModule": {
+            "type": "string"
+          },
+          "namaModule": {
+            "type": "string"
+          },
+          "namaTabel": {
+            "type": "string"
+          },
+          "namaDb": {
+            "type": "string"
+          },
+          "deskripsi": {
+            "type": "string"
+          },
+          "isAktif": {
+            "type": "boolean"
+          },
+          "urutan": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idModule"
+        ]
+      },
+      "ToolsCustomFieldGroupDto": {
+        "type": "object",
+        "properties": {
+          "idCustomFieldGroup": {
+            "type": "string"
+          },
+          "namaGroup": {
+            "type": "string"
+          },
+          "modul": {
+            "type": "string"
+          },
+          "tableName": {
+            "type": "string"
+          },
+          "deskripsi": {
+            "type": "string"
+          },
+          "isRepeatable": {
+            "type": "boolean"
+          },
+          "visibilityRule": {
+            "type": "string"
+          },
+          "forKantor": {
+            "type": "string"
+          },
+          "forRole": {
+            "type": "string"
+          },
+          "tipeRender": {
+            "type": "string"
+          },
+          "urutan": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idCustomFieldGroup",
+          "namaGroup"
+        ]
+      },
+      "ToolsCustomFieldGroupReportDto": {
+        "type": "object",
+        "properties": {
+          "idCustomFieldGroup": {
+            "type": "string"
+          },
+          "namaGroup": {
+            "type": "string"
+          },
+          "modul": {
+            "type": "string"
+          },
+          "tableName": {
+            "type": "string"
+          },
+          "deskripsi": {
+            "type": "string"
+          },
+          "isRepeatable": {
+            "type": "boolean"
+          },
+          "visibilityRule": {
+            "type": "string"
+          },
+          "forKantor": {
+            "type": "string"
+          },
+          "forRole": {
+            "type": "string"
+          },
+          "tipeRender": {
+            "type": "string"
+          },
+          "urutan": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idCustomFieldGroup",
+          "namaGroup"
+        ]
+      },
+      "ToolsCustomFieldGroupWidgetDto": {
+        "type": "object",
+        "properties": {
+          "idCustomFieldGroup": {
+            "type": "string"
+          },
+          "namaGroup": {
+            "type": "string"
+          },
+          "modul": {
+            "type": "string"
+          },
+          "tableName": {
+            "type": "string"
+          },
+          "deskripsi": {
+            "type": "string"
+          },
+          "isRepeatable": {
+            "type": "boolean"
+          },
+          "visibilityRule": {
+            "type": "string"
+          },
+          "forKantor": {
+            "type": "string"
+          },
+          "forRole": {
+            "type": "string"
+          },
+          "tipeRender": {
+            "type": "string"
+          },
+          "urutan": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idCustomFieldGroup",
+          "namaGroup"
+        ]
+      },
+      "ToolsCustomFieldDto": {
+        "type": "object",
+        "properties": {
+          "idCustomField": {
+            "type": "string"
+          },
+          "idCustomFieldGroup": {
+            "type": "string"
+          },
+          "kodeField": {
+            "type": "string"
+          },
+          "labelField": {
+            "type": "string"
+          },
+          "prefixField": {
+            "type": "string"
+          },
+          "tipeField": {
+            "type": "string"
+          },
+          "opsiSelect": {
+            "type": "string"
+          },
+          "isFilterable": {
+            "type": "boolean"
+          },
+          "isRequired": {
+            "type": "boolean"
+          },
+          "validasi": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "urutan": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idCustomField",
+          "kodeField",
+          "labelField",
+          "tipeField"
+        ]
+      },
+      "ToolsCustomFieldValueDto": {
+        "type": "object",
+        "properties": {
+          "idCustomFieldValue": {
+            "type": "string"
+          },
+          "idCustomField": {
+            "type": "string"
+          },
+          "idCustomFieldGroup": {
+            "type": "string"
+          },
+          "modul": {
+            "type": "string"
+          },
+          "tableName": {
+            "type": "string"
+          },
+          "modulId": {
+            "type": "string"
+          },
+          "nilai": {
+            "type": "string"
+          },
+          "nilaiJson": {
+            "type": "string"
+          },
+          "kodeField": {
+            "type": "string"
+          },
+          "labelField": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idCustomFieldValue",
+          "idCustomField",
+          "modulId"
+        ]
+      },
+      "ToolsCustomFieldValueReportDto": {
+        "type": "object",
+        "properties": {
+          "idCustomFieldValue": {
+            "type": "string"
+          },
+          "idCustomField": {
+            "type": "string"
+          },
+          "idCustomFieldGroup": {
+            "type": "string"
+          },
+          "modul": {
+            "type": "string"
+          },
+          "tableName": {
+            "type": "string"
+          },
+          "modulId": {
+            "type": "string"
+          },
+          "nilai": {
+            "type": "string"
+          },
+          "nilaiJson": {
+            "type": "string"
+          },
+          "kodeField": {
+            "type": "string"
+          },
+          "labelField": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idCustomFieldValue",
+          "idCustomField",
+          "modulId"
+        ]
+      },
+      "ToolsCustomFieldValueWidgetDto": {
+        "type": "object",
+        "properties": {
+          "idCustomFieldValue": {
+            "type": "string"
+          },
+          "idCustomField": {
+            "type": "string"
+          },
+          "idCustomFieldGroup": {
+            "type": "string"
+          },
+          "modul": {
+            "type": "string"
+          },
+          "tableName": {
+            "type": "string"
+          },
+          "modulId": {
+            "type": "string"
+          },
+          "nilai": {
+            "type": "string"
+          },
+          "nilaiJson": {
+            "type": "string"
+          },
+          "kodeField": {
+            "type": "string"
+          },
+          "labelField": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idCustomFieldValue",
+          "idCustomField",
+          "modulId"
         ]
       }
     }

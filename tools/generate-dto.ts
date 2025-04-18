@@ -5,6 +5,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as mysql from 'mysql2/promise';
 import * as minimist from 'minimist';
+import { capitalCase } from 'change-case';
 
 const args = minimist(process.argv.slice(2));
 const schemas = (args.db || '').split(',').filter(Boolean);
@@ -116,6 +117,7 @@ function pascalToSnake(str: string) {
                 type: mapMysqlToTs(col.DATA_TYPE),
                 isNullable: col.IS_NULLABLE === 'YES',
                 isPrimary: col.COLUMN_KEY === 'PRI',
+                isDefaultCurrent: (col.COLUMN_DEFAULT?.toUpperCase?.() === 'CURRENT_TIMESTAMP')
             }));
 
             const dtoContent = `import { ApiProperty } from '@nestjs/swagger';
@@ -134,7 +136,11 @@ ${fields.map(f => `  @ApiProperty({ required: ${!f.isNullable} })\n  ${f.name}: 
 export class ${entityClassName} {
 ${fields.map(f => {
                     const col = f.isPrimary ? '@PrimaryColumn' : '@Column';
-                    return `  ${col}({ name: '${f.dbName}' })\n  ${f.name}: ${f.type};`;
+                    const options = [`name: '${f.dbName}'`];
+                    if (!f.isPrimary && f.isNullable) options.push('nullable: true');
+                    if (f.isDefaultCurrent) options.push(`default: () => 'CURRENT_TIMESTAMP'`);
+
+                    return `  ${col}({ ${options.join(', ')} })\n  ${f.name}: ${f.type}${f.isNullable ? '' : ''};`;
                 }).join('\n\n')}
 }
 `;
@@ -272,12 +278,64 @@ export class ${widgetClassName} extends ${dtoClassName} {
 // });
 // `;
 
-//         fs.writeFileSync(providerPath, providerContent);
-//         console.log(`🔌 Generated database provider: ${providerFile}`);
+        // Tambahkan import ini di atas
+
+
+        
 
     }
 
+    // Tambahkan setelah semua DTO dan entity selesai dibuat
+    console.log('🔄 Syncing erp_acl.module...');
 
+    const moduleInserts: any[] = [];
+
+    for (const schema of dbList) {
+        const schemaAlias = schema.replace(/^erp_/, '');
+        const [tables] = await conn.query(`SELECT table_name FROM information_schema.tables WHERE table_schema = ?`, [schema]);
+
+        for (const tableRow of tables as any[]) {
+            const tableName = tableRow.TABLE_NAME;
+            const tablePascal = snakeToPascal(tableName);
+            const entityName = `${snakeToPascal(schemaAlias)}${tablePascal}`;
+
+            moduleInserts.push({
+                id_module: entityName,
+                kode_module: entityName,
+                nama_module: (tablePascal), // ClientUser → "Client User"
+                nama_tabel: tableName,
+                nama_db: schema,
+                deskripsi: null,
+                is_aktif: 1,
+                urutan: 0
+            });
+        }
+    }
+
+    // Hapus isi lama (optional)
+    await conn.query(`DELETE FROM erp_acl.module`);
+
+    // Insert ulang
+    for (const mod of moduleInserts) {
+        await conn.query(`
+        INSERT INTO erp_acl.module (
+            id_module, kode_module, nama_module,
+            nama_tabel, nama_db, deskripsi, is_aktif, urutan
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                mod.id_module,
+                mod.kode_module,
+                mod.nama_module,
+                mod.nama_tabel,
+                mod.nama_db,
+                mod.deskripsi,
+                mod.is_aktif,
+                mod.urutan
+            ]
+        );
+    }
+
+    console.log(`✅ Inserted ${moduleInserts.length} rows into erp_acl.module`);
     
 
     conn.end();

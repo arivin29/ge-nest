@@ -68,19 +68,21 @@ export class BaseQueryDtoSmart {
     include?: Record<string, any>;
 
     @ApiPropertyOptional({
-        type: 'object',
-        description: 'Filter untuk relasi/join',
-        example: {
-            contract: {
-                "status_kontrak": 'aktif'
+        type: 'array',
+        description: 'Filter + jenis JOIN (inner/left/right)',
+        example: [
+            {
+                contract: { status_kontrak: 'aktif' },
+                type: 'inner'
             },
-            client_site: {
-                kota: 'Jakarta'
+            {
+                client_site: { kota: 'Jakarta' },
+                type: 'left'
             }
-        },
-        additionalProperties: true,
-    }) 
-    joinWhere?: Record<string, any>;
+        ]
+    })
+    joinWhere?: Array<Record<string, any> & { type?: 'inner' | 'left' | 'right' }>;
+
 
     @ApiPropertyOptional({
         type: [String],

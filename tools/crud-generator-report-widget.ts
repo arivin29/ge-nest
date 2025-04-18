@@ -18,8 +18,10 @@ const tableName = nama;
 const className = pascalCase(moduleName);
 const serviceClassName = `${className}WidgetService`;
 const controllerClassName = `${className}WidgetController`;
+const schemaAlias = dbName.replace(/^erp_/, '');
+const schemaPascal = pascalCase(schemaAlias);
 
-const rootPath = path.resolve('src/modules', moduleName);
+const rootPath = path.resolve('src/modules', schemaAlias , moduleName);
 const controllerTarget = path.join(rootPath, `${moduleName}_widget.controller.ts`);
 const serviceTarget = path.join(rootPath, `${moduleName}_widget.service.ts`);
 const specTarget = path.join(rootPath, `${moduleName}_widget.service.spec.ts`);
@@ -30,8 +32,7 @@ const controllerTemplate = path.join(rootPathTemplate, 'templates', 'report_widg
 const serviceTemplate = path.join(rootPathTemplate, 'templates', 'report_widget_service.ejs'); 
 const specTemplate = path.join(rootPathTemplate, 'templates', 'report_widget_service.spec.ejs'); 
 
-const schemaAlias = dbName.replace(/^erp_/, '');
-const schemaPascal = pascalCase(schemaAlias);
+
 const dtoImport = `${schemaPascal}${className}Dto`;
 const dtoImport_widget = `${schemaPascal}${className}WidgetDto`;
 const entiryImport = `${schemaPascal}${className}`;

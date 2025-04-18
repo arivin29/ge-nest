@@ -8,45 +8,45 @@ export class PelangganFaktur {
   @Column({ name: 'id_invoice' })
   idInvoice: string;
 
-  @Column({ name: 'versi_faktur' })
+  @Column({ name: 'versi_faktur', nullable: true })
   versiFaktur: number;
 
-  @Column({ name: 'nomor_faktur' })
+  @Column({ name: 'nomor_faktur', nullable: true })
   nomorFaktur: string;
 
-  @Column({ name: 'tanggal_faktur' })
+  @Column({ name: 'tanggal_faktur', nullable: true })
   tanggalFaktur: string;
 
-  @Column({ name: 'nilai_faktur' })
+  @Column({ name: 'nilai_faktur', nullable: true })
   nilaiFaktur: number;
 
-  @Column({ name: 'status_pembayaran' })
+  @Column({ name: 'status_pembayaran', nullable: true })
   statusPembayaran: string;
 
-  @Column({ name: 'tanggal_pembayaran' })
+  @Column({ name: 'tanggal_pembayaran', nullable: true })
   tanggalPembayaran: string;
 
-  @Column({ name: 'metode_pembayaran' })
+  @Column({ name: 'metode_pembayaran', nullable: true })
   metodePembayaran: string;
 
-  @Column({ name: 'nomor_referensi_pembayaran' })
+  @Column({ name: 'nomor_referensi_pembayaran', nullable: true })
   nomorReferensiPembayaran: string;
 
-  @Column({ name: 'catatan' })
+  @Column({ name: 'catatan', nullable: true })
   catatan: string;
 
-  @Column({ name: 'file_faktur_url' })
+  @Column({ name: 'file_faktur_url', nullable: true })
   fileFakturUrl: string;
 
-  @Column({ name: 'created_by' })
+  @Column({ name: 'created_by', nullable: true })
   createdBy: string;
 
-  @Column({ name: 'updated_by' })
+  @Column({ name: 'updated_by', nullable: true })
   updatedBy: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 }

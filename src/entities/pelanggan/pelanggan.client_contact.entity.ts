@@ -8,33 +8,33 @@ export class PelangganClientContact {
   @Column({ name: 'id_client' })
   idClient: string;
 
-  @Column({ name: 'nama_contact' })
+  @Column({ name: 'nama_contact', nullable: true })
   namaContact: string;
 
-  @Column({ name: 'email' })
+  @Column({ name: 'email', nullable: true })
   email: string;
 
-  @Column({ name: 'telepon' })
+  @Column({ name: 'telepon', nullable: true })
   telepon: string;
 
-  @Column({ name: 'jabatan' })
+  @Column({ name: 'jabatan', nullable: true })
   jabatan: string;
 
-  @Column({ name: 'divisi' })
+  @Column({ name: 'divisi', nullable: true })
   divisi: string;
 
-  @Column({ name: 'jenis_contact' })
+  @Column({ name: 'jenis_contact', nullable: true })
   jenisContact: string;
 
-  @Column({ name: 'is_primary' })
+  @Column({ name: 'is_primary', nullable: true })
   isPrimary: boolean;
 
-  @Column({ name: 'catatan' })
+  @Column({ name: 'catatan', nullable: true })
   catatan: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 }

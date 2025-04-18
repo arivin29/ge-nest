@@ -11,15 +11,15 @@ export class PelangganContractSiteService {
   @Column({ name: 'id_service' })
   idService: string;
 
-  @Column({ name: 'deskripsi_service' })
+  @Column({ name: 'deskripsi_service', nullable: true })
   deskripsiService: string;
 
-  @Column({ name: 'spesifikasi_service' })
+  @Column({ name: 'spesifikasi_service', nullable: true })
   spesifikasiService: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 }

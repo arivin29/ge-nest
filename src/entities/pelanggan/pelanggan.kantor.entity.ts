@@ -8,30 +8,30 @@ export class PelangganKantor {
   @Column({ name: 'nama_kantor' })
   namaKantor: string;
 
-  @Column({ name: 'kode_kantor' })
+  @Column({ name: 'kode_kantor', nullable: true })
   kodeKantor: string;
 
-  @Column({ name: 'alamat' })
+  @Column({ name: 'alamat', nullable: true })
   alamat: string;
 
-  @Column({ name: 'kota' })
+  @Column({ name: 'kota', nullable: true })
   kota: string;
 
-  @Column({ name: 'provinsi' })
+  @Column({ name: 'provinsi', nullable: true })
   provinsi: string;
 
-  @Column({ name: 'is_pusat' })
+  @Column({ name: 'is_pusat', nullable: true })
   isPusat: boolean;
 
-  @Column({ name: 'is_aktif' })
+  @Column({ name: 'is_aktif', nullable: true })
   isAktif: boolean;
 
-  @Column({ name: 'catatan' })
+  @Column({ name: 'catatan', nullable: true })
   catatan: string;
 
-  @Column({ name: 'created_at' })
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ name: 'updated_at' })
+  @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 }
