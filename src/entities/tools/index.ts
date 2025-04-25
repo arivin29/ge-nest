@@ -1,10 +1,8 @@
 import { ToolsCustomField } from './tools.custom_field.entity';
 import { ToolsCustomFieldGroup } from './tools.custom_field_group.entity';
 import { ToolsCustomFieldValue } from './tools.custom_field_value.entity';
-import { ToolsDataFlow } from './tools.data_flow.entity';
-import { ToolsDataFlowDetail } from './tools.data_flow_detail.entity';
-import { ToolsDataFlowLog } from './tools.data_flow_log.entity';
-import { ToolsLogFlow } from './tools.log_flow.entity';
+import { ToolsDocumentNumbering } from './tools.document_numbering.entity';
+import { ToolsDocumentNumberingCounter } from './tools.document_numbering_counter.entity';
 import { ToolsMasterNotifikasi } from './tools.master_notifikasi.entity';
 import { ToolsNotifikasi } from './tools.notifikasi.entity';
 import { ToolsWorkflow } from './tools.workflow.entity';
@@ -16,10 +14,8 @@ export const ToolsEntities = [
   ToolsCustomField,
   ToolsCustomFieldGroup,
   ToolsCustomFieldValue,
-  ToolsDataFlow,
-  ToolsDataFlowDetail,
-  ToolsDataFlowLog,
-  ToolsLogFlow,
+  ToolsDocumentNumbering,
+  ToolsDocumentNumberingCounter,
   ToolsMasterNotifikasi,
   ToolsNotifikasi,
   ToolsWorkflow,
@@ -31,10 +27,8 @@ export const ToolsEntities = [
 export * from './tools.custom_field.entity';
 export * from './tools.custom_field_group.entity';
 export * from './tools.custom_field_value.entity';
-export * from './tools.data_flow.entity';
-export * from './tools.data_flow_detail.entity';
-export * from './tools.data_flow_log.entity';
-export * from './tools.log_flow.entity';
+export * from './tools.document_numbering.entity';
+export * from './tools.document_numbering_counter.entity';
 export * from './tools.master_notifikasi.entity';
 export * from './tools.notifikasi.entity';
 export * from './tools.workflow.entity';

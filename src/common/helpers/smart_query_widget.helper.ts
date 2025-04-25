@@ -10,16 +10,39 @@ export class SmartQueryWidget {
 
     async run(input: SmartQueryInputWidget): Promise<any[]> {
         const qb = this.dataSource.createQueryBuilder(this.table, this.alias);
-
+         
         // WHERE
         if (input.where) {
             Object.entries(input.where).forEach(([key, val]) => {
-                const col = `${this.alias}.${key}`;
-                const paramKey = `where_${key}`;
-                console.log(input.where)
+                const dbField = camelToSnake(key);
+                const col = `${this.alias}.${dbField}`;
+                const paramKey = `where_${dbField}`;
 
-                if (val && typeof val === 'object' && !Array.isArray(val)) {
+                if (val === null) {
+                    qb.andWhere(`${col} IS NOT NULL`);
+                    return;
+                }
+
+                if (typeof val !== 'object' || Array.isArray(val)) {
+                    qb.andWhere(`${col} = :${paramKey}`, { [paramKey]: val });
+                    return;
+                }
+
+                
+
+                if (val && typeof val === 'object' && !Array.isArray(val)) { 
+                    
                     Object.entries(val).forEach(([op, v]) => {
+                        let conditionCol = col;
+                        const keyName = `${paramKey}_${op}`;
+
+                        // 👇 Deteksi operator waktu
+                        if (['date', 'month', 'year', 'day'].includes(op)) {
+                            conditionCol = `${op.toUpperCase()}(${col})`;
+                            qb.andWhere(`${conditionCol} = :${keyName}`, { [keyName]: v });
+                            return;
+                        }
+                        
                         switch (op) {
                             case 'eq':
                                 qb.andWhere(`${col} = :${paramKey}`, { [paramKey]: v });
@@ -60,36 +83,58 @@ export class SmartQueryWidget {
             });
         }
 
-        if (input.joinWhere) {
-            Object.keys(input.joinWhere).forEach((joinName) => {
-                const pk = `id_${joinName}`;
-                const fk = `${this.alias}.${pk}`;
-                qb.innerJoin(joinName, joinName, `${joinName}.${pk} = ${fk}`);
+        if (input.joinWhere && Array.isArray(input.joinWhere)) {
+            input.joinWhere.forEach((joinItem) => {
+                const [joinName, filterObj] = Object.entries(joinItem).find(([k]) => k !== 'type')!;
+                const joinType = (joinItem.type || 'inner').toUpperCase();
+                const joinAlias = joinName;
+                const joinKey = `id_${joinName}`;
+                const baseKey = `id_${this.table}`;
+
+                if (joinType === 'WHEREIN') {
+                    // ✅ Generate WHERE IN (SELECT...) for subquery filter
+                    const subAlias = `sub_${joinAlias}`;
+                    const subWhere: string[] = [];
+                    const subParams: Record<string, any> = {};
+
+                    Object.entries(filterObj || {}).forEach(([field, value], idx) => {
+                        const paramKey = `${joinAlias}_${camelToSnake(field)}`;
+                        subWhere.push(`${subAlias}.${camelToSnake(field)} = :${paramKey}`);
+                        subParams[paramKey] = value;
+                    });
+
+                    const subquery = qb.subQuery()
+                        .select(`${subAlias}.${baseKey}`)
+                        .from(joinName, subAlias)
+                        .where(subWhere.join(' AND '))
+                        .getQuery();
+
+                    qb.andWhere(`${this.alias}.${baseKey} IN ${subquery}`, subParams);
+                } else {
+                    // ✅ Default JOIN + WHERE
+                    const pk = `id_${joinName}`;
+                    const fk = `${this.alias}.${pk}`;
+                    qb.innerJoin(joinName, joinAlias, `${joinAlias}.${pk} = ${fk}`);
+
+                    Object.entries(filterObj || {}).forEach(([key, value]) => {
+                        if (value !== undefined && value !== null && value !== '') {
+                            const paramKey = `${joinAlias}_${camelToSnake(key)}`;
+                            qb.andWhere(`${joinAlias}.${camelToSnake(key)} = :${paramKey}`, {
+                                [paramKey]: value,
+                            });
+                        }
+                    });
+                }
             });
         }
 
-        // JOIN WHERE (alias join)
-        if (input.joinWhere) {
-            Object.entries(input.joinWhere).forEach(([joinName, filterObj]) => {
-                Object.entries(filterObj).forEach(([key, value]) => {
-                    if (value !== undefined && value !== null && value !== '') {
-                        const paramKey = `${joinName}_${key}`;
-                        qb.andWhere(`${joinName}.${key} = :${paramKey}`, {
-                            [paramKey]: value,
-                        });
-                    }
-                });
-            });
-            
-             
-        }
 
         // GROUP BY
-        if (input.groupBy && Array.isArray(input.groupBy)) {
-            input.groupBy.forEach((field) => {
-                qb.addGroupBy(`${this.alias}.${field}`);
-            });
-        } 
+        // if (input.groupBy && Array.isArray(input.groupBy)) {
+        //     input.groupBy.forEach((field) => {
+        //         qb.addGroupBy(`${this.alias}.${field}`);
+        //     });
+        // } 
  
         // SELECT
         if (input.select && Array.isArray(input.select)) {
@@ -97,35 +142,51 @@ export class SmartQueryWidget {
            
 
             qb.select([]); // ⬅️ Clear all default selects first
-            input.select.forEach((sel,i) => {
-                const { type, field, alias } = sel;
-                qb.addSelect(`${type.toUpperCase()}(${this.alias}.${field})`, alias);
+            input.select.forEach(({ type, field, alias }) => {
+                const [func, rawField] = field.includes('.') ? field.split('.') : [null, field];
+                const snake = camelToSnake(rawField);
+                const col = `${this.alias}.${snake}`;
+                const selectExpr = func ? `${func.toUpperCase()}(${col})` : `${type.toUpperCase()}(${col})`;
+
+                qb.addSelect(selectExpr, alias);
             });
+
+            // Tambahkan select untuk setiap groupBy (jika belum di-select)
             if (input.groupBy && Array.isArray(input.groupBy)) {
-                input.groupBy.forEach((field,i) => {
-                    if (i == 0)
-                    {
-                        qb.addSelect(`${this.alias}.${field}`, 'status'); // <-- ini penting!
-                    }
-                    else
-                    {
-                        qb.addSelect(`${this.alias}.${field}`, field); // <-- ini penting!
-                    }
-                    
+                input.groupBy.forEach((field, i) => {
+                    const [func, rawField] = field.includes('.') ? field.split('.') : [null, field];
+                    const snake = camelToSnake(rawField);
+                    const col = `${this.alias}.${snake}`;
+                    const expr = func ? `${func.toUpperCase()}(${col})` : col;
+
+                    // ⬇️ Inject select juga agar sama (misal "status")
+                    const aliasName = i === 0 ? 'status' : snake;
+                    qb.addSelect(expr, aliasName);  // ✅ inject SELECT for groupBy
+                    qb.addGroupBy(expr);            // ✅ GROUP BY expression
                 });
             }
         }
 
         const [sql, params] = qb.getQueryAndParameters(); 
-
+        // console.log('sql ', sql)
         // ORDER
         // ORDER
         if (input.order?.by) {
             const direction = (input.order.direction ?? 'ASC').toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
-            qb.orderBy(`${this.alias}.${input.order.by}`, direction);
+            // qb.orderBy(`${this.alias}.${input.order.by}`, direction);
+            const [fn, rawField] = input.order.by.includes('.') ? input.order.by.split('.') : [null, input.order.by];
+            const snake = camelToSnake(rawField);
+            const col = `${this.alias}.${snake}`;
+            const orderExpr = fn ? `${fn.toUpperCase()}(${col})` : rawField; // ✅ rawField alias langsung
+
+            qb.orderBy(orderExpr, direction);
         }
         
 
         return await qb.getRawMany();
     }
+}
+
+function camelToSnake(str: string): string {
+    return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 }

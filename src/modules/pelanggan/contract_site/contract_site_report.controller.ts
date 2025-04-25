@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ContractSiteService } from './contract_site.service';
+import { ContractSiteService } from '../contract_site/contract_site.service';
 import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper';
@@ -24,7 +24,7 @@ export class ContractSiteReportController {
   
         const parsed: SmartQueryInput = {
             where: source.filter ?? {},
-            joinWhere: (source as any).joinWhere ?? {},
+            joinWhere: (source as any).joinWhere ?? [],
             fsearch: (source as any).search_keyword
                 ? {
                     keyword: (source as any).search_keyword,

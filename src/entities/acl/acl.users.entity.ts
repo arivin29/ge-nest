@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'users', schema: 'erp_acl' })
@@ -8,8 +9,9 @@ export class AclUsers {
   @Column({ name: 'email' })
   email: string;
 
-  @Column({ name: 'password' })
-  password: string;
+  @Column({ name: 'password', nullable: true })
+  @Exclude()
+    password: string;
 
   @Column({ name: 'nama', nullable: true })
   nama: string;

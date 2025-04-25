@@ -8,7 +8,7 @@ export class AclUsersDto {
   @ApiProperty({ required: true })
   email: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   password: string;
 
   @ApiProperty({ required: false })

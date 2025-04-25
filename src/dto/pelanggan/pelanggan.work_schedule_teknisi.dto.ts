@@ -18,6 +18,9 @@ export class PelangganWorkScheduleTeknisiDto {
   peran: string;
 
   @ApiProperty({ required: false })
+  fee: number;
+
+  @ApiProperty({ required: false })
   catatan: string;
 
   @ApiProperty({ required: false })

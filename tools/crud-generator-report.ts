@@ -10,7 +10,7 @@ const args = yargs(hideBin(process.argv))
     .option('fromTable', { type: 'string', demandOption: true })
     .option('nama', { type: 'string', demandOption: true })
     .option('db', { type: 'string', demandOption: true })
-    .option('router', { type: 'string', choices: ['auth', 'nonauth'], default: 'auth' })
+    .option('router', { type: 'string', default: 'auth' })
     .argv as any;
 
 const routerGroup = args.router;

@@ -8,19 +8,19 @@ export class PelangganContract {
   @Column({ name: 'id_client' })
   idClient: string;
 
-  @Column({ name: 'nomor_kontrak', nullable: true })
+  @Column({ name: 'nomor_kontrak' })
   nomorKontrak: string;
 
   @Column({ name: 'tanggal_kontrak', nullable: true })
   tanggalKontrak: string;
 
-  @Column({ name: 'tanggal_mulai', nullable: true })
+  @Column({ name: 'tanggal_mulai' })
   tanggalMulai: string;
 
-  @Column({ name: 'tanggal_akhir', nullable: true })
+  @Column({ name: 'tanggal_akhir' })
   tanggalAkhir: string;
 
-  @Column({ name: 'durasi_bulan', nullable: true })
+  @Column({ name: 'durasi_bulan' })
   durasiBulan: number;
 
   @Column({ name: 'status_contract', nullable: true })
@@ -38,7 +38,7 @@ export class PelangganContract {
   @Column({ name: 'presentase_fee', nullable: true })
   presentaseFee: number;
 
-  @Column({ name: 'nilai_kontrak', nullable: true })
+  @Column({ name: 'nilai_kontrak' })
   nilaiKontrak: number;
 
   @Column({ name: 'nilai_diawal', nullable: true })
@@ -65,10 +65,10 @@ export class PelangganContract {
   @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 
-  @Column({ name: 'id_contract_jenis', nullable: true })
+  @Column({ name: 'id_contract_jenis' })
   idContractJenis: string;
 
-  @Column({ name: 'id_kantor', nullable: true })
+  @Column({ name: 'id_kantor' })
   idKantor: string;
 
   @Column({ name: 'id_document', nullable: true })

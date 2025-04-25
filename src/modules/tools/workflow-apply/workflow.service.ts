@@ -7,7 +7,8 @@ import { updateDynamicTableRow } from './helpers/smart-table.helper';
 import { Repository } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { AclUsers } from 'src/entities/acl';
-import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid'; 
+import { RedisPublishHelperPenormoran } from 'src/common/redis/penomoram/redis-publish.helper';
 
 @Injectable()
 export class WorkflowService {
@@ -26,6 +27,8 @@ export class WorkflowService {
 
         @InjectRepository(AclUsers, 'acl')
         private readonly userRepo: Repository<AclUsers>,
+
+        private redisPublishHelperPenormoran: RedisPublishHelperPenormoran
 
     ) { }
 
@@ -94,6 +97,14 @@ export class WorkflowService {
         aggregator.lastApprovalStatus = status === 'reject' ? 'rejected' : nextStep ? 'in_progress' : 'done';
 
         await this.aggregatorRepo.save(aggregator);
+
+
+        await this.redisPublishHelperPenormoran.publishDocumentNumberingEvent({
+            forModule: from_module,
+            forModuleId: from_module_id,
+            id_users: user_id, // ambil dari context
+            trigger: 'workflow',
+        });
 
         return {
             log,

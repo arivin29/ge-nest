@@ -23,6 +23,21 @@ export class PelangganWorkSchedule {
   @Column({ name: 'keterangan', nullable: true })
   keterangan: string;
 
+  @Column({ name: 'nomor_work_schedule', nullable: true })
+  nomorWorkSchedule: string;
+
+  @Column({ name: 'id_user', nullable: true })
+  idUser: string;
+
+  @Column({ name: 'start_working', nullable: true })
+  startWorking: string;
+
+  @Column({ name: 'end_working', nullable: true })
+  endWorking: string;
+
+  @Column({ name: 'duration_working', nullable: true })
+  durationWorking: number;
+
   @Column({ name: 'created_by', nullable: true })
   createdBy: string;
 
@@ -34,4 +49,10 @@ export class PelangganWorkSchedule {
 
   @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
+
+  @Column({ name: 'id_client', nullable: true })
+  idClient: string;
+
+  @Column({ name: 'id_contract', nullable: true })
+  idContract: string;
 }

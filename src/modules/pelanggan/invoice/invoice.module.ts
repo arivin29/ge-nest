@@ -9,7 +9,7 @@ import { InvoiceReportController } from './invoice_report.controller';
  
 @Module({
   imports: [TypeOrmModule.forFeature([PelangganInvoice],'pelanggan')],
-  controllers: [InvoiceController, InvoiceWidgetController, InvoiceReportController],
+  controllers: [InvoiceController, InvoiceReportController, InvoiceWidgetController],
   providers: [InvoiceService, InvoiceWidgetService],
 })
 export class InvoiceModule {}

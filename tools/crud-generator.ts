@@ -106,40 +106,44 @@ async function main() {
         console.log(`🔗 Router entry added to group '${routerGroup}'`);
     }
 
-    // ✅ Smart update app.module.ts
+    // ✅ Smart update app.module.ts ke dalam COM[]
     const APP_MODULE_PATH = path.join(__dirname, '../src/app.module.ts');
     const appModuleRaw = fs.readFileSync(APP_MODULE_PATH, 'utf-8');
 
     const appImport = `import { ${className}Module } from './modules/${schemaAlias}/${moduleName}/${moduleName}.module';`;
-    const importRegex = /^(import .+;\s*)+/m; 
+    const importRegex = /^(import .+;\s*)+/m;
 
     let updatedAppModule = appModuleRaw;
 
-    // ✅ 1. Inject import statement sebelum semua @Module
+    // ✅ 1. Inject import statement
     if (!appModuleRaw.includes(appImport)) {
         const importSection = appModuleRaw.match(importRegex)?.[0] ?? '';
         updatedAppModule = updatedAppModule.replace(importSection, `${importSection}${appImport}\n`);
     }
 
-    // ✅ 2. Inject ke dalam array `imports: [ ... ]`
-    const importMarker = 'PassportModule],';
-    if (updatedAppModule.includes(importMarker)) {
-        const [before, after] = updatedAppModule.split(importMarker);
+    // ✅ 2. Inject ke dalam COM = [ ... ];
+    const comArrayRegex = /const\s+COM\s*=\s*\[(.*?)\];/s;
 
-        const alreadyExists = before.includes(`${className}Module`);
-        if (!alreadyExists) {
-            // cari posisi akhir array imports: [ ... ]
-            const updatedBefore = before.replace(/imports\s*:\s*\[((.|\n)*?)\]$/, (match, p1) => {
-                return `imports: [${p1.trim()},\n  ${className}Module]`;
-            });
+    const matchCom = updatedAppModule.match(comArrayRegex);
+    if (matchCom) {
+        const original = matchCom[0];
+        const innerContent = matchCom[1].trim();
 
-            updatedAppModule = updatedBefore + importMarker + after;
+        const entries = innerContent ? innerContent.split(',').map(e => e.trim()).filter(Boolean) : [];
+        if (!entries.includes(`${className}Module`)) {
+            entries.push(`${className}Module`);
+            const newCom = `const COM = [\n  ${entries.join(',\n  ')}\n];`;
+            updatedAppModule = updatedAppModule.replace(comArrayRegex, newCom);
         }
     }
 
+    // Simpan hasilnya
+    fs.writeFileSync(APP_MODULE_PATH, updatedAppModule, 'utf-8');
+    console.log(`✅ ${className}Module ditambahkan ke COM dan import`);
 
-    fs.writeFileSync(APP_MODULE_PATH, updatedAppModule);
-    console.log('📦 app.module.ts updated with new module');
+
+    // fs.writeFileSync(APP_MODULE_PATH, updatedAppModule);
+    // console.log('📦 app.module.ts updated with new module');
 
       
   

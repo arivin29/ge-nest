@@ -9,7 +9,7 @@ import { ContractReportController } from './contract_report.controller';
  
 @Module({
   imports: [TypeOrmModule.forFeature([PelangganContract],'pelanggan')],
-  controllers: [ContractController, ContractReportController, ContractWidgetController, ContractWidgetController],
-  providers: [ContractService, ContractWidgetService, ContractWidgetService],
+  controllers: [ContractController, ContractReportController, ContractWidgetController],
+  providers: [ContractService, ContractWidgetService],
 })
 export class ContractModule {}

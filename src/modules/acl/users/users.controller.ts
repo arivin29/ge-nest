@@ -8,16 +8,16 @@ import {
     Delete,
     Query,
 } from '@nestjs/common';
-import { UsersService } from './users.service'; 
+import { UsersService } from './users.service';
 import { BaseRequestPipe } from 'src/common/pipes/base-request.pipe';
-import { ApiResponseHelper } from 'src/common/helpers/response.helper'; 
+import { ApiResponseHelper } from 'src/common/helpers/response.helper';
 import { ApiTags, ApiBody } from '@nestjs/swagger';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
 import { BaseQueryDto } from 'src/common/dto/base-query.dto';
 
-import { AclUsersDto } from 'src/dto/acl/acl.users.dto';; 
+import { AclUsersDto } from 'src/dto/acl/acl.users.dto';;
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
- 
+
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
@@ -29,7 +29,7 @@ export class UsersController {
     async findAll(@Query() query: BaseQueryDto) {
         const parsed = {
             pageIndex: parseInt(String(query.pageIndex ?? '1'), 10),
-            pageSize: parseInt(String(query.pageSize ?? '10'), 10),
+            pageSize: parseInt(String(query.pageSize ?? '1000'), 10),
             filter: query.filter ? JSON.parse(query.filter) : {},
             sortKey: query.sortKey,
             sortValue: query.sortValue,
@@ -39,7 +39,9 @@ export class UsersController {
 
         try {
             const result = await this.service.findAll(parsed);
-            return ApiResponseHelper.success(result.data, 'list', undefined, result.total);
+            const safeData = result.data.map(({ password, ...rest }) => rest);
+
+            return ApiResponseHelper.success(safeData, 'list', undefined, result.total);
         } catch (error) {
             return ApiResponseHelper.failed(null, 'Gagal mengambil data', 500, error);
         }
@@ -53,6 +55,9 @@ export class UsersController {
             if (!result) {
                 return ApiResponseHelper.failed(null, 'Data tidak ditemukan', 404);
             }
+            if (result) {
+                const { password, ...safeResult } = result;
+            }
             return ApiResponseHelper.success(result, 'get');
         } catch (error) {
             return ApiResponseHelper.failed(null, 'Terjadi kesalahan', 500, error);
@@ -60,7 +65,7 @@ export class UsersController {
     }
 
     @Post()
-    @ApiBody({ type: AclUsersDto }) 
+    @ApiBody({ type: AclUsersDto })
     @ApiResponseEntity(AclUsersDto, 'post')
     async create(@Body() body: AclUsersDto) {
         try {
@@ -75,7 +80,10 @@ export class UsersController {
     @ApiBody({ type: AclUsersDto })
     @ApiResponseEntity(AclUsersDto, 'put')
     async update(@Param('id') id: string, @Body() body: AclUsersDto) {
-        try {
+        try { 
+            if (body.password === undefined || body.password === null || body.password === ''){
+                delete (body as any).password;
+            }
             const result = await this.service.update(id, body);
             return ApiResponseHelper.success(result, 'update');
         } catch (error) {

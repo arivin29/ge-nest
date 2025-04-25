@@ -14,9 +14,10 @@ export class ContractWidgetController {
 
     @Post() 
     @ApiResponseEntity( PelangganContractWidgetDto, 'list')
-    async findAll( 
+    async findAll(
+        @Query() query: BaseWidgetQueryDto,
         @Body() body: BaseWidgetQueryDto
-    ) {  
+    ) {
         const parsed: SmartQueryInputWidget = {
             where: body.filter ?? {},
             joinWhere: body.joinWhere ?? {},

@@ -9,7 +9,7 @@ import { ClientReportController } from './client_report.controller';
  
 @Module({
   imports: [TypeOrmModule.forFeature([PelangganClient],'pelanggan')],
-  controllers: [ClientController, ClientWidgetController, ClientReportController],
+  controllers: [ClientController, ClientReportController, ClientWidgetController],
   providers: [ClientService, ClientWidgetService],
 })
 export class ClientModule {}

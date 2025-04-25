@@ -10,6 +10,7 @@ const MODULES_PATH = path.resolve(__dirname, '../src/modules');
 const TEMPLATES_PATH = path.resolve(__dirname, './templates');
 const TEMP_ENTITY_OUTPUT = path.resolve(__dirname, './__generated__/entities');
 
+
 async function generateEntityAndDtoOnly(table: string, moduleName: string, dbName: string) {
     const className = pascalCase(moduleName);
     const dbConfig = {

@@ -5,7 +5,7 @@ import { SelectQueryBuilder, Repository, ObjectLiteral } from 'typeorm';
 
 export interface SmartQueryInclude {
     name: string; // nama table/module
-    type: 'single' | 'array'; 
+    type: 'single' | 'array';
     to?: string; // optional: relasi ke parent (default: base alias)
     parent?: string; // optional: relasi ke parent (default: base alias)
     select?: string[]; // optional: relasi ke parent (default: base alias)
@@ -292,34 +292,122 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
             filterConditions.push(`${joinAlias}.${joinKey} IS NOT NULL`);
         }
 
-        const onClause = [
-            `${joinAlias}.${joinKey} = ${alias}.${joinKey}`,
-            ...filterConditions
-        ].join(' AND ');
+        if (joinType === 'WHEREIN') {
+            const subAlias = `sub_${joinAlias}`;
+            const fk = `${subAlias}.id_${table}`; // ex: sub_work_schedule_teknisi.id_work_schedule
+            const subWhere: string[] = [];
 
-        joins.push(`${joinType} JOIN erp_${schema}.${joinName} ${joinAlias} ON ${onClause}`);
+            Object.entries(filters || {}).forEach(([field, value], idx) => {
+                const paramKey = `${joinAlias}_${snakeCase(field)}`;
+                subWhere.push(`${subAlias}.${snakeCase(field)} = :${paramKey}`);
+                params[paramKey] = value;
+            });
+
+            const subquery = `SELECT ${fk} FROM erp_${schema}.${joinName} ${subAlias}${subWhere.length ? ' WHERE ' + subWhere.join(' AND ') : ''
+                }`;
+
+            whereClauses.push(`${alias}.id_${table} IN (${subquery})`);
+        } else {
+            const onClause = [
+                `${joinAlias}.${joinKey} = ${alias}.${joinKey}`,
+                ...filterConditions
+            ].join(' AND ');
+
+            joins.push(`${joinType} JOIN erp_${schema}.${joinName} ${joinAlias} ON ${onClause}`);
+        }
+
+
+        // const onClause = [
+        //     `${joinAlias}.${joinKey} = ${alias}.${joinKey}`,
+        //     ...filterConditions
+        // ].join(' AND ');
+
+        // joins.push(`${joinType} JOIN erp_${schema}.${joinName} ${joinAlias} ON ${onClause}`);
     });
 
     // WHEREs
     Object.entries(where).forEach(([field, value]) => {
         const dbField = camelToSnake(field); // 🔁 konversi ke snake_case
         const paramKey = `${alias}_${dbField}`;
+        const baseCol = `${alias}.${dbField}`; // kolom lengkap
+
 
         if (typeof value !== 'object' || value === null) {
-            whereClauses.push(`${alias}.${dbField} = :${paramKey}`);
-            params[paramKey] = value;
+            if (value) {
+                whereClauses.push(`${alias}.${dbField} = :${paramKey}`);
+                params[paramKey] = value;
+            }
+
         } else {
             Object.entries(value).forEach(([op, val]) => {
-                const key = `${paramKey}_${op}`;
+                let col = baseCol;
+                let key = `${paramKey}_${op}`; // sesuai pola awal
+
+                // 🧠 Fungsi waktu langsung (month, year, day, date)
+                if (['month', 'year', 'day', 'date'].includes(op)) {
+                    const func = op.toUpperCase();
+                    col = `${func}(${baseCol})`;
+                    key = `${paramKey}_${op}`; // tetap pakai _month atau _year
+                    whereClauses.push(`${col} = :${key}`);
+                    params[key] = val;
+                    return; // skip ke switch
+                }
+
                 switch (op) {
-                    case 'eq': whereClauses.push(`${alias}.${dbField} = :${key}`); params[key] = val; break;
-                    case 'ne': whereClauses.push(`${alias}.${dbField} != :${key}`); params[key] = val; break;
-                    case 'gt': whereClauses.push(`${alias}.${dbField} > :${key}`); params[key] = val; break;
-                    case 'gte': whereClauses.push(`${alias}.${dbField} >= :${key}`); params[key] = val; break;
-                    case 'lt': whereClauses.push(`${alias}.${dbField} < :${key}`); params[key] = val; break;
-                    case 'lte': whereClauses.push(`${alias}.${dbField} <= :${key}`); params[key] = val; break;
-                    case 'like': whereClauses.push(`${alias}.${dbField} LIKE :${key}`); params[key] = `%${val}%`; break;
-                    case 'in': whereClauses.push(`${alias}.${dbField} IN (:...${key})`); params[key] = val; break;
+                    case 'eq':
+                        whereClauses.push(`${col} = :${key}`);
+                        params[key] = val;
+                        break;
+                    case 'ne':
+                        whereClauses.push(`${col} != :${key}`);
+                        params[key] = val;
+                        break;
+                    case 'gt':
+                        whereClauses.push(`${col} > :${key}`);
+                        params[key] = val;
+                        break;
+                    case 'gte':
+                        whereClauses.push(`${col} >= :${key}`);
+                        params[key] = val;
+                        break;
+                    case 'lt':
+                        whereClauses.push(`${col} < :${key}`);
+                        params[key] = val;
+                        break;
+                    case 'lte':
+                        whereClauses.push(`${col} <= :${key}`);
+                        params[key] = val;
+                        break;
+                    case 'like':
+                        whereClauses.push(`${col} LIKE :${key}`);
+                        params[key] = `%${val}%`;
+                        break;
+                    case 'notLike':
+                        whereClauses.push(`${col} NOT LIKE :${key}`);
+                        params[key] = `%${val}%`;
+                        break;
+                    case 'in':
+                        whereClauses.push(`${col} IN (:...${key})`);
+                        params[key] = val;
+                        break;
+                    case 'notIn':
+                        whereClauses.push(`${col} NOT IN (:...${key})`);
+                        params[key] = val;
+                        break;
+                    case 'isNull':
+                        whereClauses.push(`${col} IS NULL`);
+                        break;
+                    case 'isNotNull':
+                        whereClauses.push(`${col} IS NOT NULL`);
+                        break;
+                    case 'between':
+                        const [from, to] = val as [any, any];
+                        whereClauses.push(`${col} BETWEEN :${key}_from AND :${key}_to`);
+                        params[`${key}_from`] = from;
+                        params[`${key}_to`] = to; 
+                        break;
+                    default:
+                        console.warn(`[Unknown Operator] ${op} in ${field}`);
                 }
             });
         }
@@ -327,10 +415,23 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
 
     // Fuzzy search
     if (fsearch?.keyword && fsearch.fields?.length > 0) {
-        const fuzzy = fsearch.fields.map((field, i) => `${alias}.${field} LIKE :fuzzy_${i}`);
+        const fuzzy = fsearch.fields.map((field, i) => {
+            let aliasPart = alias; // default alias (tabel utama)
+            let columnPart = field;
+
+            if (field.includes('.')) {
+                const [customAlias, column] = field.split('.');
+                aliasPart = customAlias;
+                columnPart = column;
+            }
+
+            return `${aliasPart}.${camelToSnake(columnPart)} LIKE :fuzzy_${i}`;
+        });
+
         fsearch.fields.forEach((_, i) => {
             params[`fuzzy_${i}`] = `%${fsearch.keyword}%`;
         });
+
         whereClauses.push(`(${fuzzy.join(' OR ')})`);
     }
 

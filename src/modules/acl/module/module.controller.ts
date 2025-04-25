@@ -29,7 +29,7 @@ export class ModuleController {
     async findAll(@Query() query: BaseQueryDto) {
         const parsed = {
             pageIndex: parseInt(String(query.pageIndex ?? '1'), 10),
-            pageSize: parseInt(String(query.pageSize ?? '10'), 10),
+            pageSize: parseInt(String(query.pageSize ?? '1000'), 10),
             filter: query.filter ? JSON.parse(query.filter) : {},
             sortKey: query.sortKey,
             sortValue: query.sortValue,
@@ -49,7 +49,8 @@ export class ModuleController {
     @ApiResponseEntity(AclModuleDto, 'get')
     async findOne(@Param('id') id: string) {
         try {
-            const result = await this.service.findOne(id);
+            const result = await this.service.findSATU(id);
+            // console.log(result)
             if (!result) {
                 return ApiResponseHelper.failed(null, 'Data tidak ditemukan', 404);
             }

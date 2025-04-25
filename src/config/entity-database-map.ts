@@ -90,18 +90,6 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "contract_site_service"
     ]
   },
-  "PelangganCustomField": {
-    "db": "pelanggan",
-    "aliases": [
-      "custom_field"
-    ]
-  },
-  "PelangganCustomFieldValue": {
-    "db": "pelanggan",
-    "aliases": [
-      "custom_field_value"
-    ]
-  },
   "PelangganFaktur": {
     "db": "pelanggan",
     "aliases": [
@@ -124,6 +112,12 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
     "db": "pelanggan",
     "aliases": [
       "service"
+    ]
+  },
+  "PelangganTeknisi": {
+    "db": "pelanggan",
+    "aliases": [
+      "teknisi"
     ]
   },
   "PelangganWorkSchedule": {
@@ -156,28 +150,16 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "custom_field_value"
     ]
   },
-  "ToolsDataFlow": {
+  "ToolsDocumentNumbering": {
     "db": "tools",
     "aliases": [
-      "data_flow"
+      "document_numbering"
     ]
   },
-  "ToolsDataFlowDetail": {
+  "ToolsDocumentNumberingCounter": {
     "db": "tools",
     "aliases": [
-      "data_flow_detail"
-    ]
-  },
-  "ToolsDataFlowLog": {
-    "db": "tools",
-    "aliases": [
-      "data_flow_log"
-    ]
-  },
-  "ToolsLogFlow": {
-    "db": "tools",
-    "aliases": [
-      "log_flow"
+      "document_numbering_counter"
     ]
   },
   "ToolsMasterNotifikasi": {

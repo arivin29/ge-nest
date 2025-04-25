@@ -24,6 +24,21 @@ export class PelangganWorkScheduleDto {
   keterangan: string;
 
   @ApiProperty({ required: false })
+  nomorWorkSchedule: string;
+
+  @ApiProperty({ required: false })
+  idUser: string;
+
+  @ApiProperty({ required: false })
+  startWorking: string;
+
+  @ApiProperty({ required: false })
+  endWorking: string;
+
+  @ApiProperty({ required: false })
+  durationWorking: number;
+
+  @ApiProperty({ required: false })
   createdBy: string;
 
   @ApiProperty({ required: false })
@@ -34,4 +49,10 @@ export class PelangganWorkScheduleDto {
 
   @ApiProperty({ required: false })
   updatedAt: string;
+
+  @ApiProperty({ required: false })
+  idClient: string;
+
+  @ApiProperty({ required: false })
+  idContract: string;
 }

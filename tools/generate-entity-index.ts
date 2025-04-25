@@ -8,6 +8,21 @@ const dataSourceMapPath = path.resolve(__dirname, '../src/config/data-source-map
 const entityDbMap: Record<string, { db: string; aliases: string[] }> = {};
 const dataSourceImports: string[] = [];
 const dataSourceEntries: string[] = [];
+function injectExcludeToPasswordField(entityPath: string) {
+    let content = fs.readFileSync(entityPath, 'utf-8');
+
+    if (content.includes('password: string')) {
+        if (!content.includes(`import { Exclude } from 'class-transformer'`)) {
+            content = `import { Exclude } from 'class-transformer';\n` + content;
+        }
+        content = content.replace(
+            /(\@Column\([^)]*\)\s+)(password: string;)/,
+            '$1@Exclude()\n    $2'
+        );
+        fs.writeFileSync(entityPath, content, 'utf-8');
+        console.log(`🔒 Injected @Exclude() to password field in ${entityPath}`);
+    }
+}
 
 function generateIndexForSchema(schemaName: string) {
     const folderPath = path.join(baseDir, schemaName);
@@ -31,6 +46,9 @@ function generateIndexForSchema(schemaName: string) {
         const entityNameBase = fileBase.replace('.entity', '');
         const className = pascalCase(entityNameBase);
         const relativePath = `./${fileBase}`;
+
+        const fullEntityPath = path.join(folderPath, file);
+        injectExcludeToPasswordField(fullEntityPath);
 
         importLines.push(`import { ${className} } from '${relativePath}';`);
         exportLines.push(`export * from '${relativePath}';`);

@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import * as fs from 'fs';
+import { StripAuditFieldsInterceptor } from './common/middleware/strip-audit-fields.interceptor';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -22,7 +23,8 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document); // akses di /api
 
     fs.writeFileSync('./swagger.json', JSON.stringify(document, null, 2));
-
-    await app.listen(process.env.PORT ?? 4000);
+    app.useGlobalInterceptors(new StripAuditFieldsInterceptor());
+    
+    await app.listen(process.env.PORT ?? 4002);
 }
 bootstrap();

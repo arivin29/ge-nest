@@ -80,7 +80,7 @@ function pascalToSnake(str: string) {
     });
 
     const [dbs] = await conn.query(`SHOW DATABASES`);
-    const excludeSchemas = ['erp_sensor', 'erp_sensor_analisa', 'erp_user'];
+    const excludeSchemas = ['erp_sensor', 'erp_sensor_analisa', 'erp_user','erp_amims'];
 
     const dbList = (dbs as any[])
         .map((d) => d.Database)
@@ -195,7 +195,7 @@ ${fields.map(f => {
                 dbName: col.COLUMN_NAME,
                 type: mapMysqlToTs(col.DATA_TYPE),
                 isNullable: col.IS_NULLABLE === 'YES',
-                isPrimary: col.COLUMN_KEY === 'PRI',
+                isPrimary: (col.COLUMN_KEY === 'PRI' || col.COLUMN_NAME == `id_${table}`),
             }));
  
 

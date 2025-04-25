@@ -28,8 +28,6 @@ export class ContractSiteWidgetController {
             groupBy: body.groupBy ?? [],
         };
 
-        console.log('parsed', parsed)
-
         const result = await this.service.findAllWidget(parsed);
         return ApiResponseHelper.success(result.data, 'list', undefined, result.total);
     }

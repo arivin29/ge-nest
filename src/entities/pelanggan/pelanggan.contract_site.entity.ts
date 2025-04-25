@@ -23,6 +23,9 @@ export class PelangganContractSite {
   @Column({ name: 'biaya_akhir', nullable: true })
   biayaAkhir: number;
 
+  @Column({ name: 'nilai_total', nullable: true })
+  nilaiTotal: number;
+
   @Column({ name: 'jumlah_jadwal_per_bulan', nullable: true })
   jumlahJadwalPerBulan: number;
 
