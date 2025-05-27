@@ -8,19 +8,19 @@ export class PelangganContractDto {
   @ApiProperty({ required: true })
   idClient: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   nomorKontrak: string;
 
   @ApiProperty({ required: false })
   tanggalKontrak: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   tanggalMulai: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   tanggalAkhir: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   durasiBulan: number;
 
   @ApiProperty({ required: false })
@@ -38,7 +38,7 @@ export class PelangganContractDto {
   @ApiProperty({ required: false })
   presentaseFee: number;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   nilaiKontrak: number;
 
   @ApiProperty({ required: false })
@@ -65,10 +65,10 @@ export class PelangganContractDto {
   @ApiProperty({ required: false })
   updatedAt: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   idContractJenis: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: true })
   idKantor: string;
 
   @ApiProperty({ required: false })

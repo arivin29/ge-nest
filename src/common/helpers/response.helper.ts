@@ -1,3 +1,5 @@
+import { HttpException } from "@nestjs/common";
+
 export class ApiResponseHelper {
     static success(
         data: any,
@@ -45,6 +47,7 @@ export class ApiResponseHelper {
             response.error = typeof errorDetail === 'string' ? errorDetail : errorDetail?.message;
         }
 
-        return response;
+        throw new HttpException(response, code);
+        // return response;
     }
 }

@@ -36,7 +36,7 @@ export class DocumentController {
     async findAll(@Query() query: BaseQueryDto) {
         const parsed = {
             pageIndex: parseInt(String(query.pageIndex ?? '1'), 10),
-            pageSize: parseInt(String(query.pageSize ?? '10'), 10),
+            pageSize: parseInt(String(query.pageSize ?? '1000'), 10),
             filter: query.filter ? JSON.parse(query.filter) : {},
             sortKey: query.sortKey,
             sortValue: query.sortValue,

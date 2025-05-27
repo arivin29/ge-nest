@@ -24,6 +24,9 @@ export class PelangganContractSiteDto {
   biayaAkhir: number;
 
   @ApiProperty({ required: false })
+  nilaiTotal: number;
+
+  @ApiProperty({ required: false })
   jumlahJadwalPerBulan: number;
 
   @ApiProperty({ required: false })

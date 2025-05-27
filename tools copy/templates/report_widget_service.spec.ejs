@@ -1,0 +1,25 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { <%= className %>WidgetService } from './<%= moduleName %>_widget.service';
+import { DataSource } from 'typeorm';
+
+describe('<%= className %>WidgetService', () => {
+  let service: <%= className %>WidgetService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        <%= className %>WidgetService,
+        {
+          provide: DataSource,
+          useValue: {}, // Mocked DataSource
+        },
+      ],
+    }).compile();
+
+    service = module.get<<%= className %>WidgetService>(<%= className %>WidgetService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});

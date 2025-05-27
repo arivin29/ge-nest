@@ -14,6 +14,9 @@ export class PelangganContactClientUse {
   @Column({ name: 'from_module_id' })
   fromModuleId: string;
 
+  @Column({ name: 'from_module_object', nullable: true })
+  fromModuleObject: string;
+
   @Column({ name: 'peran', nullable: true })
   peran: string;
 

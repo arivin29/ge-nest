@@ -8,6 +8,45 @@ const dataSourceMapPath = path.resolve(__dirname, '../src/config/data-source-map
 const entityDbMap: Record<string, { db: string; aliases: string[] }> = {};
 const dataSourceImports: string[] = [];
 const dataSourceEntries: string[] = [];
+function injectExcludeToPasswordField(entityPath: string) {
+    let content = fs.readFileSync(entityPath, 'utf-8');
+
+    if (content.includes('password: string')) {
+        if (!content.includes(`import { Exclude } from 'class-transformer'`)) {
+            content = `import { Exclude } from 'class-transformer';\n` + content;
+        }
+        content = content.replace(
+            /(\@Column\([^)]*\)\s+)(password: string;)/,
+            '$1@Exclude()\n    $2'
+        );
+        fs.writeFileSync(entityPath, content, 'utf-8');
+        console.log(`🔒 Injected @Exclude() to password field in ${entityPath}`);
+    }
+}
+
+function fixAmimsStockPrimaryColumn(entityPath: string) {
+    if (!fs.existsSync(entityPath)) return;
+
+    let content = fs.readFileSync(entityPath, 'utf-8');
+
+    if (content.includes(`@Column({ name: 'id_mpart' })`)) {
+        content = content.replace(
+            `@Column({ name: 'id_mpart' })`,
+            `@PrimaryColumn({ name: 'id_mpart' })`
+        );
+
+        if (!content.includes(`import { PrimaryColumn } from 'typeorm';`)) {
+            content = content.replace(
+                `import { Column, Entity`,
+                `import { Column, Entity, PrimaryColumn`
+            );
+        }
+
+        fs.writeFileSync(entityPath, content, 'utf-8');
+        console.log(`🛠️  Fixed @PrimaryColumn on id_mpart in ${entityPath}`);
+    }
+}
+
 
 function generateIndexForSchema(schemaName: string) {
     const folderPath = path.join(baseDir, schemaName);
@@ -31,6 +70,16 @@ function generateIndexForSchema(schemaName: string) {
         const entityNameBase = fileBase.replace('.entity', '');
         const className = pascalCase(entityNameBase);
         const relativePath = `./${fileBase}`;
+
+        const fullEntityPath = path.join(folderPath, file);
+        injectExcludeToPasswordField(fullEntityPath);
+
+
+        // Tambahan fix khusus amims.stock
+        if (file === 'amims.stock.entity.ts') {
+            fixAmimsStockPrimaryColumn(fullEntityPath);
+        }
+
 
         importLines.push(`import { ${className} } from '${relativePath}';`);
         exportLines.push(`export * from '${relativePath}';`);

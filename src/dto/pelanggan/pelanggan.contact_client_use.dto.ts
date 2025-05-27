@@ -15,6 +15,9 @@ export class PelangganContactClientUseDto {
   fromModuleId: string;
 
   @ApiProperty({ required: false })
+  fromModuleObject: string;
+
+  @ApiProperty({ required: false })
   peran: string;
 
   @ApiProperty({ required: false })

@@ -17,6 +17,9 @@ export class PelangganWorkScheduleTeknisi {
   @Column({ name: 'peran', nullable: true })
   peran: string;
 
+  @Column({ name: 'fee', nullable: true })
+  fee: number;
+
   @Column({ name: 'catatan', nullable: true })
   catatan: string;
 

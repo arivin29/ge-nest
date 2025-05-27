@@ -91,7 +91,7 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
         if (sortKey && sortValue) {
             qb.orderBy(`e.${sortKey}`, sortValue.toUpperCase() as 'ASC' | 'DESC');
         }
-        // console.log(qb.getSql())
+        
         // Pagination
         const total = await qb.getCount();
         if (pageIndex !== undefined && pageSize !== undefined) {
@@ -99,7 +99,7 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
         } else {
             qb.take(100); // default no pagination max 100
         }
-
+        // console.log(qb.getSql())
         const data = await qb.getMany();
         return { data, total };
     }
@@ -136,12 +136,17 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
         }
 
         sanitizeEmptyStrings(data as any);
+        convertUtcDatesToLocal(data); // ✅ tambahkan ini
 
         return this.repo.save(data as any);
     }
 
-    update(id: any, data: D): Promise<T> {
-        return this.repo.save({ ...(data as any), id });
+    // update(id: any, data: D): Promise<T> {
+    //     return this.repo.save({ ...(data as any), id });
+    // }
+    update(id: any, data: D): Promise<any> {
+        convertUtcDatesToLocal(data); // ✅ tambahkan ini
+        return this.repo.update(id, data as any);
     }
 
     async remove(id: any): Promise<void> {
@@ -153,6 +158,35 @@ function sanitizeEmptyStrings(obj: any) {
     for (const [key, val] of Object.entries(obj)) {
         if (val === '') {
             obj[key] = null;
+        }
+    }
+}
+
+
+import * as dayjs from 'dayjs';
+import * as utc from 'dayjs/plugin/utc';
+import * as timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+export function convertUtcDatesToLocal(obj: any, timezoneStr = 'Asia/Jakarta') {
+    for (const key in obj) {
+        if (!obj[key]) continue;
+
+        // hanya jika nama field mengandung 'tanggal' dan value mengandung Z
+        if (
+            typeof obj[key] === 'string' &&
+            key.toLowerCase().includes('tanggal') &&
+            obj[key].includes('T') &&
+            obj[key].endsWith('Z')
+        ) {
+            const parsed = dayjs(obj[key]).tz(timezoneStr).format('YYYY-MM-DD HH:mm:ss');
+            obj[key] = parsed;
+        }
+
+        // Optional: kalau ada nested object
+        if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+            convertUtcDatesToLocal(obj[key], timezoneStr);
         }
     }
 }

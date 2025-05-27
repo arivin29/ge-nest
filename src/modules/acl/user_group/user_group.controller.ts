@@ -17,7 +17,7 @@ import { BaseQueryDto } from 'src/common/dto/base-query.dto';
 
 import { AclUserGroupDto } from 'src/dto/acl/acl.user_group.dto';; 
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
- 
+  
 @ApiTags('user_group')
 @Controller('user_group')
 export class UserGroupController {
@@ -29,7 +29,7 @@ export class UserGroupController {
     async findAll(@Query() query: BaseQueryDto) {
         const parsed = {
             pageIndex: parseInt(String(query.pageIndex ?? '1'), 10),
-            pageSize: parseInt(String(query.pageSize ?? '10'), 10),
+            pageSize: parseInt(String(query.pageSize ?? '1000'), 10),
             filter: query.filter ? JSON.parse(query.filter) : {},
             sortKey: query.sortKey,
             sortValue: query.sortValue,
@@ -51,6 +51,7 @@ export class UserGroupController {
         try {
             const result = await this.service.findOne(id);
             if (!result) {
+                
                 return ApiResponseHelper.failed(null, 'Data tidak ditemukan', 404);
             }
             return ApiResponseHelper.success(result, 'get');
