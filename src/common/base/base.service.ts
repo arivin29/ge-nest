@@ -22,8 +22,8 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
             search_field = [],
             search_keyword = '',
         } = query;
- 
-        const qb = this.repo.createQueryBuilder('e'); 
+
+        const qb = this.repo.createQueryBuilder('e');
         // Filter
         // Object.entries(filter).forEach(([key, value]) => {
         //     if (value !== undefined && value !== null && value !== '') {
@@ -38,7 +38,7 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
             filter: Record<string, any>,
             alias: string = 'e'
         ): void {
-          
+
 
             for (const [key, value] of Object.entries(filter)) {
                 const field = `${alias}.${key}`;
@@ -91,7 +91,7 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
         if (sortKey && sortValue) {
             qb.orderBy(`e.${sortKey}`, sortValue.toUpperCase() as 'ASC' | 'DESC');
         }
-        
+
         // Pagination
         const total = await qb.getCount();
         if (pageIndex !== undefined && pageSize !== undefined) {
@@ -104,7 +104,7 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
         return { data, total };
     }
 
-    
+
 
 
     async findOne(id: string) {
@@ -131,21 +131,39 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
             throw new Error(`Primary key not found in ${entityTarget.name}`);
         }
 
+        sanitizeEmptyStrings(data as any);
+        convertUtcDatesToLocal(data);
+
+        // ✅ Jika ada kolom validasi
+        if ('validasi' in (data as any) && (data as any).validasi === 0) {
+            const existingDraft = await this.repo.findOne({
+                where: { validasi: 0 } as any,
+                order: { createdAt: 'ASC' } as any,
+            });
+
+            if (existingDraft) {
+                // 🔥 Draft sudah ada → return row itu langsung
+                return existingDraft;
+            }
+        }
+
+        // ✅ Jika tidak ada draft → buat data baru
         if (!(data as any)[primaryKey]) {
             (data as any)[primaryKey] = uuidv4();
         }
 
-        sanitizeEmptyStrings(data as any);
-        convertUtcDatesToLocal(data); // ✅ tambahkan ini
-
         return this.repo.save(data as any);
     }
+
 
     // update(id: any, data: D): Promise<T> {
     //     return this.repo.save({ ...(data as any), id });
     // }
-    update(id: any, data: D): Promise<any> {
-        convertUtcDatesToLocal(data); // ✅ tambahkan ini
+    update<T>(id: any, data: Partial<T>): Promise<any> {
+        convertUtcDatesToLocal(data);
+        if ('isAktif' in data) { 
+            data.isAktif = data.isAktif == true ? true : false || data.isAktif === 1 ? true :false; 
+        }
         return this.repo.update(id, data as any);
     }
 

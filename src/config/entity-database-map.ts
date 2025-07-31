@@ -108,6 +108,66 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "kantor"
     ]
   },
+  "PelangganPenawaran": {
+    "db": "pelanggan",
+    "aliases": [
+      "penawaran"
+    ]
+  },
+  "PelangganPenawaranHistory": {
+    "db": "pelanggan",
+    "aliases": [
+      "penawaran_history"
+    ]
+  },
+  "PelangganPenawaranItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "penawaran_item"
+    ]
+  },
+  "PelangganPenawaranRevisiLog": {
+    "db": "pelanggan",
+    "aliases": [
+      "penawaran_revisi_log"
+    ]
+  },
+  "PelangganPenawaranTag": {
+    "db": "pelanggan",
+    "aliases": [
+      "penawaran_tag"
+    ]
+  },
+  "PelangganSaleShipping": {
+    "db": "pelanggan",
+    "aliases": [
+      "sale_shipping"
+    ]
+  },
+  "PelangganSaleShippingItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "sale_shipping_item"
+    ]
+  },
+  "PelangganSalesBarang": {
+    "db": "pelanggan",
+    "aliases": [
+      "sales_barang"
+    ]
+  },
+  "PelangganSalesPenjualan": {
+    "db": "pelanggan",
+    "aliases": [
+      "sales_penjualan"
+    ]
+  },
+  "PelangganSalesPenjualanItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "sales_penjualan_item"
+    ]
+  },
   "PelangganService": {
     "db": "pelanggan",
     "aliases": [
@@ -124,6 +184,18 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
     "db": "pelanggan",
     "aliases": [
       "work_schedule"
+    ]
+  },
+  "PelangganWorkScheduleBap": {
+    "db": "pelanggan",
+    "aliases": [
+      "work_schedule_bap"
+    ]
+  },
+  "PelangganWorkScheduleBapItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "work_schedule_bap_item"
     ]
   },
   "PelangganWorkScheduleTeknisi": {

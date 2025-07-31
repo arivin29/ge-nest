@@ -50,23 +50,47 @@ import { ServiceModule } from './modules/pelanggan/service/service.module';
 import { TeknisiModule } from './modules/pelanggan/teknisi/teknisi.module';
 import { WorkScheduleModule } from './modules/pelanggan/work_schedule/work_schedule.module';
 import { WorkScheduleTeknisiModule } from './modules/pelanggan/work_schedule_teknisi/work_schedule_teknisi.module';
+import { WorkScheduleBapModule } from './modules/pelanggan/work_schedule_bap/work_schedule_bap.module';
+import { PenawaranModule } from './modules/pelanggan/penawaran/penawaran.module';
+import { PenawaranHistoryModule } from './modules/pelanggan/penawaran_history/penawaran_history.module';
+import { PenawaranItemModule } from './modules/pelanggan/penawaran_item/penawaran_item.module';
+import { PenawaranRevisiLogModule } from './modules/pelanggan/penawaran_revisi_log/penawaran_revisi_log.module';
+import { PenawaranTagModule } from './modules/pelanggan/penawaran_tag/penawaran_tag.module';
+import { WorkScheduleBapItemModule } from './modules/pelanggan/work_schedule_bap_item/work_schedule_bap_item.module';
+import { SalesBarangModule } from './modules/pelanggan/sales_barang/sales_barang.module';
+import { SalesPenjualanModule } from './modules/pelanggan/sales_penjualan/sales_penjualan.module';
+import { SalesPenjualanItemModule } from './modules/pelanggan/sales_penjualan_item/sales_penjualan_item.module';
+import { SaleShippingModule } from './modules/pelanggan/sale_shipping/sale_shipping.module';
+import { SaleShippingItemModule } from './modules/pelanggan/sale_shipping_item/sale_shipping_item.module';
 const COM = [
-    ClientModule,
-    ClientContactModule,
-    ClientSiteModule,
-    CompanyConfigModule,
-    ContactClientUseModule,
-    ContractModule,
-    ContractJenisModule,
-    ContractSiteModule,
-    ContractSiteServiceModule,
-    FakturModule,
-    InvoiceModule,
-    KantorModule,
-    ServiceModule,
-    TeknisiModule,
-    WorkScheduleModule,
-    WorkScheduleTeknisiModule
+  ClientModule,
+  ClientContactModule,
+  ClientSiteModule,
+  CompanyConfigModule,
+  ContactClientUseModule,
+  ContractModule,
+  ContractJenisModule,
+  ContractSiteModule,
+  ContractSiteServiceModule,
+  FakturModule,
+  InvoiceModule,
+  KantorModule,
+  ServiceModule,
+  TeknisiModule,
+  WorkScheduleModule,
+  WorkScheduleTeknisiModule,
+  WorkScheduleBapModule,
+  PenawaranModule,
+  PenawaranHistoryModule,
+  PenawaranItemModule,
+  PenawaranRevisiLogModule,
+  PenawaranTagModule,
+  WorkScheduleBapItemModule,
+  SalesBarangModule,
+  SalesPenjualanModule,
+  SalesPenjualanItemModule,
+  SaleShippingModule,
+  SaleShippingItemModule
 ];
 
 @Module({

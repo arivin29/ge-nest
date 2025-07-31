@@ -1,3 +1,15 @@
+import { SaleShippingItemModule } from './modules/pelanggan/sale_shipping_item/sale_shipping_item.module';
+import { SaleShippingModule } from './modules/pelanggan/sale_shipping/sale_shipping.module';
+import { SalesPenjualanItemModule } from './modules/pelanggan/sales_penjualan_item/sales_penjualan_item.module';
+import { SalesPenjualanModule } from './modules/pelanggan/sales_penjualan/sales_penjualan.module';
+import { SalesBarangModule } from './modules/pelanggan/sales_barang/sales_barang.module';
+import { WorkScheduleBapItemModule } from './modules/pelanggan/work_schedule_bap_item/work_schedule_bap_item.module';
+import { PenawaranTagModule } from './modules/pelanggan/penawaran_tag/penawaran_tag.module';
+import { PenawaranRevisiLogModule } from './modules/pelanggan/penawaran_revisi_log/penawaran_revisi_log.module';
+import { PenawaranItemModule } from './modules/pelanggan/penawaran_item/penawaran_item.module';
+import { PenawaranHistoryModule } from './modules/pelanggan/penawaran_history/penawaran_history.module';
+import { PenawaranModule } from './modules/pelanggan/penawaran/penawaran.module';
+import { WorkScheduleBapModule } from './modules/pelanggan/work_schedule_bap/work_schedule_bap.module';
 import { WorkScheduleTeknisiModule } from './modules/pelanggan/work_schedule_teknisi/work_schedule_teknisi.module';
 import { WorkScheduleModule } from './modules/pelanggan/work_schedule/work_schedule.module';
 import { TeknisiModule } from './modules/pelanggan/teknisi/teknisi.module';
@@ -59,7 +71,19 @@ export const routerConfig = [
             { path: 'service', module: ServiceModule },
             { path: 'teknisi', module: TeknisiModule },
             { path: 'work_schedule', module: WorkScheduleModule },
-            { path: 'work_schedule_teknisi', module: WorkScheduleTeknisiModule }]
+            { path: 'work_schedule_teknisi', module: WorkScheduleTeknisiModule },
+      { path: 'work_schedule_bap', module: WorkScheduleBapModule },
+      { path: 'penawaran', module: PenawaranModule },
+      { path: 'penawaran_history', module: PenawaranHistoryModule },
+      { path: 'penawaran_item', module: PenawaranItemModule },
+      { path: 'penawaran_revisi_log', module: PenawaranRevisiLogModule },
+      { path: 'penawaran_tag', module: PenawaranTagModule },
+      { path: 'work_schedule_bap_item', module: WorkScheduleBapItemModule },
+      { path: 'sales_barang', module: SalesBarangModule },
+      { path: 'sales_penjualan', module: SalesPenjualanModule },
+      { path: 'sales_penjualan_item', module: SalesPenjualanItemModule },
+      { path: 'sale_shipping', module: SaleShippingModule },
+      { path: 'sale_shipping_item', module: SaleShippingItemModule }]
     },
     {
         path: 'auth',

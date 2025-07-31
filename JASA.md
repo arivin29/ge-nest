@@ -15,3 +15,19 @@ npm run generator-api  -- --fromTable=teknisi --nama=teknisi --db=erp_pelanggan 
 npm run generator-api  -- --fromTable=work_schedule --nama=work_schedule --db=erp_pelanggan --router=pelanggan --out=crud,report
 npm run generator-api  -- --fromTable=work_schedule_teknisi --nama=work_schedule_teknisi --db=erp_pelanggan --router=pelanggan --out=crud,report
 
+
+npm run generator-api  -- --fromTable=work_schedule_bap_item --nama=work_schedule_bap_item --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=work_schedule_bap --nama=work_schedule_bap --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=penawaran --nama=penawaran --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=penawaran_history --nama=penawaran_history --db=erp_pelanggan --router=pelanggan --out=report
+npm run generator-api  -- --fromTable=penawaran_item --nama=penawaran_item --db=erp_pelanggan --router=pelanggan --out=crud
+npm run generator-api  -- --fromTable=penawaran_revisi_log --nama=penawaran_revisi_log --db=erp_pelanggan --router=pelanggan --out=crud
+npm run generator-api  -- --fromTable=penawaran_tag --nama=penawaran_tag --db=erp_pelanggan --router=pelanggan --out=crud
+
+npm run generator-api  -- --fromTable=sales_barang --nama=sales_barang --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=sales_penjualan --nama=sales_penjualan --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=sales_penjualan_item --nama=sales_penjualan_item --db=erp_pelanggan --router=pelanggan --out=crud,report
+
+npm run generator-api  -- --fromTable=sale_shipping --nama=sale_shipping --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=sale_shipping_item --nama=sale_shipping_item --db=erp_pelanggan --router=pelanggan --out=crud
+

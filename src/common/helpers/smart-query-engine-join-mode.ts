@@ -315,14 +315,7 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
 
             joins.push(`${joinType} JOIN erp_${schema}.${joinName} ${joinAlias} ON ${onClause}`);
         }
-
-
-        // const onClause = [
-        //     `${joinAlias}.${joinKey} = ${alias}.${joinKey}`,
-        //     ...filterConditions
-        // ].join(' AND ');
-
-        // joins.push(`${joinType} JOIN erp_${schema}.${joinName} ${joinAlias} ON ${onClause}`);
+ 
     });
 
     // WHEREs
