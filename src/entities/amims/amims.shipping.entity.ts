@@ -2,8 +2,14 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'shipping', schema: 'erp_amims' })
 export class AmimsShipping {
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: string;
+
   @PrimaryColumn({ name: 'id_shipping' })
   idShipping: string;
+
+  @Column({ name: 'line0', nullable: true })
+  line0: string;
 
   @Column({ name: 'line1', nullable: true })
   line1: string;
@@ -29,14 +35,8 @@ export class AmimsShipping {
   @Column({ name: 'line8', nullable: true })
   line8: string;
 
-  @Column({ name: 'line0', nullable: true })
-  line0: string;
-
   @Column({ name: 'status_shipping', nullable: true })
   statusShipping: string;
-
-  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: string;
 
   @Column({ name: 'updated_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;

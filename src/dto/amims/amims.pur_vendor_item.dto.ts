@@ -2,20 +2,23 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsPurVendorItemDto {
-  @ApiProperty({ required: true })
-  idPurVendorItem: string;
-
   @ApiProperty({ required: false })
-  idPurVendor: string;
+  createdAt: string;
 
   @ApiProperty({ required: false })
   idMpart: string;
 
   @ApiProperty({ required: false })
-  manufacture: string;
+  idPurVendor: string;
+
+  @ApiProperty({ required: true })
+  idPurVendorItem: string;
 
   @ApiProperty({ required: false })
-  price: number;
+  isDeleted: number;
+
+  @ApiProperty({ required: false })
+  manufacture: string;
 
   @ApiProperty({ required: false })
   minOrder: number;
@@ -24,14 +27,11 @@ export class AmimsPurVendorItemDto {
   note: string;
 
   @ApiProperty({ required: false })
+  price: number;
+
+  @ApiProperty({ required: false })
   responseTime: number;
 
   @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
   updatedAt: string;
-
-  @ApiProperty({ required: false })
-  isDeleted: number;
 }

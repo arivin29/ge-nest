@@ -2,6 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsCurrencyDto {
+  @ApiProperty({ required: false })
+  createdAt: string;
+
+  @ApiProperty({ required: false })
+  effectiveDate: string;
+
+  @ApiProperty({ required: false })
+  forcurrency: string;
+
   @ApiProperty({ required: true })
   idCurrency: string;
 
@@ -12,22 +21,13 @@ export class AmimsCurrencyDto {
   idUser: string;
 
   @ApiProperty({ required: false })
-  effectiveDate: string;
+  newValue: number;
 
   @ApiProperty({ required: false })
   noteCurrency: string;
 
   @ApiProperty({ required: false })
   oldValue: number;
-
-  @ApiProperty({ required: false })
-  newValue: number;
-
-  @ApiProperty({ required: false })
-  forcurrency: string;
-
-  @ApiProperty({ required: false })
-  createdAt: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;

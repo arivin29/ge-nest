@@ -1,3 +1,4 @@
+import { VDueListOutputModule } from './modules/amims/v_due_list_output/v_due_list_output.module';
 import { StockModule } from './modules/amims/stock/stock.module';
 import { McurrencyModule } from './modules/amims/mcurrency/mcurrency.module';
 import { MpartModule } from './modules/amims/mpart/mpart.module';
@@ -87,7 +88,6 @@ import { EngineerPrisModule } from './modules/amims/engineer_pris/engineer_pris.
 import { EngineerPmtrItemModule } from './modules/amims/engineer_pmtr_item/engineer_pmtr_item.module';
 import { EngineerPmtrModule } from './modules/amims/engineer_pmtr/engineer_pmtr.module';
 import { DueListOutputModule } from './modules/amims/due_list_output/due_list_output.module';
-import { DueListModule } from './modules/amims/due_list/due_list.module';
 import { DoctypeModule } from './modules/amims/doctype/doctype.module';
 import { CurrencyModule } from './modules/amims/currency/currency.module';
 import { ConditionMonitoringModule } from './modules/amims/condition_monitoring/condition_monitoring.module';
@@ -104,16 +104,16 @@ import { ModuleModule } from './modules/acl/module/module.module';
 import { CustomFieldValueModule } from './modules/tools/custom_field_value/custom_field_value.module';
 import { CustomFieldModule } from './modules/tools/custom_field/custom_field.module';
 import { CustomFieldGroupModule } from './modules/tools/custom_field_group/custom_field_group.module';
-import { WorkflowAggregatorModule } from './modules/tools/workflow_aggregator/workflow_aggregator.module'; 
-import { UserGroupModule } from './modules/acl/user_group/user_group.module'; 
+import { WorkflowAggregatorModule } from './modules/tools/workflow_aggregator/workflow_aggregator.module';
+import { UserGroupModule } from './modules/acl/user_group/user_group.module';
 import { WorkflowLogModule } from './modules/tools/workflow_log/workflow_log.module';
 import { WorkflowStepModule } from './modules/tools/workflow_step/workflow_step.module';
-import { WorkflowModule } from './modules/tools/workflow/workflow.module';  
+import { WorkflowModule } from './modules/tools/workflow/workflow.module';
 import { UsersModule } from './modules/acl/users/users.module';
 import { UserTokensModule } from './modules/acl/user_tokens/user_tokens.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthProtectedModule } from './auth/auth-protected.module';
-import { ClientModule } from './modules/acl/client/client.module'; 
+import { ClientModule } from './modules/acl/client/client.module';
 import { DocumentNumberingModule } from './modules/tools/document_numbering/document_numbering.module';
 import { DocumentNumberingCounterModule } from './modules/tools/document_numbering_counter/document_numbering_counter.module';
 export const routerConfig = [
@@ -138,7 +138,6 @@ export const routerConfig = [
             { path: 'condition_monitoring', module: ConditionMonitoringModule },
             { path: 'currency', module: CurrencyModule },
             { path: 'doctype', module: DoctypeModule },
-            { path: 'due_list', module: DueListModule },
             { path: 'due_list_output', module: DueListOutputModule },
             { path: 'engineer_pmtr', module: EngineerPmtrModule },
             { path: 'engineer_pmtr_item', module: EngineerPmtrItemModule },
@@ -225,9 +224,10 @@ export const routerConfig = [
             { path: 'tech_log_jo', module: TechLogJoModule },
             { path: 'type_ofwork', module: TypeOfworkModule },
             { path: 'warranty', module: WarrantyModule },
-      { path: 'mpart', module: MpartModule },
-      { path: 'mcurrency', module: McurrencyModule },
-      { path: 'stock', module: StockModule }]
+            { path: 'mpart', module: MpartModule },
+            { path: 'mcurrency', module: McurrencyModule },
+            { path: 'stock', module: StockModule },
+            { path: 'v_due_list_output', module: VDueListOutputModule }]
     },
     {
         path: 'auth',
@@ -239,13 +239,13 @@ export const routerConfig = [
             { path: 'document', module: DocumentModule },
 
             { path: 'user_tokens', module: UserTokensModule },
-            { path: 'users', module: UsersModule }, 
-            { path: 'client', module: ClientModule },  
+            { path: 'users', module: UsersModule },
+            { path: 'client', module: ClientModule },
 
             { path: 'workflow', module: WorkflowModule },
             { path: 'workflow_step', module: WorkflowStepModule },
             { path: 'workflow_log', module: WorkflowLogModule },
- 
+
             { path: 'user_group', module: UserGroupModule },
             { path: 'workflow_aggregator', module: WorkflowAggregatorModule },
             { path: 'custom_field_group', module: CustomFieldGroupModule },

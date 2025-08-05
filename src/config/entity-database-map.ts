@@ -618,6 +618,12 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "type_ofwork"
     ]
   },
+  "AmimsVDueListOutput": {
+    "db": "amims",
+    "aliases": [
+      "v_due_list_output"
+    ]
+  },
   "AmimsWarranty": {
     "db": "amims",
     "aliases": [
@@ -628,6 +634,12 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
     "db": "document",
     "aliases": [
       "document"
+    ]
+  },
+  "PelangganBankAccount": {
+    "db": "pelanggan",
+    "aliases": [
+      "bank_account"
     ]
   },
   "PelangganClient": {
@@ -696,10 +708,22 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "invoice"
     ]
   },
+  "PelangganInvoiceItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "invoice_item"
+    ]
+  },
   "PelangganKantor": {
     "db": "pelanggan",
     "aliases": [
       "kantor"
+    ]
+  },
+  "PelangganPayment": {
+    "db": "pelanggan",
+    "aliases": [
+      "payment"
     ]
   },
   "PelangganPenawaran": {
@@ -730,6 +754,60 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
     "db": "pelanggan",
     "aliases": [
       "penawaran_tag"
+    ]
+  },
+  "PelangganPurchaseInvoice": {
+    "db": "pelanggan",
+    "aliases": [
+      "purchase_invoice"
+    ]
+  },
+  "PelangganPurchaseInvoiceItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "purchase_invoice_item"
+    ]
+  },
+  "PelangganPurchaseOrder": {
+    "db": "pelanggan",
+    "aliases": [
+      "purchase_order"
+    ]
+  },
+  "PelangganPurchaseOrderItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "purchase_order_item"
+    ]
+  },
+  "PelangganSaleShipping": {
+    "db": "pelanggan",
+    "aliases": [
+      "sale_shipping"
+    ]
+  },
+  "PelangganSaleShippingItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "sale_shipping_item"
+    ]
+  },
+  "PelangganSalesBarang": {
+    "db": "pelanggan",
+    "aliases": [
+      "sales_barang"
+    ]
+  },
+  "PelangganSalesPenjualan": {
+    "db": "pelanggan",
+    "aliases": [
+      "sales_penjualan"
+    ]
+  },
+  "PelangganSalesPenjualanItem": {
+    "db": "pelanggan",
+    "aliases": [
+      "sales_penjualan_item"
     ]
   },
   "PelangganService": {

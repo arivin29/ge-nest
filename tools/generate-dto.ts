@@ -111,20 +111,39 @@ function pascalToSnake(str: string) {
             const widgetFilename = `${schemaAlias}.${table}-widget.dto.ts`;
             const entityFilename = `${schemaAlias}.${table}.entity.ts`;
 
-            const fields = (cols as any[]).map(col => ({
-                name: snakeToCamel(col.COLUMN_NAME),
-                dbName: col.COLUMN_NAME,
-                type: mapMysqlToTs(col.DATA_TYPE),
-                isNullable: col.IS_NULLABLE === 'YES',
-                isPrimary: col.COLUMN_KEY === 'PRI',
-                isDefaultCurrent: (col.COLUMN_DEFAULT?.toUpperCase?.() === 'CURRENT_TIMESTAMP')
-            }));
+            const isView = table.startsWith('v_');
+            const baseName = isView ? table.replace(/^v_/, '') : table;
+
+            const fields = (cols as any[]).map(col => {
+                const nameCamel = snakeToCamel(col.COLUMN_NAME);
+
+                // Normal PK
+                let isPrimary = col.COLUMN_KEY === 'PRI' || col.COLUMN_NAME === `id_${table}`;
+
+                // Fallback untuk view: gunakan id_<baseName> sebagai PK
+                if (!isPrimary && isView && col.COLUMN_NAME === `id_${baseName}`) {
+                    console.warn(`⚠️ View ${table} tidak punya PK → menggunakan ${col.COLUMN_NAME} sebagai Primary`);
+                    isPrimary = true;
+                }
+
+                return {
+                    name: nameCamel,
+                    dbName: col.COLUMN_NAME,
+                    type: mapMysqlToTs(col.DATA_TYPE),
+                    isNullable: col.IS_NULLABLE === 'YES',
+                    isPrimary,
+                    isDefaultCurrent: (col.COLUMN_DEFAULT?.toUpperCase?.() === 'CURRENT_TIMESTAMP')
+                };
+            });
 
             const dtoContent = `import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class ${dtoClassName} {
-${fields.map(f => `  @ApiProperty({ required: ${!f.isNullable} })\n  ${f.name}: ${f.type};`).join('\n\n')}
+${fields.map(f => {
+                const required = f.isPrimary ? true : !f.isNullable;
+                return `  @ApiProperty({ required: ${required} })\n  ${f.name}: ${f.type};`;
+            }).join('\n\n')}
 }
 `;
             await fs.writeFile(path.join(dtoDir, dtoFilename), dtoContent);

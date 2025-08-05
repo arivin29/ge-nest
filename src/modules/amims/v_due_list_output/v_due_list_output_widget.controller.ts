@@ -1,19 +1,19 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { DueListWidgetService } from './due_list_widget.service';
+import { VDueListOutputWidgetService } from './v_due_list_output_widget.service';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper';  
 import { BaseWidgetQueryDto } from 'src/common/dto/base-widget-query.dto';
 import { SmartQueryInputWidget } from 'src/common/helpers/smart-query-input-widget';
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity'; 
-import { AmimsDueListWidgetDto } from 'src/dto/amims/amims.due_list-widget.dto';
+import { AmimsVDueListOutputWidgetDto } from 'src/dto/amims/amims.v_due_list_output-widget.dto';
 
-@ApiTags('due_list_widget')
-@Controller('due_list_widget')
-export class DueListWidgetController {
-    constructor(private readonly service: DueListWidgetService) { }
+@ApiTags('v_due_list_output_widget')
+@Controller('v_due_list_output_widget')
+export class VDueListOutputWidgetController {
+    constructor(private readonly service: VDueListOutputWidgetService) { }
 
     @Post() 
-    @ApiResponseEntity( AmimsDueListWidgetDto, 'list')
+    @ApiResponseEntity( AmimsVDueListOutputWidgetDto, 'list')
     async findAll(
         @Query() query: BaseWidgetQueryDto,
         @Body() body: BaseWidgetQueryDto

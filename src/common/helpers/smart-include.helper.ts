@@ -31,7 +31,7 @@ export async function applySmartInclude(
                 return entityName === pascal || meta.aliases?.includes(relation);
             }
         );
-       
+
 
         if (!foundEntry) {
             console.warn(`⚠️ Repo untuk '${relation}' tidak ditemukan di EntityDatabaseMap.`);
@@ -40,13 +40,13 @@ export async function applySmartInclude(
 
         const [entityName, meta] = foundEntry;
         const dbName = meta.db;
-       
+
         if (!dataSourceMap[dbName]) {
             console.warn(`⚠️ Database source untuk '${dbName}' tidak ditemukan di dataSourceMap.`);
             continue;
-        } 
+        }
         const relationRepo = dataSourceMap[dbName].getRepository(entityName);
-       
+
         if (inc.type === 'single') {
             const fk = toCamel(`id_${relation}`);
             const pk = toCamel(`id_${relation}`);
@@ -72,22 +72,39 @@ export async function applySmartInclude(
             });
         }
 
-        if (inc.type === 'array') { 
-            const pkField = Object.keys(data[0]).find(k => k.toLowerCase().startsWith('id'))!;
-            const camel = toCamel(inc.name); // ex: workScheduleTeknisi
+        if (inc.type === 'array') {
+            const targetAlias = inc.to ?? baseAlias;
+            const camel = toCamel(inc.name);
 
-            // Ambil semua primary key dari data utama
-            const ids = data.map(d => d[pkField]).filter(Boolean);
-             
+            // Step 1: deteksi langsung apakah `data[]` adalah targetAlias
+            const possibleKeys = Object.keys(data[0] ?? {});
+            const matchIdField = possibleKeys.find(k => k.toLowerCase().startsWith(`id${pascalCase(targetAlias).toLowerCase()}`));
+            // console.log('parent', parent)
+            // console.log('camel', camel)
+            // console.log('matchIdField', matchIdField)
+            // console.log('possibleKeys', possibleKeys)
+            if (!matchIdField) {
+                console.warn(`⚠️ Tidak ditemukan field id untuk '${targetAlias}' pada data utama.`);
+                continue;
+            }
+            else
+            {
 
+            }
+
+            const pkField = matchIdField;
+
+            // Step 2: Ambil ID untuk join
+            const ids = data.map(d => d?.[pkField]).filter(Boolean);
             if (!ids.length) continue;
 
+            // Step 3: Ambil dari repo relasi
             const rows = await relationRepo.find({
                 where: { [pkField]: In(ids) },
                 ...(inc.select ? { select: inc.select } : {}),
             });
 
-            // Kelompokkan berdasarkan foreign key
+            // Step 4: Group berdasarkan foreign key
             const grouped = rows.reduce((acc, row) => {
                 const key = row[pkField];
                 if (!acc[key]) acc[key] = [];
@@ -95,11 +112,12 @@ export async function applySmartInclude(
                 return acc;
             }, {} as Record<string, any[]>);
 
-            // Inject ke masing-masing data
-            data.forEach(d => {
-                const key = d[pkField];
-                d[camel] = grouped[key] ?? [];
-            });
+            // Step 5: Inject ke object utama
+            for (const row of data) {
+                const idVal = row?.[pkField];
+                if (!idVal) continue;
+                row[camel] = grouped[idVal] ?? [];
+            }
         }
     }
 }

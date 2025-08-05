@@ -33,7 +33,9 @@ async function generateEntityAndDtoOnly(table: string, moduleName: string, dbNam
     const entityFile = fs.readdirSync(TEMP_ENTITY_OUTPUT).find(f => f.endsWith('.ts'));
     if (!entityFile) throw new Error('Entity not generated');
 
-    const entityContent = fs.readFileSync(path.join(TEMP_ENTITY_OUTPUT, entityFile), 'utf-8');
+    let entityContent = fs.readFileSync(path.join(TEMP_ENTITY_OUTPUT, entityFile), 'utf-8');
+    entityContent = addPrimaryColumnToView(entityContent, table);
+
     const entityFolder = path.join(MODULES_PATH, moduleName, 'entities');
     fs.mkdirSync(entityFolder, { recursive: true });
     fs.writeFileSync(path.join(entityFolder, `${moduleName}.entity.ts`), entityContent);
@@ -68,6 +70,43 @@ async function generateEntityAndDtoOnly(table: string, moduleName: string, dbNam
     fs.writeFileSync(path.join(dtoFolder, dtoFileName), dtoContent);
     console.log(`📦 DTO regenerated: ${dtoFileName}`);
 }
+
+function addPrimaryColumnToView(entityContent: string, table: string): string {
+    if (!table.startsWith('v_')) return entityContent;
+
+    // Ambil nama setelah 'v_' → untuk mencari field id_xxx
+    const baseName = table.replace(/^v_/, '');
+    const primaryFieldRegex = new RegExp(`(public\\s+)?(id_${baseName})[:\\s\\w|]+;`, 'i');
+    const match = entityContent.match(primaryFieldRegex);
+
+    if (!match) {
+        console.warn(`⚠️ Tidak menemukan field id_${baseName} di entity. Primary column tidak ditambahkan.`);
+        return entityContent;
+    }
+
+    const fieldName = match[2]; // id_due_list_output misalnya
+    const camelName = fieldName.replace(/_([a-z])/g, (_, l) => l.toUpperCase());
+
+    // Tambahkan dekorator @PrimaryColumn di atas field tersebut
+    const updatedContent = entityContent.replace(
+        new RegExp(`(@Column\\([^)]*\\)\\s*public\\s+${fieldName}\\s*:\\s*[\\w|\\s]+;)`, 'i'),
+        `@PrimaryColumn({ name: '${fieldName}' })\n    ${camelName}: string;`
+    );
+
+    // Tambahkan import PrimaryColumn jika belum ada
+    if (!updatedContent.includes('PrimaryColumn')) {
+        return updatedContent.replace(
+            /import\s+\{([^}]*)\}\s+from\s+'typeorm';/,
+            (match, imports) => {
+                if (imports.includes('PrimaryColumn')) return match;
+                return `import {${imports}, PrimaryColumn} from 'typeorm';`;
+            }
+        );
+    }
+
+    return updatedContent;
+}
+
 
 async function main() {
     const args = process.argv.slice(2);

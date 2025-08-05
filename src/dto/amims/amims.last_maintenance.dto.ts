@@ -2,38 +2,35 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsLastMaintenanceDto {
+  @ApiProperty({ required: false })
+  createdAt: string;
+
   @ApiProperty({ required: true })
   idLastMaintenance: string;
-
-  @ApiProperty({ required: false })
-  idMpcJo: string;
 
   @ApiProperty({ required: false })
   idMaintenance: string;
 
   @ApiProperty({ required: false })
-  lastDate: string;
-
-  @ApiProperty({ required: false })
-  lastCycle: number;
-
-  @ApiProperty({ required: false })
-  lastHours: number;
+  idMpcJo: string;
 
   @ApiProperty({ required: false })
   idPart: string;
 
   @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
-  updatedAt: string;
-
-  @ApiProperty({ required: false })
   idUser: string;
 
   @ApiProperty({ required: false })
-  typeOfWork: number;
+  lastCycle: number;
+
+  @ApiProperty({ required: false })
+  lastDate: string;
+
+  @ApiProperty({ required: false })
+  lastHours: number;
+
+  @ApiProperty({ required: false })
+  oldId: string;
 
   @ApiProperty({ required: false })
   parentCycle: number;
@@ -42,5 +39,8 @@ export class AmimsLastMaintenanceDto {
   parentHours: number;
 
   @ApiProperty({ required: false })
-  oldId: string;
+  typeOfWork: number;
+
+  @ApiProperty({ required: false })
+  updatedAt: string;
 }

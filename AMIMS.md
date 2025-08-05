@@ -102,3 +102,4 @@ npm run generator-api -- --fromTable=tech_log_item --nama=tech_log_item --db=erp
 npm run generator-api -- --fromTable=tech_log_jo --nama=tech_log_jo --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=type_ofwork --nama=type_ofwork --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=warranty --nama=warranty --db=erp_amims --router=amims --out=crud
+npm run generator-api -- --fromTable=v_due_list_output --nama=v_due_list_output --db=erp_amims --router=amims --out=crud,report

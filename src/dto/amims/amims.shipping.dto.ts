@@ -2,8 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsShippingDto {
+  @ApiProperty({ required: false })
+  createdAt: string;
+
   @ApiProperty({ required: true })
   idShipping: string;
+
+  @ApiProperty({ required: false })
+  line0: string;
 
   @ApiProperty({ required: false })
   line1: string;
@@ -30,13 +36,7 @@ export class AmimsShippingDto {
   line8: string;
 
   @ApiProperty({ required: false })
-  line0: string;
-
-  @ApiProperty({ required: false })
   statusShipping: string;
-
-  @ApiProperty({ required: false })
-  createdAt: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;

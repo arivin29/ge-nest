@@ -292,9 +292,9 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
             filterConditions.push(`${joinAlias}.${joinKey} IS NOT NULL`);
         }
 
-        if (joinType === 'WHEREIN') {
-            const subAlias = `sub_${joinAlias}`;
-            const fk = `${subAlias}.id_${table}`; // ex: sub_work_schedule_teknisi.id_work_schedule
+        if (joinType === 'WHEREIN' || joinType === 'wherein') {
+            const subAlias = `${joinAlias}`;
+            const fk = `${subAlias}.${(joinItem as any).from ?? `id_${table}`}`; // ex: sub_work_schedule_teknisi.id_work_schedule
             const subWhere: string[] = [];
 
             Object.entries(filters || {}).forEach(([field, value], idx) => {
@@ -305,7 +305,7 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
 
             const subquery = `SELECT ${fk} FROM erp_${schema}.${joinName} ${subAlias}${subWhere.length ? ' WHERE ' + subWhere.join(' AND ') : ''
                 }`;
-
+            console.log('subquery', subquery)
             whereClauses.push(`${alias}.id_${table} IN (${subquery})`);
         } else {
             const onClause = [
@@ -322,7 +322,7 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
     Object.entries(where).forEach(([field, value]) => {
         const dbField = camelToSnake(field); // 🔁 konversi ke snake_case
         const paramKey = `${alias}_${dbField}`;
-        const baseCol = `${alias}.${dbField}`; // kolom lengkap
+        const baseCol = `${alias}.${dbField.replace('v_', '') }`; // kolom lengkap
 
 
         if (typeof value !== 'object' || value === null) {
@@ -444,7 +444,7 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
     SELECT ${selectFields.join(', ')}
     FROM ${mainTable} ${alias}
     ${joins.join('\n')}
-    ${whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : ''}
+     ${whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : ''}
     ${orderByClause}
     LIMIT ${limit} OFFSET ${offset}
   `;

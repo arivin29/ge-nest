@@ -2,32 +2,35 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class PelangganClientSiteDto {
-  @ApiProperty({ required: true })
-  idClientSite: string;
-
-  @ApiProperty({ required: true })
-  idClient: string;
-
-  @ApiProperty({ required: false })
-  namaSite: string;
-
   @ApiProperty({ required: false })
   alamat: string;
 
   @ApiProperty({ required: false })
-  kota: string;
+  catatan: string;
 
   @ApiProperty({ required: false })
-  provinsi: string;
+  createdAt: string;
+
+  @ApiProperty({ required: true })
+  idClient: string;
+
+  @ApiProperty({ required: true })
+  idClientSite: string;
 
   @ApiProperty({ required: false })
-  kodePos: string;
+  idKantor: string;
+
+  @ApiProperty({ required: false })
+  isAktif: boolean;
 
   @ApiProperty({ required: false })
   kategoriSite: string;
 
   @ApiProperty({ required: false })
-  tagSite: string;
+  kodePos: string;
+
+  @ApiProperty({ required: false })
+  kota: string;
 
   @ApiProperty({ required: false })
   latitude: number;
@@ -36,16 +39,13 @@ export class PelangganClientSiteDto {
   longitude: number;
 
   @ApiProperty({ required: false })
-  isAktif: boolean;
+  namaSite: string;
 
   @ApiProperty({ required: false })
-  idKantor: string;
+  provinsi: string;
 
   @ApiProperty({ required: false })
-  catatan: string;
-
-  @ApiProperty({ required: false })
-  createdAt: string;
+  tagSite: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;

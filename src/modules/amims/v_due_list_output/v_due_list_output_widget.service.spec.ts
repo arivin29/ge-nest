@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DueListWidgetService } from './due_list_widget.service';
+import { VDueListOutputWidgetService } from './v_due_list_output_widget.service';
 import { DataSource } from 'typeorm';
 
-describe('DueListWidgetService', () => {
-  let service: DueListWidgetService;
+describe('VDueListOutputWidgetService', () => {
+  let service: VDueListOutputWidgetService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        DueListWidgetService,
+        VDueListOutputWidgetService,
         {
           provide: DataSource,
           useValue: {}, // Mocked DataSource
@@ -16,7 +16,7 @@ describe('DueListWidgetService', () => {
       ],
     }).compile();
 
-    service = module.get<DueListWidgetService>(DueListWidgetService);
+    service = module.get<VDueListOutputWidgetService>(VDueListOutputWidgetService);
   });
 
   it('should be defined', () => {

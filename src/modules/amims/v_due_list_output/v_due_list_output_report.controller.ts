@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { DueListService } from '../due_list/due_list.service';
+import { VDueListOutputService } from '../v_due_list_output/v_due_list_output.service';
 import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper';
@@ -7,15 +7,15 @@ import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decor
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity'; 
 import { SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
 import { applySmartInclude } from 'src/common/helpers/smart-include.helper';  
-import { AmimsDueListReportDto } from 'src/dto/amims/amims.due_list-report.dto';;
+import { AmimsVDueListOutputReportDto } from 'src/dto/amims/amims.v_due_list_output-report.dto';;
 
-@ApiTags('due_list_report')
-@Controller('due_list_report')
-export class DueListReportController {
-    constructor(private readonly service: DueListService) { }
+@ApiTags('v_due_list_output_report')
+@Controller('v_due_list_output_report')
+export class VDueListOutputReportController {
+    constructor(private readonly service: VDueListOutputService) { }
 
     @Post('list')
-    @ApiResponseEntity(AmimsDueListReportDto, 'list') 
+    @ApiResponseEntity(AmimsVDueListOutputReportDto, 'list') 
     async findAll( 
         @Body() body: BaseQueryDtoSmart
     ) {
@@ -44,9 +44,10 @@ export class DueListReportController {
             },
             include: (source as any).include ?? [
                                                 { name: 'aircraft', type: 'single' },
+                                                { name: 'due_list', type: 'single' },
+                                                { name: 'due_list_output', type: 'single' },
+                                                { name: 'mpart', type: 'single' },
                                                 { name: 'part', type: 'single' },
-                                                { name: 'type_ofwork', type: 'single' },
-                                                { name: 'mantenance', type: 'single' },
                                 ],   // mohon di isi dengan default dari id_xxx
         };
 
@@ -62,7 +63,7 @@ export class DueListReportController {
     }
 
     @Get(':id')
-    @ApiResponseEntity(AmimsDueListReportDto, 'get')
+    @ApiResponseEntity(AmimsVDueListOutputReportDto, 'get')
     async findOne(@Param('id') id: string) {
         try {
             const result = await this.service.findOne(id);
@@ -74,9 +75,10 @@ export class DueListReportController {
             // Include semua relasi (bisa dari default config atau didefinisikan di controller)
             const allIncludes: SmartQueryInput['include'] = [
                                                 { name: 'aircraft', type: 'single' },
+                                                { name: 'due_list', type: 'single' },
+                                                { name: 'due_list_output', type: 'single' },
+                                                { name: 'mpart', type: 'single' },
                                                 { name: 'part', type: 'single' },
-                                                { name: 'type_ofwork', type: 'single' },
-                                                { name: 'mantenance', type: 'single' },
                                 ];
 
             // Filter hanya yang punya id_<name> di data

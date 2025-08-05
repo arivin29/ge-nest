@@ -42,8 +42,7 @@ import { BinModule } from './modules/amims/bin/bin.module';
 import { CompanyModule } from './modules/amims/company/company.module';
 import { ConditionMonitoringModule } from './modules/amims/condition_monitoring/condition_monitoring.module';
 import { CurrencyModule } from './modules/amims/currency/currency.module';
-import { DoctypeModule } from './modules/amims/doctype/doctype.module';
-import { DueListModule } from './modules/amims/due_list/due_list.module';
+import { DoctypeModule } from './modules/amims/doctype/doctype.module'; 
 import { DueListOutputModule } from './modules/amims/due_list_output/due_list_output.module';
 import { EngineerPmtrModule } from './modules/amims/engineer_pmtr/engineer_pmtr.module';
 import { EngineerPmtrItemModule } from './modules/amims/engineer_pmtr_item/engineer_pmtr_item.module';
@@ -133,6 +132,7 @@ import { WarrantyModule } from './modules/amims/warranty/warranty.module';
 import { MpartModule } from './modules/amims/mpart/mpart.module';
 import { McurrencyModule } from './modules/amims/mcurrency/mcurrency.module';
 import { StockModule } from './modules/amims/stock/stock.module';
+import { VDueListOutputModule } from './modules/amims/v_due_list_output/v_due_list_output.module';
 const COM = [
   ActypeModule,
   AircraftModule,
@@ -143,7 +143,6 @@ const COM = [
   ConditionMonitoringModule,
   CurrencyModule,
   DoctypeModule,
-  DueListModule,
   DueListOutputModule,
   EngineerPmtrModule,
   EngineerPmtrItemModule,
@@ -232,7 +231,8 @@ const COM = [
   WarrantyModule,
   MpartModule,
   McurrencyModule,
-  StockModule
+  StockModule,
+  VDueListOutputModule
 ];
 
 @Module({

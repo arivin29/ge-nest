@@ -2,23 +2,23 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsPartFigureIndexDto {
-  @ApiProperty({ required: true })
-  idPartFigureIndex: string;
-
   @ApiProperty({ required: false })
-  idMpart: string;
-
-  @ApiProperty({ required: false })
-  idAta: string;
+  createdAt: string;
 
   @ApiProperty({ required: false })
   figureIndex: string;
 
   @ApiProperty({ required: false })
-  itemIndex: string;
+  idAta: string;
 
   @ApiProperty({ required: false })
-  createdAt: string;
+  idMpart: string;
+
+  @ApiProperty({ required: true })
+  idPartFigureIndex: string;
+
+  @ApiProperty({ required: false })
+  itemIndex: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;

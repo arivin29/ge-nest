@@ -8,23 +8,23 @@ import {
     Delete,
     Query,
 } from '@nestjs/common';
-import { DueListService } from './due_list.service'; 
+import { VDueListOutputService } from './v_due_list_output.service'; 
 import { BaseRequestPipe } from 'src/common/pipes/base-request.pipe';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper'; 
 import { ApiTags, ApiBody } from '@nestjs/swagger';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
 import { BaseQueryDto } from 'src/common/dto/base-query.dto';
 
-import { AmimsDueListDto } from 'src/dto/amims/amims.due_list.dto';; 
+import { AmimsVDueListOutputDto } from 'src/dto/amims/amims.v_due_list_output.dto';; 
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
  
-@ApiTags('due_list')
-@Controller('due_list')
-export class DueListController {
-    constructor(private readonly service: DueListService) { }
+@ApiTags('v_due_list_output')
+@Controller('v_due_list_output')
+export class VDueListOutputController {
+    constructor(private readonly service: VDueListOutputService) { }
 
     @Get()
-    @ApiResponseEntity(AmimsDueListDto, 'list')
+    @ApiResponseEntity(AmimsVDueListOutputDto, 'list')
     @AutoSwaggerQuery()
     async findAll(@Query() query: BaseQueryDto) {
         const parsed = {
@@ -46,7 +46,7 @@ export class DueListController {
     }
 
     @Get(':id')
-    @ApiResponseEntity(AmimsDueListDto, 'get')
+    @ApiResponseEntity(AmimsVDueListOutputDto, 'get')
     async findOne(@Param('id') id: string) {
         try {
             const result = await this.service.findOne(id);
@@ -60,9 +60,9 @@ export class DueListController {
     }
 
     @Post()
-    @ApiBody({ type: AmimsDueListDto }) 
-    @ApiResponseEntity(AmimsDueListDto, 'post')
-    async create(@Body() body: AmimsDueListDto) {
+    @ApiBody({ type: AmimsVDueListOutputDto }) 
+    @ApiResponseEntity(AmimsVDueListOutputDto, 'post')
+    async create(@Body() body: AmimsVDueListOutputDto) {
         try {
             const result = await this.service.create(body);
             return ApiResponseHelper.success(result, 'create');
@@ -72,9 +72,9 @@ export class DueListController {
     }
 
     @Put(':id')
-    @ApiBody({ type: AmimsDueListDto })
-    @ApiResponseEntity(AmimsDueListDto, 'put')
-    async update(@Param('id') id: string, @Body() body: AmimsDueListDto) {
+    @ApiBody({ type: AmimsVDueListOutputDto })
+    @ApiResponseEntity(AmimsVDueListOutputDto, 'put')
+    async update(@Param('id') id: string, @Body() body: AmimsVDueListOutputDto) {
         try {
             const result = await this.service.update(id, body);
             return ApiResponseHelper.success(result, 'update');
@@ -84,7 +84,7 @@ export class DueListController {
     }
 
     @Delete(':id')
-    @ApiResponseEntity(AmimsDueListDto, 'delete')
+    @ApiResponseEntity(AmimsVDueListOutputDto, 'delete')
     async remove(@Param('id') id: string) {
         try {
             const result = await this.service.remove(id);

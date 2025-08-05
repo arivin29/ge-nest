@@ -96,6 +96,7 @@ import { AmimsTechLogEngineCheck } from './amims.tech_log_engine_check.entity';
 import { AmimsTechLogItem } from './amims.tech_log_item.entity';
 import { AmimsTechLogJo } from './amims.tech_log_jo.entity';
 import { AmimsTypeOfwork } from './amims.type_ofwork.entity';
+import { AmimsVDueListOutput } from './amims.v_due_list_output.entity';
 import { AmimsWarranty } from './amims.warranty.entity';
 
 export const AmimsEntities = [
@@ -197,6 +198,7 @@ export const AmimsEntities = [
   AmimsTechLogItem,
   AmimsTechLogJo,
   AmimsTypeOfwork,
+  AmimsVDueListOutput,
   AmimsWarranty
 ];
 
@@ -298,4 +300,5 @@ export * from './amims.tech_log_engine_check.entity';
 export * from './amims.tech_log_item.entity';
 export * from './amims.tech_log_jo.entity';
 export * from './amims.type_ofwork.entity';
+export * from './amims.v_due_list_output.entity';
 export * from './amims.warranty.entity';

@@ -2,14 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsMaintenanceDto {
-  @ApiProperty({ required: true })
-  idMaintenance: string;
+  @ApiProperty({ required: false })
+  atachapter: string;
 
   @ApiProperty({ required: false })
-  idMpart: string;
-
-  @ApiProperty({ required: false })
-  idMaintenanceCode: string;
+  createdAt: string;
 
   @ApiProperty({ required: false })
   cycleFrom: number;
@@ -23,6 +20,30 @@ export class AmimsMaintenanceDto {
   @ApiProperty({ required: false })
   flightHoursTo: number;
 
+  @ApiProperty({ required: true })
+  idMaintenance: string;
+
+  @ApiProperty({ required: false })
+  idMaintenanceCode: string;
+
+  @ApiProperty({ required: false })
+  idMpart: string;
+
+  @ApiProperty({ required: false })
+  idUser: string;
+
+  @ApiProperty({ required: false })
+  noteMaintenance: string;
+
+  @ApiProperty({ required: false })
+  oldId: string;
+
+  @ApiProperty({ required: false })
+  onLocation: string;
+
+  @ApiProperty({ required: false })
+  repetitions: number;
+
   @ApiProperty({ required: false })
   timeRangeForm: number;
 
@@ -33,29 +54,8 @@ export class AmimsMaintenanceDto {
   timeUnit: string;
 
   @ApiProperty({ required: false })
-  repetitions: number;
-
-  @ApiProperty({ required: false })
-  noteMaintenance: string;
-
-  @ApiProperty({ required: false })
-  atachapter: string;
-
-  @ApiProperty({ required: false })
   typeMaintenance: string;
 
   @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
   updatedAt: string;
-
-  @ApiProperty({ required: false })
-  idUser: string;
-
-  @ApiProperty({ required: false })
-  onLocation: string;
-
-  @ApiProperty({ required: false })
-  oldId: string;
 }
