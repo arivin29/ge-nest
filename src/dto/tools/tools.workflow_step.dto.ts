@@ -30,7 +30,7 @@ export class ToolsWorkflowStepDto {
   statusFrom: string;
 
   @ApiProperty({ required: false })
-  statusRejectTo: string;
+  statusRejectTo: number;
 
   @ApiProperty({ required: true })
   statusTo: string;

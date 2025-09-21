@@ -29,5 +29,13 @@ npm run generator-api  -- --fromTable=sales_penjualan --nama=sales_penjualan --d
 npm run generator-api  -- --fromTable=sales_penjualan_item --nama=sales_penjualan_item --db=erp_pelanggan --router=pelanggan --out=crud,report
 
 npm run generator-api  -- --fromTable=sale_shipping --nama=sale_shipping --db=erp_pelanggan --router=pelanggan --out=crud,report
-npm run generator-api  -- --fromTable=sale_shipping_item --nama=sale_shipping_item --db=erp_pelanggan --router=pelanggan --out=crud
+npm run generator-api  -- --fromTable=sale_shipping_item --nama=sale_shipping_item --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=invoice_item --nama=invoice_item --db=erp_pelanggan --router=pelanggan --out=crud,report
+
+npm run generator-api  -- --fromTable=payment --nama=payment --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=purchase_invoice --nama=purchase_invoice --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=purchase_invoice_item --nama=purchase_invoice_item --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=purchase_order --nama=purchase_order --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=purchase_order_item --nama=purchase_order_item --db=erp_pelanggan --router=pelanggan --out=crud,report
+npm run generator-api  -- --fromTable=bank_account --nama=bank_account --db=erp_pelanggan --router=pelanggan --out=crud,report
 

@@ -30,7 +30,7 @@ export class ToolsWorkflowStep {
   statusFrom: string;
 
   @Column({ name: 'status_reject_to', nullable: true })
-  statusRejectTo: string;
+  statusRejectTo: number;
 
   @Column({ name: 'status_to' })
   statusTo: string;

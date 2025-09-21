@@ -4,9 +4,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
-import { ApiResponseEntity } from 'src/common/decorators/api-response-entity'; 
+import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
 import { SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
-import { applySmartInclude } from 'src/common/helpers/smart-include.helper';  
+import { applySmartInclude } from 'src/common/helpers/smart-include.helper';
 import { PelangganInvoiceReportDto } from 'src/dto/pelanggan/pelanggan.invoice-report.dto';;
 
 @ApiTags('invoice_report')
@@ -15,13 +15,13 @@ export class InvoiceReportController {
     constructor(private readonly service: InvoiceService) { }
 
     @Post('list')
-    @ApiResponseEntity(PelangganInvoiceReportDto, 'list') 
-    async findAll( 
+    @ApiResponseEntity(PelangganInvoiceReportDto, 'list')
+    async findAll(
         @Body() body: BaseQueryDtoSmart
     ) {
         const isString = (val: any) => typeof val === 'string';
         const source = body;
-  
+
         const parsed: SmartQueryInput = {
             where: source.filter ?? {},
             joinWhere: (source as any).joinWhere ?? [],
@@ -43,14 +43,14 @@ export class InvoiceReportController {
                 limit: parseInt(String((source as any).pageSize ?? (source as any).pagination?.limit ?? '10'), 10),
             },
             include: (source as any).include ?? [
-                                                { name: 'contract', type: 'single' },
-                                ],   // mohon di isi dengan default dari id_xxx
+                { name: 'client', type: 'single' },
+            ],   // mohon di isi dengan default dari id_xxx
         };
 
         try {
-            const result = await this.service.findAllSmart(parsed); 
+            const result = await this.service.findAllSmart(parsed);
             // ⬇️ Inject include handler 
-            await applySmartInclude(result.data, parsed.include, this.service['repo'].manager); 
+            await applySmartInclude(result.data, parsed.include, this.service['repo'].manager);
             return ApiResponseHelper.success(result.data, 'list', undefined, result.total);
 
         } catch (error) {
@@ -70,8 +70,8 @@ export class InvoiceReportController {
 
             // Include semua relasi (bisa dari default config atau didefinisikan di controller)
             const allIncludes: SmartQueryInput['include'] = [
-                                                { name: 'contract', type: 'single' },
-                                ];
+                { name: 'client', type: 'single' },
+            ];
 
             // Filter hanya yang punya id_<name> di data
             const toCamel = (s: string) => s.replace(/_([a-z])/g, (_, g) => g.toUpperCase());
@@ -83,7 +83,7 @@ export class InvoiceReportController {
                 ];
                 return possibleKeys.some(key => Object.keys(result).includes(key));
             });
-            
+
             // Jalankan include
             await applySmartInclude([result], filteredIncludes, this.service['repo'].manager);
             return ApiResponseHelper.success(result, 'get');

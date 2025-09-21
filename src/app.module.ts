@@ -62,6 +62,13 @@ import { SalesPenjualanModule } from './modules/pelanggan/sales_penjualan/sales_
 import { SalesPenjualanItemModule } from './modules/pelanggan/sales_penjualan_item/sales_penjualan_item.module';
 import { SaleShippingModule } from './modules/pelanggan/sale_shipping/sale_shipping.module';
 import { SaleShippingItemModule } from './modules/pelanggan/sale_shipping_item/sale_shipping_item.module';
+import { InvoiceItemModule } from './modules/pelanggan/invoice_item/invoice_item.module';
+import { PaymentModule } from './modules/pelanggan/payment/payment.module';
+import { PurchaseInvoiceModule } from './modules/pelanggan/purchase_invoice/purchase_invoice.module';
+import { PurchaseInvoiceItemModule } from './modules/pelanggan/purchase_invoice_item/purchase_invoice_item.module';
+import { PurchaseOrderModule } from './modules/pelanggan/purchase_order/purchase_order.module';
+import { PurchaseOrderItemModule } from './modules/pelanggan/purchase_order_item/purchase_order_item.module';
+import { BankAccountModule } from './modules/pelanggan/bank_account/bank_account.module';
 const COM = [
   ClientModule,
   ClientContactModule,
@@ -90,7 +97,14 @@ const COM = [
   SalesPenjualanModule,
   SalesPenjualanItemModule,
   SaleShippingModule,
-  SaleShippingItemModule
+  SaleShippingItemModule,
+  InvoiceItemModule,
+  PaymentModule,
+  PurchaseInvoiceModule,
+  PurchaseInvoiceItemModule,
+  PurchaseOrderModule,
+  PurchaseOrderItemModule,
+  BankAccountModule
 ];
 
 @Module({

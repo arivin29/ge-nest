@@ -60,6 +60,11 @@ export class WorkflowService {
         // ) {
         //     throw new ForbiddenException(`User tidak punya akses approve/reject pada langkah ini`);
         // }
+        const workflow = await this.workflowRepo.findOne({
+            where: { idWorkflow: aggregator.idWorkflow }
+        })
+
+        
 
         // ➤ Simpan log approval
         const log = this.workflowLog.create({
@@ -88,16 +93,30 @@ export class WorkflowService {
                 },
             });
         }
+        else
+        {
+            nextStep = await this.workflowStep.findOne({
+                where: {
+                    idWorkflow: aggregator.idWorkflow,
+                    urutan: currentStep.statusRejectTo ? (currentStep.statusRejectTo) : 1,
+                },
+            });
+        }
 
-        aggregator.lastWorkflowStep = nextStep?.idWorkflowStep ?? currentStep.idWorkflowStep;
+        aggregator.lastWorkflowStep = (nextStep?.idWorkflowStep) ;
         aggregator.lastApprovalUser = user_id;
         aggregator.lastApprovalDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
         aggregator.lastApprovalNote = catatan;
         aggregator.updatedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        aggregator.lastApprovalStatus = status === 'reject' ? 'rejected' : nextStep ? 'in_progress' : 'done';
+        // aggregator.lastApprovalStatus = status === 'reject' ? 'rejected' : nextStep ? 'in_progress' : 'done';
+        aggregator.lastApprovalStatus = status === 'approve' ? currentStep.statusTo : currentStep.statusFrom;
 
         await this.aggregatorRepo.save(aggregator);
-
+        
+        await this.aggregatorRepo.query(
+            `UPDATE \`${workflow?.targetDb}\`.\`${workflow?.targetTable}\` SET \`${(workflow?.statusField ? workflow?.statusField : ('status_' + workflow?.targetTable))}\` = ? WHERE id_${workflow?.targetTable} = ?`,
+            [aggregator.lastApprovalStatus, from_module_id],
+        ); 
 
         await this.redisPublishHelperPenormoran.publishDocumentNumberingEvent({
             forModule: from_module,
@@ -105,7 +124,7 @@ export class WorkflowService {
             id_users: user_id, // ambil dari context
             trigger: 'workflow',
         });
-
+        
         return {
             log,
             aggregator,

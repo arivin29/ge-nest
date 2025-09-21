@@ -133,11 +133,18 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
 
         sanitizeEmptyStrings(data as any);
         convertUtcDatesToLocal(data);
-
+        console.log('data', data)
         // ✅ Jika ada kolom validasi
         if ('validasi' in (data as any) && (data as any).validasi === 0) {
+            let where: any = { validasi: 0 };
+
+            if ('formModule' in (data as any) && ((data as any).formModule != null || (data as any).formModule != ''))
+            {
+                where.formModule = (data as any).formModule
+            }
+
             const existingDraft = await this.repo.findOne({
-                where: { validasi: 0 } as any,
+                where: where as any,
                 order: { createdAt: 'ASC' } as any,
             });
 

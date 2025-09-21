@@ -16,12 +16,17 @@ import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decor
 import { BaseQueryDto } from 'src/common/dto/base-query.dto';
 
 import { PelangganInvoiceDto } from 'src/dto/pelanggan/pelanggan.invoice.dto';; 
-import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
+import { ApiResponseEntity } from 'src/common/decorators/api-response-entity'; 
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { DocumentNumberingService } from 'src/modules/tools/document_numbering/document_numbering.service';
  
 @ApiTags('invoice')
 @Controller('invoice')
 export class InvoiceController {
-    constructor(private readonly service: InvoiceService) { }
+    constructor(
+        private readonly service: InvoiceService, 
+        private readonly docNumService: DocumentNumberingService,
+    ) { }
 
     @Get()
     @ApiResponseEntity(PelangganInvoiceDto, 'list')
@@ -74,9 +79,28 @@ export class InvoiceController {
     @Put(':id')
     @ApiBody({ type: PelangganInvoiceDto })
     @ApiResponseEntity(PelangganInvoiceDto, 'put')
-    async update(@Param('id') id: string, @Body() body: PelangganInvoiceDto) {
+    async update(@Param('id') id: string, @Body() body: PelangganInvoiceDto, @CurrentUser() user: any,) {
         try {
-            const result = await this.service.update(id, body);
+            // Ambil data lama dulu
+            const existing = await this.service.findOne(id);
+
+            const result = await this.service.update(id, body); 
+
+            // Cek validasi berubah 0 → 1
+            if (existing?.validasi === 0 && body.validasi === 1) {
+                // await this.redisPublishHelperPenomoran.publishDocumentNumberingEvent({
+                //     forModule: 'PelangganInvoice',
+                //     forModuleId: id,
+                //     id_users: user.id_users, // ambil user dari context/auth
+                //     trigger: 'workflow',
+                // });
+                await this.docNumService.generateIfEligible(
+                    'PelangganInvoice',
+                    id
+                );
+                
+            }
+
             return ApiResponseHelper.success(result, 'update');
         } catch (error) {
             return ApiResponseHelper.failed(null, 'Gagal memperbarui data', 500, error);

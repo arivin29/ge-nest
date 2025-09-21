@@ -24,6 +24,9 @@ export class ToolsWorkflowDto {
   namaWorkflow: string;
 
   @ApiProperty({ required: false })
+  statusField: string;
+
+  @ApiProperty({ required: false })
   statusWorkflow: string;
 
   @ApiProperty({ required: true })

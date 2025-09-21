@@ -1,3 +1,10 @@
+import { BankAccountModule } from './modules/pelanggan/bank_account/bank_account.module';
+import { PurchaseOrderItemModule } from './modules/pelanggan/purchase_order_item/purchase_order_item.module';
+import { PurchaseOrderModule } from './modules/pelanggan/purchase_order/purchase_order.module';
+import { PurchaseInvoiceItemModule } from './modules/pelanggan/purchase_invoice_item/purchase_invoice_item.module';
+import { PurchaseInvoiceModule } from './modules/pelanggan/purchase_invoice/purchase_invoice.module';
+import { PaymentModule } from './modules/pelanggan/payment/payment.module';
+import { InvoiceItemModule } from './modules/pelanggan/invoice_item/invoice_item.module';
 import { SaleShippingItemModule } from './modules/pelanggan/sale_shipping_item/sale_shipping_item.module';
 import { SaleShippingModule } from './modules/pelanggan/sale_shipping/sale_shipping.module';
 import { SalesPenjualanItemModule } from './modules/pelanggan/sales_penjualan_item/sales_penjualan_item.module';
@@ -83,7 +90,14 @@ export const routerConfig = [
       { path: 'sales_penjualan', module: SalesPenjualanModule },
       { path: 'sales_penjualan_item', module: SalesPenjualanItemModule },
       { path: 'sale_shipping', module: SaleShippingModule },
-      { path: 'sale_shipping_item', module: SaleShippingItemModule }]
+      { path: 'sale_shipping_item', module: SaleShippingItemModule },
+      { path: 'invoice_item', module: InvoiceItemModule },
+      { path: 'payment', module: PaymentModule },
+      { path: 'purchase_invoice', module: PurchaseInvoiceModule },
+      { path: 'purchase_invoice_item', module: PurchaseInvoiceItemModule },
+      { path: 'purchase_order', module: PurchaseOrderModule },
+      { path: 'purchase_order_item', module: PurchaseOrderItemModule },
+      { path: 'bank_account', module: BankAccountModule }]
     },
     {
         path: 'auth',

@@ -4,7 +4,7 @@ import { RedisService } from 'nestjs-redis'; // pastikan pakai nestjs-redis atau
 @Injectable()
 export class RedisPublishHelperPenormoran {
     constructor(
-        @Inject('REDIS_CLIENT')
+        @Inject('REDIS_PUBLISHER')
         private readonly redisClient: any, // pakai ioredis type kalau ada
     ) { }
 

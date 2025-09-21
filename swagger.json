@@ -18745,6 +18745,3457 @@
           "sale_shipping_item_widget"
         ]
       }
+    },
+    "/pelanggan/invoice_item/invoice_item": {
+      "get": {
+        "operationId": "InvoiceItemController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganInvoiceItemDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_item"
+        ]
+      },
+      "post": {
+        "operationId": "InvoiceItemController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganInvoiceItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create PelangganInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_item"
+        ]
+      }
+    },
+    "/pelanggan/invoice_item/invoice_item/{id}": {
+      "get": {
+        "operationId": "InvoiceItemController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_item"
+        ]
+      },
+      "put": {
+        "operationId": "InvoiceItemController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganInvoiceItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put PelangganInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_item"
+        ]
+      },
+      "delete": {
+        "operationId": "InvoiceItemController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete PelangganInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_item"
+        ]
+      }
+    },
+    "/pelanggan/invoice_item/invoice_item_report/list": {
+      "post": {
+        "operationId": "InvoiceItemReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganInvoiceItemReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganInvoiceItemReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_item_report"
+        ]
+      }
+    },
+    "/pelanggan/invoice_item/invoice_item_report/{id}": {
+      "get": {
+        "operationId": "InvoiceItemReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganInvoiceItemReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganInvoiceItemReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_item_report"
+        ]
+      }
+    },
+    "/pelanggan/invoice_item/invoice_item_widget": {
+      "post": {
+        "operationId": "InvoiceItemWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganInvoiceItemWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganInvoiceItemWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invoice_item_widget"
+        ]
+      }
+    },
+    "/pelanggan/payment/payment": {
+      "get": {
+        "operationId": "PaymentController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPaymentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPaymentDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payment"
+        ]
+      },
+      "post": {
+        "operationId": "PaymentController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPaymentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create PelangganPaymentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPaymentDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payment"
+        ]
+      }
+    },
+    "/pelanggan/payment/payment/{id}": {
+      "get": {
+        "operationId": "PaymentController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPaymentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPaymentDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payment"
+        ]
+      },
+      "put": {
+        "operationId": "PaymentController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPaymentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put PelangganPaymentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPaymentDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payment"
+        ]
+      },
+      "delete": {
+        "operationId": "PaymentController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete PelangganPaymentDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPaymentDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payment"
+        ]
+      }
+    },
+    "/pelanggan/payment/payment_report/list": {
+      "post": {
+        "operationId": "PaymentReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPaymentReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPaymentReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payment_report"
+        ]
+      }
+    },
+    "/pelanggan/payment/payment_report/{id}": {
+      "get": {
+        "operationId": "PaymentReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPaymentReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPaymentReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payment_report"
+        ]
+      }
+    },
+    "/pelanggan/payment/payment_widget": {
+      "post": {
+        "operationId": "PaymentWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPaymentWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPaymentWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payment_widget"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice/purchase_invoice": {
+      "get": {
+        "operationId": "PurchaseInvoiceController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseInvoiceDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice"
+        ]
+      },
+      "post": {
+        "operationId": "PurchaseInvoiceController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPurchaseInvoiceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create PelangganPurchaseInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice/purchase_invoice/{id}": {
+      "get": {
+        "operationId": "PurchaseInvoiceController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPurchaseInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice"
+        ]
+      },
+      "put": {
+        "operationId": "PurchaseInvoiceController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPurchaseInvoiceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put PelangganPurchaseInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice"
+        ]
+      },
+      "delete": {
+        "operationId": "PurchaseInvoiceController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete PelangganPurchaseInvoiceDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice/purchase_invoice_report/list": {
+      "post": {
+        "operationId": "PurchaseInvoiceReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseInvoiceReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseInvoiceReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_report"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice/purchase_invoice_report/{id}": {
+      "get": {
+        "operationId": "PurchaseInvoiceReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPurchaseInvoiceReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_report"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice/purchase_invoice_widget": {
+      "post": {
+        "operationId": "PurchaseInvoiceWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseInvoiceWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseInvoiceWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_widget"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice_item/purchase_invoice_item": {
+      "get": {
+        "operationId": "PurchaseInvoiceItemController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_item"
+        ]
+      },
+      "post": {
+        "operationId": "PurchaseInvoiceItemController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create PelangganPurchaseInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_item"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice_item/purchase_invoice_item/{id}": {
+      "get": {
+        "operationId": "PurchaseInvoiceItemController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPurchaseInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_item"
+        ]
+      },
+      "put": {
+        "operationId": "PurchaseInvoiceItemController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put PelangganPurchaseInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_item"
+        ]
+      },
+      "delete": {
+        "operationId": "PurchaseInvoiceItemController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete PelangganPurchaseInvoiceItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_item"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice_item/purchase_invoice_item_report/list": {
+      "post": {
+        "operationId": "PurchaseInvoiceItemReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseInvoiceItemReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_item_report"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice_item/purchase_invoice_item_report/{id}": {
+      "get": {
+        "operationId": "PurchaseInvoiceItemReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPurchaseInvoiceItemReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_item_report"
+        ]
+      }
+    },
+    "/pelanggan/purchase_invoice_item/purchase_invoice_item_widget": {
+      "post": {
+        "operationId": "PurchaseInvoiceItemWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseInvoiceItemWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseInvoiceItemWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_invoice_item_widget"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order/purchase_order": {
+      "get": {
+        "operationId": "PurchaseOrderController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseOrderDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseOrderDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order"
+        ]
+      },
+      "post": {
+        "operationId": "PurchaseOrderController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPurchaseOrderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create PelangganPurchaseOrderDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order/purchase_order/{id}": {
+      "get": {
+        "operationId": "PurchaseOrderController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPurchaseOrderDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order"
+        ]
+      },
+      "put": {
+        "operationId": "PurchaseOrderController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPurchaseOrderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put PelangganPurchaseOrderDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order"
+        ]
+      },
+      "delete": {
+        "operationId": "PurchaseOrderController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete PelangganPurchaseOrderDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order/purchase_order_report/list": {
+      "post": {
+        "operationId": "PurchaseOrderReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseOrderReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseOrderReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_report"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order/purchase_order_report/{id}": {
+      "get": {
+        "operationId": "PurchaseOrderReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPurchaseOrderReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_report"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order/purchase_order_widget": {
+      "post": {
+        "operationId": "PurchaseOrderWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseOrderWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseOrderWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_widget"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order_item/purchase_order_item": {
+      "get": {
+        "operationId": "PurchaseOrderItemController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseOrderItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseOrderItemDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_item"
+        ]
+      },
+      "post": {
+        "operationId": "PurchaseOrderItemController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPurchaseOrderItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create PelangganPurchaseOrderItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_item"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order_item/purchase_order_item/{id}": {
+      "get": {
+        "operationId": "PurchaseOrderItemController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPurchaseOrderItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_item"
+        ]
+      },
+      "put": {
+        "operationId": "PurchaseOrderItemController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganPurchaseOrderItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put PelangganPurchaseOrderItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_item"
+        ]
+      },
+      "delete": {
+        "operationId": "PurchaseOrderItemController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete PelangganPurchaseOrderItemDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderItemDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_item"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order_item/purchase_order_item_report/list": {
+      "post": {
+        "operationId": "PurchaseOrderItemReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseOrderItemReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseOrderItemReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_item_report"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order_item/purchase_order_item_report/{id}": {
+      "get": {
+        "operationId": "PurchaseOrderItemReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganPurchaseOrderItemReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganPurchaseOrderItemReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_item_report"
+        ]
+      }
+    },
+    "/pelanggan/purchase_order_item/purchase_order_item_widget": {
+      "post": {
+        "operationId": "PurchaseOrderItemWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganPurchaseOrderItemWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganPurchaseOrderItemWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "purchase_order_item_widget"
+        ]
+      }
+    },
+    "/pelanggan/bank_account/bank_account": {
+      "get": {
+        "operationId": "BankAccountController_findAll",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "JSON.stringify({})",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "search_field",
+            "required": false,
+            "in": "query",
+            "description": "Array of searchable fields",
+            "schema": {
+              "example": [
+                "nama",
+                "alamat"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "search_keyword",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "makmur",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganBankAccountDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganBankAccountDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "bank_account"
+        ]
+      },
+      "post": {
+        "operationId": "BankAccountController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganBankAccountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create PelangganBankAccountDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganBankAccountDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "bank_account"
+        ]
+      }
+    },
+    "/pelanggan/bank_account/bank_account/{id}": {
+      "get": {
+        "operationId": "BankAccountController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganBankAccountDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganBankAccountDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "bank_account"
+        ]
+      },
+      "put": {
+        "operationId": "BankAccountController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PelangganBankAccountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for put PelangganBankAccountDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganBankAccountDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "bank_account"
+        ]
+      },
+      "delete": {
+        "operationId": "BankAccountController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for delete PelangganBankAccountDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganBankAccountDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "bank_account"
+        ]
+      }
+    },
+    "/pelanggan/bank_account/bank_account_report/list": {
+      "post": {
+        "operationId": "BankAccountReportController_findAll",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseQueryDtoSmart"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganBankAccountReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganBankAccountReportDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "bank_account_report"
+        ]
+      }
+    },
+    "/pelanggan/bank_account/bank_account_report/{id}": {
+      "get": {
+        "operationId": "BankAccountReportController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response for get PelangganBankAccountReportDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PelangganBankAccountReportDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "bank_account_report"
+        ]
+      }
+    },
+    "/pelanggan/bank_account/bank_account_widget": {
+      "post": {
+        "operationId": "BankAccountWidgetController_findAll",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "joinWhere",
+            "required": false,
+            "in": "query",
+            "description": "JoinWhere object",
+            "schema": {
+              "$ref": "#/components/schemas/Object"
+            }
+          },
+          {
+            "name": "select",
+            "required": false,
+            "in": "query",
+            "description": "Select fields with aggregation, e.g. [{ type: \"sum\", field: \"nilai\", alias: \"totalNilai\" }]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SelectFieldDto"
+              }
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Fields to group by",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sortKey",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortValue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaseWidgetQueryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response for list PelangganBankAccountWidgetDto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "pesan": {
+                      "type": "string",
+                      "example": "Berhasil"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PelangganBankAccountWidgetDto"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "bank_account_widget"
+        ]
+      }
     }
   },
   "info": {
@@ -19239,6 +22690,9 @@
           "namaWorkflow": {
             "type": "string"
           },
+          "statusField": {
+            "type": "string"
+          },
           "statusWorkflow": {
             "type": "string"
           },
@@ -19311,6 +22765,9 @@
           "namaWorkflow": {
             "type": "string"
           },
+          "statusField": {
+            "type": "string"
+          },
           "statusWorkflow": {
             "type": "string"
           },
@@ -19354,6 +22811,9 @@
             "type": "string"
           },
           "namaWorkflow": {
+            "type": "string"
+          },
+          "statusField": {
             "type": "string"
           },
           "statusWorkflow": {
@@ -19562,7 +23022,7 @@
             "type": "string"
           },
           "statusRejectTo": {
-            "type": "string"
+            "type": "number"
           },
           "statusTo": {
             "type": "string"
@@ -19616,7 +23076,7 @@
             "type": "string"
           },
           "statusRejectTo": {
-            "type": "string"
+            "type": "number"
           },
           "statusTo": {
             "type": "string"
@@ -19674,7 +23134,7 @@
             "type": "string"
           },
           "statusRejectTo": {
-            "type": "string"
+            "type": "number"
           },
           "statusTo": {
             "type": "string"
@@ -21776,6 +25236,12 @@
           "alamatPenagihan": {
             "type": "string"
           },
+          "amountPaid": {
+            "type": "number"
+          },
+          "billTujuan": {
+            "type": "string"
+          },
           "catatan": {
             "type": "string"
           },
@@ -21788,11 +25254,20 @@
           "dpp": {
             "type": "number"
           },
-          "idContract": {
+          "formModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "idClient": {
             "type": "string"
           },
           "idInvoice": {
             "type": "string"
+          },
+          "jatuhTempo": {
+            "type": "number"
           },
           "jenisInvoice": {
             "type": "string"
@@ -21802,6 +25277,9 @@
           },
           "nilaiInvoice": {
             "type": "number"
+          },
+          "nomorFaktur": {
+            "type": "string"
           },
           "nomorInvoice": {
             "type": "string"
@@ -21815,19 +25293,28 @@
           "picPenagihan": {
             "type": "string"
           },
+          "picPenagihanPhone": {
+            "type": "string"
+          },
           "ppn": {
             "type": "number"
           },
-          "statusInvoice": {
+          "rekening": {
+            "type": "string"
+          },
+          "remainingAmount": {
+            "type": "number"
+          },
+          "statusPembayaran": {
             "type": "string"
           },
           "tanggalDibayar": {
             "type": "string"
           },
-          "tanggalJatuhTempo": {
+          "tanggalTerbit": {
             "type": "string"
           },
-          "tanggalTerbit": {
+          "topCatatan": {
             "type": "string"
           },
           "updatedAt": {
@@ -21835,6 +25322,9 @@
           },
           "updatedBy": {
             "type": "string"
+          },
+          "validasi": {
+            "type": "number"
           }
         },
         "required": [
@@ -21968,6 +25458,12 @@
           "alamatPenagihan": {
             "type": "string"
           },
+          "amountPaid": {
+            "type": "number"
+          },
+          "billTujuan": {
+            "type": "string"
+          },
           "catatan": {
             "type": "string"
           },
@@ -21980,11 +25476,20 @@
           "dpp": {
             "type": "number"
           },
-          "idContract": {
+          "formModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "idClient": {
             "type": "string"
           },
           "idInvoice": {
             "type": "string"
+          },
+          "jatuhTempo": {
+            "type": "number"
           },
           "jenisInvoice": {
             "type": "string"
@@ -21994,6 +25499,9 @@
           },
           "nilaiInvoice": {
             "type": "number"
+          },
+          "nomorFaktur": {
+            "type": "string"
           },
           "nomorInvoice": {
             "type": "string"
@@ -22007,19 +25515,28 @@
           "picPenagihan": {
             "type": "string"
           },
+          "picPenagihanPhone": {
+            "type": "string"
+          },
           "ppn": {
             "type": "number"
           },
-          "statusInvoice": {
+          "rekening": {
+            "type": "string"
+          },
+          "remainingAmount": {
+            "type": "number"
+          },
+          "statusPembayaran": {
             "type": "string"
           },
           "tanggalDibayar": {
             "type": "string"
           },
-          "tanggalJatuhTempo": {
+          "tanggalTerbit": {
             "type": "string"
           },
-          "tanggalTerbit": {
+          "topCatatan": {
             "type": "string"
           },
           "updatedAt": {
@@ -22028,13 +25545,16 @@
           "updatedBy": {
             "type": "string"
           },
-          "contract": {
-            "$ref": "#/components/schemas/PelangganContractDto"
+          "validasi": {
+            "type": "number"
+          },
+          "client": {
+            "$ref": "#/components/schemas/PelangganClientDto"
           }
         },
         "required": [
           "idInvoice",
-          "contract"
+          "client"
         ]
       },
       "PelangganInvoiceWidgetDto": {
@@ -22043,6 +25563,12 @@
           "alamatPenagihan": {
             "type": "string"
           },
+          "amountPaid": {
+            "type": "number"
+          },
+          "billTujuan": {
+            "type": "string"
+          },
           "catatan": {
             "type": "string"
           },
@@ -22055,11 +25581,20 @@
           "dpp": {
             "type": "number"
           },
-          "idContract": {
+          "formModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "idClient": {
             "type": "string"
           },
           "idInvoice": {
             "type": "string"
+          },
+          "jatuhTempo": {
+            "type": "number"
           },
           "jenisInvoice": {
             "type": "string"
@@ -22069,6 +25604,9 @@
           },
           "nilaiInvoice": {
             "type": "number"
+          },
+          "nomorFaktur": {
+            "type": "string"
           },
           "nomorInvoice": {
             "type": "string"
@@ -22082,19 +25620,28 @@
           "picPenagihan": {
             "type": "string"
           },
+          "picPenagihanPhone": {
+            "type": "string"
+          },
           "ppn": {
             "type": "number"
           },
-          "statusInvoice": {
+          "rekening": {
+            "type": "string"
+          },
+          "remainingAmount": {
+            "type": "number"
+          },
+          "statusPembayaran": {
             "type": "string"
           },
           "tanggalDibayar": {
             "type": "string"
           },
-          "tanggalJatuhTempo": {
+          "tanggalTerbit": {
             "type": "string"
           },
-          "tanggalTerbit": {
+          "topCatatan": {
             "type": "string"
           },
           "updatedAt": {
@@ -22102,6 +25649,9 @@
           },
           "updatedBy": {
             "type": "string"
+          },
+          "validasi": {
+            "type": "number"
           },
           "total": {
             "type": "number"
@@ -24322,6 +27872,1387 @@
           "idSaleShippingItem",
           "idSalesPenjualanItem",
           "qtyKirim"
+        ]
+      },
+      "PelangganInvoiceItemDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string"
+          },
+          "deskripsiBarang": {
+            "type": "string"
+          },
+          "diskon": {
+            "type": "number"
+          },
+          "fromModuleIdItem": {
+            "type": "string"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idInvoice": {
+            "type": "string"
+          },
+          "idInvoiceItem": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "totalRupiah": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fromModuleIdItem",
+          "hargaSatuan",
+          "idInvoice",
+          "idInvoiceItem",
+          "qty",
+          "totalRupiah"
+        ]
+      },
+      "PelangganInvoiceItemReportDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string"
+          },
+          "deskripsiBarang": {
+            "type": "string"
+          },
+          "diskon": {
+            "type": "number"
+          },
+          "fromModuleIdItem": {
+            "type": "string"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idInvoice": {
+            "type": "string"
+          },
+          "idInvoiceItem": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "totalRupiah": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "invoice": {
+            "$ref": "#/components/schemas/PelangganInvoiceDto"
+          }
+        },
+        "required": [
+          "fromModuleIdItem",
+          "hargaSatuan",
+          "idInvoice",
+          "idInvoiceItem",
+          "qty",
+          "totalRupiah",
+          "invoice"
+        ]
+      },
+      "PelangganInvoiceItemWidgetDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string"
+          },
+          "deskripsiBarang": {
+            "type": "string"
+          },
+          "diskon": {
+            "type": "number"
+          },
+          "fromModuleIdItem": {
+            "type": "string"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idInvoice": {
+            "type": "string"
+          },
+          "idInvoiceItem": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "totalRupiah": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "fromModuleIdItem",
+          "hargaSatuan",
+          "idInvoice",
+          "idInvoiceItem",
+          "qty",
+          "totalRupiah"
+        ]
+      },
+      "PelangganPaymentDto": {
+        "type": "object",
+        "properties": {
+          "approvedBy": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "coa": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "exchangeRate": {
+            "type": "number"
+          },
+          "fromModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "fromModuleNumber": {
+            "type": "string"
+          },
+          "idBankAccount": {
+            "type": "string"
+          },
+          "idPayment": {
+            "type": "string"
+          },
+          "isReconciled": {
+            "type": "boolean"
+          },
+          "jumlah": {
+            "type": "number"
+          },
+          "metode": {
+            "type": "string"
+          },
+          "nomorPayment": {
+            "type": "string"
+          },
+          "paymentType": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "sisaTagihan": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "tanggalPayment": {
+            "type": "string"
+          },
+          "totalInvoice": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idPayment",
+          "jumlah",
+          "nomorPayment",
+          "paymentType",
+          "tanggalPayment"
+        ]
+      },
+      "PelangganPaymentReportDto": {
+        "type": "object",
+        "properties": {
+          "approvedBy": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "coa": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "exchangeRate": {
+            "type": "number"
+          },
+          "fromModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "fromModuleNumber": {
+            "type": "string"
+          },
+          "idBankAccount": {
+            "type": "string"
+          },
+          "idPayment": {
+            "type": "string"
+          },
+          "isReconciled": {
+            "type": "boolean"
+          },
+          "jumlah": {
+            "type": "number"
+          },
+          "metode": {
+            "type": "string"
+          },
+          "nomorPayment": {
+            "type": "string"
+          },
+          "paymentType": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "sisaTagihan": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "tanggalPayment": {
+            "type": "string"
+          },
+          "totalInvoice": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idPayment",
+          "jumlah",
+          "nomorPayment",
+          "paymentType",
+          "tanggalPayment"
+        ]
+      },
+      "PelangganPaymentWidgetDto": {
+        "type": "object",
+        "properties": {
+          "approvedBy": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "coa": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "exchangeRate": {
+            "type": "number"
+          },
+          "fromModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "fromModuleNumber": {
+            "type": "string"
+          },
+          "idBankAccount": {
+            "type": "string"
+          },
+          "idPayment": {
+            "type": "string"
+          },
+          "isReconciled": {
+            "type": "boolean"
+          },
+          "jumlah": {
+            "type": "number"
+          },
+          "metode": {
+            "type": "string"
+          },
+          "nomorPayment": {
+            "type": "string"
+          },
+          "paymentType": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "sisaTagihan": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "tanggalPayment": {
+            "type": "string"
+          },
+          "totalInvoice": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idPayment",
+          "jumlah",
+          "nomorPayment",
+          "paymentType",
+          "tanggalPayment"
+        ]
+      },
+      "PelangganPurchaseInvoiceDto": {
+        "type": "object",
+        "properties": {
+          "amountPaid": {
+            "type": "number"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "grandTotal": {
+            "type": "number"
+          },
+          "idClient": {
+            "type": "string"
+          },
+          "idPurchaseInvoice": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "jenis": {
+            "type": "string"
+          },
+          "nomorInvoice": {
+            "type": "string"
+          },
+          "paymentStatus": {
+            "type": "string"
+          },
+          "remainingAmount": {
+            "type": "number"
+          },
+          "sisaTagihan": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalInvoice": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "totalDiskon": {
+            "type": "number"
+          },
+          "totalHarga": {
+            "type": "number"
+          },
+          "totalPajak": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "idClient",
+          "idPurchaseInvoice",
+          "nomorInvoice",
+          "tanggalInvoice"
+        ]
+      },
+      "PelangganPurchaseInvoiceReportDto": {
+        "type": "object",
+        "properties": {
+          "amountPaid": {
+            "type": "number"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "grandTotal": {
+            "type": "number"
+          },
+          "idClient": {
+            "type": "string"
+          },
+          "idPurchaseInvoice": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "jenis": {
+            "type": "string"
+          },
+          "nomorInvoice": {
+            "type": "string"
+          },
+          "paymentStatus": {
+            "type": "string"
+          },
+          "remainingAmount": {
+            "type": "number"
+          },
+          "sisaTagihan": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalInvoice": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "totalDiskon": {
+            "type": "number"
+          },
+          "totalHarga": {
+            "type": "number"
+          },
+          "totalPajak": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "client": {
+            "$ref": "#/components/schemas/PelangganClientDto"
+          }
+        },
+        "required": [
+          "idClient",
+          "idPurchaseInvoice",
+          "nomorInvoice",
+          "tanggalInvoice",
+          "client"
+        ]
+      },
+      "PelangganPurchaseInvoiceWidgetDto": {
+        "type": "object",
+        "properties": {
+          "amountPaid": {
+            "type": "number"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "grandTotal": {
+            "type": "number"
+          },
+          "idClient": {
+            "type": "string"
+          },
+          "idPurchaseInvoice": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "jenis": {
+            "type": "string"
+          },
+          "nomorInvoice": {
+            "type": "string"
+          },
+          "paymentStatus": {
+            "type": "string"
+          },
+          "remainingAmount": {
+            "type": "number"
+          },
+          "sisaTagihan": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalInvoice": {
+            "type": "string"
+          },
+          "tanggalJatuhTempo": {
+            "type": "string"
+          },
+          "totalDiskon": {
+            "type": "number"
+          },
+          "totalHarga": {
+            "type": "number"
+          },
+          "totalPajak": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idClient",
+          "idPurchaseInvoice",
+          "nomorInvoice",
+          "tanggalInvoice"
+        ]
+      },
+      "PelangganPurchaseInvoiceItemDto": {
+        "type": "object",
+        "properties": {
+          "diskonNominal": {
+            "type": "number"
+          },
+          "diskonPersen": {
+            "type": "number"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idPurchaseInvoice": {
+            "type": "string"
+          },
+          "idPurchaseInvoiceItem": {
+            "type": "string"
+          },
+          "idPurchaseOrderItem": {
+            "type": "string"
+          },
+          "idSalesBarang": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "namaProduk": {
+            "type": "string"
+          },
+          "pajakPersen": {
+            "type": "number"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "hargaSatuan",
+          "idPurchaseInvoice",
+          "idPurchaseInvoiceItem",
+          "idSalesBarang",
+          "namaProduk",
+          "qty",
+          "satuan"
+        ]
+      },
+      "PelangganPurchaseInvoiceItemReportDto": {
+        "type": "object",
+        "properties": {
+          "diskonNominal": {
+            "type": "number"
+          },
+          "diskonPersen": {
+            "type": "number"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idPurchaseInvoice": {
+            "type": "string"
+          },
+          "idPurchaseInvoiceItem": {
+            "type": "string"
+          },
+          "idPurchaseOrderItem": {
+            "type": "string"
+          },
+          "idSalesBarang": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "namaProduk": {
+            "type": "string"
+          },
+          "pajakPersen": {
+            "type": "number"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "hargaSatuan",
+          "idPurchaseInvoice",
+          "idPurchaseInvoiceItem",
+          "idSalesBarang",
+          "namaProduk",
+          "qty",
+          "satuan"
+        ]
+      },
+      "PelangganPurchaseInvoiceItemWidgetDto": {
+        "type": "object",
+        "properties": {
+          "diskonNominal": {
+            "type": "number"
+          },
+          "diskonPersen": {
+            "type": "number"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idPurchaseInvoice": {
+            "type": "string"
+          },
+          "idPurchaseInvoiceItem": {
+            "type": "string"
+          },
+          "idPurchaseOrderItem": {
+            "type": "string"
+          },
+          "idSalesBarang": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "namaProduk": {
+            "type": "string"
+          },
+          "pajakPersen": {
+            "type": "number"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "hargaSatuan",
+          "idPurchaseInvoice",
+          "idPurchaseInvoiceItem",
+          "idSalesBarang",
+          "namaProduk",
+          "qty",
+          "satuan"
+        ]
+      },
+      "PelangganPurchaseOrderDto": {
+        "type": "object",
+        "properties": {
+          "catatan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "detailClient": {
+            "type": "string"
+          },
+          "grandTotal": {
+            "type": "number"
+          },
+          "idClient": {
+            "type": "string"
+          },
+          "idKantor": {
+            "type": "string"
+          },
+          "idPurchaseOrder": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "jenis": {
+            "type": "string"
+          },
+          "namaClient": {
+            "type": "string"
+          },
+          "nomorPo": {
+            "type": "string"
+          },
+          "shipping": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalDikirim": {
+            "type": "string"
+          },
+          "tanggalDiterima": {
+            "type": "string"
+          },
+          "tanggalPo": {
+            "type": "string"
+          },
+          "totalDiskon": {
+            "type": "number"
+          },
+          "totalHarga": {
+            "type": "number"
+          },
+          "totalPajak": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "validasi": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idKantor",
+          "idPurchaseOrder",
+          "nomorPo",
+          "tanggalPo"
+        ]
+      },
+      "PelangganPurchaseOrderReportDto": {
+        "type": "object",
+        "properties": {
+          "catatan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "detailClient": {
+            "type": "string"
+          },
+          "grandTotal": {
+            "type": "number"
+          },
+          "idClient": {
+            "type": "string"
+          },
+          "idKantor": {
+            "type": "string"
+          },
+          "idPurchaseOrder": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "jenis": {
+            "type": "string"
+          },
+          "namaClient": {
+            "type": "string"
+          },
+          "nomorPo": {
+            "type": "string"
+          },
+          "shipping": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalDikirim": {
+            "type": "string"
+          },
+          "tanggalDiterima": {
+            "type": "string"
+          },
+          "tanggalPo": {
+            "type": "string"
+          },
+          "totalDiskon": {
+            "type": "number"
+          },
+          "totalHarga": {
+            "type": "number"
+          },
+          "totalPajak": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "validasi": {
+            "type": "number"
+          },
+          "client": {
+            "$ref": "#/components/schemas/PelangganClientDto"
+          },
+          "kantor": {
+            "$ref": "#/components/schemas/PelangganKantorDto"
+          }
+        },
+        "required": [
+          "idKantor",
+          "idPurchaseOrder",
+          "nomorPo",
+          "tanggalPo",
+          "client",
+          "kantor"
+        ]
+      },
+      "PelangganPurchaseOrderWidgetDto": {
+        "type": "object",
+        "properties": {
+          "catatan": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "detailClient": {
+            "type": "string"
+          },
+          "grandTotal": {
+            "type": "number"
+          },
+          "idClient": {
+            "type": "string"
+          },
+          "idKantor": {
+            "type": "string"
+          },
+          "idPurchaseOrder": {
+            "type": "string"
+          },
+          "idUser": {
+            "type": "string"
+          },
+          "jenis": {
+            "type": "string"
+          },
+          "namaClient": {
+            "type": "string"
+          },
+          "nomorPo": {
+            "type": "string"
+          },
+          "shipping": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tanggalDikirim": {
+            "type": "string"
+          },
+          "tanggalDiterima": {
+            "type": "string"
+          },
+          "tanggalPo": {
+            "type": "string"
+          },
+          "totalDiskon": {
+            "type": "number"
+          },
+          "totalHarga": {
+            "type": "number"
+          },
+          "totalPajak": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "validasi": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "idKantor",
+          "idPurchaseOrder",
+          "nomorPo",
+          "tanggalPo"
+        ]
+      },
+      "PelangganPurchaseOrderItemDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string"
+          },
+          "diskonNominal": {
+            "type": "number"
+          },
+          "diskonPersen": {
+            "type": "number"
+          },
+          "fromModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "fromModuleNomor": {
+            "type": "string"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idPurchaseOrder": {
+            "type": "string"
+          },
+          "idPurchaseOrderItem": {
+            "type": "string"
+          },
+          "idSalesBarang": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "namaProduk": {
+            "type": "string"
+          },
+          "pajakPersen": {
+            "type": "number"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "hargaSatuan",
+          "idPurchaseOrder",
+          "idPurchaseOrderItem",
+          "idSalesBarang",
+          "namaProduk",
+          "qty",
+          "satuan"
+        ]
+      },
+      "PelangganPurchaseOrderItemReportDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string"
+          },
+          "diskonNominal": {
+            "type": "number"
+          },
+          "diskonPersen": {
+            "type": "number"
+          },
+          "fromModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "fromModuleNomor": {
+            "type": "string"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idPurchaseOrder": {
+            "type": "string"
+          },
+          "idPurchaseOrderItem": {
+            "type": "string"
+          },
+          "idSalesBarang": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "namaProduk": {
+            "type": "string"
+          },
+          "pajakPersen": {
+            "type": "number"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "hargaSatuan",
+          "idPurchaseOrder",
+          "idPurchaseOrderItem",
+          "idSalesBarang",
+          "namaProduk",
+          "qty",
+          "satuan"
+        ]
+      },
+      "PelangganPurchaseOrderItemWidgetDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string"
+          },
+          "diskonNominal": {
+            "type": "number"
+          },
+          "diskonPersen": {
+            "type": "number"
+          },
+          "fromModule": {
+            "type": "string"
+          },
+          "fromModuleId": {
+            "type": "string"
+          },
+          "fromModuleNomor": {
+            "type": "string"
+          },
+          "hargaSatuan": {
+            "type": "number"
+          },
+          "idPurchaseOrder": {
+            "type": "string"
+          },
+          "idPurchaseOrderItem": {
+            "type": "string"
+          },
+          "idSalesBarang": {
+            "type": "string"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "namaProduk": {
+            "type": "string"
+          },
+          "pajakPersen": {
+            "type": "number"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "satuan": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "hargaSatuan",
+          "idPurchaseOrder",
+          "idPurchaseOrderItem",
+          "idSalesBarang",
+          "namaProduk",
+          "qty",
+          "satuan"
+        ]
+      },
+      "PelangganBankAccountDto": {
+        "type": "object",
+        "properties": {
+          "accountName": {
+            "type": "string"
+          },
+          "accountNumber": {
+            "type": "string"
+          },
+          "bankCode": {
+            "type": "string"
+          },
+          "bankName": {
+            "type": "string"
+          },
+          "branchName": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "coaIn": {
+            "type": "string"
+          },
+          "coaOut": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "idBankAccount": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "swiftCode": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accountName",
+          "accountNumber",
+          "bankName",
+          "coaIn",
+          "coaOut",
+          "idBankAccount"
+        ]
+      },
+      "PelangganBankAccountReportDto": {
+        "type": "object",
+        "properties": {
+          "accountName": {
+            "type": "string"
+          },
+          "accountNumber": {
+            "type": "string"
+          },
+          "bankCode": {
+            "type": "string"
+          },
+          "bankName": {
+            "type": "string"
+          },
+          "branchName": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "coaIn": {
+            "type": "string"
+          },
+          "coaOut": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "idBankAccount": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "swiftCode": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accountName",
+          "accountNumber",
+          "bankName",
+          "coaIn",
+          "coaOut",
+          "idBankAccount"
+        ]
+      },
+      "PelangganBankAccountWidgetDto": {
+        "type": "object",
+        "properties": {
+          "accountName": {
+            "type": "string"
+          },
+          "accountNumber": {
+            "type": "string"
+          },
+          "bankCode": {
+            "type": "string"
+          },
+          "bankName": {
+            "type": "string"
+          },
+          "branchName": {
+            "type": "string"
+          },
+          "catatan": {
+            "type": "string"
+          },
+          "coaIn": {
+            "type": "string"
+          },
+          "coaOut": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "idBankAccount": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "swiftCode": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "accountName",
+          "accountNumber",
+          "bankName",
+          "coaIn",
+          "coaOut",
+          "idBankAccount"
         ]
       }
     }
