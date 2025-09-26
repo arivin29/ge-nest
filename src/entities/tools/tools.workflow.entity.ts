@@ -23,6 +23,9 @@ export class ToolsWorkflow {
   @Column({ name: 'nama_workflow' })
   namaWorkflow: string;
 
+  @Column({ name: 'status_field', nullable: true })
+  statusField: string;
+
   @Column({ name: 'status_workflow', nullable: true })
   statusWorkflow: string;
 

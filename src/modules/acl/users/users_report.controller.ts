@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import { UsersService } from './users.service';
 import { ApiTags } from '@nestjs/swagger';
 import { BaseQueryDtoSmart } from 'src/common/dto/base-query.dto';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper';

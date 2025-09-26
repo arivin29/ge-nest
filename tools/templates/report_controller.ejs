@@ -63,7 +63,7 @@ export class <%= className %>ReportController {
 
     @Get(':id')
     @ApiResponseEntity(<%= dtoImport_report %>, 'get')
-    async findOne(@Param('id') id: string) {
+    async findOne(@Param('id') id: number) {
         try {
             const result = await this.service.findOne(id);
 
@@ -87,7 +87,8 @@ export class <%= className %>ReportController {
                     'id' + inc.name[0].toUpperCase() + inc.name.slice(1), // camelCase
                     toCamel(`id_${inc.name}`)  // idClientSite
                 ];
-                return possibleKeys.some(key => Object.keys(result).includes(key));
+                // return possibleKeys.some(key => Object.keys(result).includes(key));
+                return true;;
             });
             
             // Jalankan include

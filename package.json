@@ -25,7 +25,7 @@
         "crud-report-widget": "ts-node tools/crud-generator-report-widget.ts",
         "crud-model": "ts-node tools/dto-entity-generator.ts",
         "worker:document-numbering": "ts-node src/common/redis/penomoram/document-numbering.worker.ts",
-        "ge-dto-entity": "npx ts-node tools/generate-dto.ts --db=erp_pelanggan --all-tables --with-entity && npx ts-node tools/generate-entity-index.ts"
+        "ge-dto-entity": "npx ts-node tools/generate-dto.ts --db=new_bpt --all-tables --with-entity && npx ts-node tools/generate-entity-index.ts"
     },
     "dependencies": {
         "@nestjs/common": "^11.0.1",
@@ -57,6 +57,7 @@
         "reflect-metadata": "^0.2.2",
         "rxjs": "^7.8.1",
         "swagger-ui-express": "^5.0.1",
+        "tunnel-ssh": "^5.2.0",
         "typeorm": "^0.3.21"
     },
     "devDependencies": {

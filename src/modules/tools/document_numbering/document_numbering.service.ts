@@ -10,7 +10,7 @@ import { SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode
 
 @Injectable()
 export class DocumentNumberingService extends BaseService<ToolsDocumentNumbering> {
-    constructor( 
+    constructor(
 
         @InjectRepository(ToolsDocumentNumbering, 'tools')
         repo: Repository<ToolsDocumentNumbering>,
@@ -24,7 +24,7 @@ export class DocumentNumberingService extends BaseService<ToolsDocumentNumbering
         super(repo);
     }
 
-     
+
 
     async generateIfEligible(forModule: string, forModuleId: string, userRoles: string[] = []) {
         const configs = await this.configRepo.find({ where: { forModule, isActive: true } });
@@ -34,24 +34,35 @@ export class DocumentNumberingService extends BaseService<ToolsDocumentNumbering
 
             // Ambil nilai field target + id_kantor + semua kolom
             const recordRaw = await this.repo.query(
-                `SELECT * FROM \`${dbName}\`.\`${tableName}\` WHERE id = ? LIMIT 1`,
+                `SELECT * FROM \`${dbName}\`.\`${tableName}\` WHERE \`id_${tableName}\` = ? LIMIT 1`,
                 [forModuleId]
             );
 
             const record = recordRaw?.[0];
+
             if (!record) continue;
 
             // Skip kalau sudah punya nomor
-            if (record[config.targetColumn]) continue;
+            if (
+                record[config.targetColumn] &&
+                !record[config.targetColumn].toString().startsWith('AUTO')
+            ) {
+                continue;
+            }
 
             const idKantor = record.id_kantor;
 
             // Role check
-            const allowed = !config.allowedRoles || userRoles.some(role => config.allowedRoles.includes(role));
+            let allowed = !config.allowedRoles || userRoles.some(role => config.allowedRoles.includes(role));
+            if (record.idDataFlow) {
+                allowed = true
+            }
             if (!allowed) continue;
-
+            
             // Trigger check (JSON format)
             const trigger = config.triggerStage ? JSON.parse(config.triggerStage) : null;
+            console.log('trigger', trigger)
+
             if (trigger) {
                 const { column, on, value } = trigger;
 
@@ -60,7 +71,7 @@ export class DocumentNumberingService extends BaseService<ToolsDocumentNumbering
                 // Validasi trigger
                 const isNew = !record[config.targetColumn];
                 const isMatch = value === undefined || fieldValue === value;
-
+                console.log('isMatch', isMatch)
                 if (
                     (on === 'new' && !isNew) ||
                     (on === 'update' && isNew) || // kita anggap "update" dipicu manual dari luar
@@ -73,7 +84,7 @@ export class DocumentNumberingService extends BaseService<ToolsDocumentNumbering
             // Generate nomor dan update
             const nomor = await this.generateNomor(config, forModuleId, idKantor);
             await this.repo.query(
-                `UPDATE \`${dbName}\`.\`${tableName}\` SET \`${config.targetColumn}\` = ? WHERE id = ?`,
+                `UPDATE \`${dbName}\`.\`${tableName}\` SET \`${config.targetColumn}\` = ? WHERE id_${tableName} = ?`,
                 [nomor, forModuleId],
             );
         }

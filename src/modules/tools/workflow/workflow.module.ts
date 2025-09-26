@@ -9,7 +9,7 @@ import { ToolsWorkflow, ToolsWorkflowAggregator, ToolsWorkflowLog, ToolsWorkflow
 import { WorkflowApplyController } from '../workflow-apply/workflow-apply.controller';
 import { WorkflowReportController } from './workflow_report.controller';
 import { AclUsers } from 'src/entities/acl';
-import { RedisPublishHelperPenormoran } from 'src/common/redis/penomoram/redis-publish.helper'; 
+// import { RedisPublishHelperPenormoran } from 'src/common/redis/penomoram/redis-publish.helper'; 
 
 @Module({
     imports: [
@@ -17,6 +17,6 @@ import { RedisPublishHelperPenormoran } from 'src/common/redis/penomoram/redis-p
         TypeOrmModule.forFeature([AclUsers], 'acl'),
     ],
     controllers: [WorkflowController, WorkflowApplyController, WorkflowReportController, WorkflowWidgetController],
-    providers: [WorkflowService, WorkflowServiceApp, WorkflowWidgetService, RedisPublishHelperPenormoran],
+    providers: [WorkflowService, WorkflowServiceApp, WorkflowWidgetService],
 })
 export class WorkflowModule { }

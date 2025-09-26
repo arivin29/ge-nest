@@ -1,4 +1,21 @@
 npm run ge-dto-entity 
+
+PORT=4002
+NODE_ENV=development
+DB_HOST=82.153.226.244
+DB_PORT=33108
+DB_USERNAME=app
+DB_PASSWORD='!@#'
+DB_NAME=new_bpt
+
+
+JWT_SECRET=S3P9qG5cXgqGz2Ftko3YVzQ6Ue9xCatg5H52bSpjmaYivtnp1AjjUuQtkttto3fe
+JWT_EXPIRES_IN=1015m
+REDIS_HOST=localhost
+REDIS_ENABLED=0
+REDIS_PORT=6379
+REDIS_PASSWORD=Pantek123
+
  
 npm run generator-api -- --fromTable=mpart --nama=mpart --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=mcurrency --nama=mcurrency --db=erp_amims --router=amims --out=crud,report

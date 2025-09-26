@@ -1,40 +1,43 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
-export class ToolsWorkflowDto {
+export class PelangganPurchaseInvoiceItemDto {
   @ApiProperty({ required: false })
-  createdAt: string;
+  diskonNominal: number;
+
+  @ApiProperty({ required: false })
+  diskonPersen: number;
 
   @ApiProperty({ required: true })
-  forModule: string;
-
-  @ApiProperty({ required: false })
-  idKantor: string;
+  hargaSatuan: number;
 
   @ApiProperty({ required: true })
-  idWorkflow: string;
+  idPurchaseInvoice: string;
+
+  @ApiProperty({ required: true })
+  idPurchaseInvoiceItem: string;
 
   @ApiProperty({ required: false })
-  isDefault: boolean;
+  idPurchaseOrderItem: string;
+
+  @ApiProperty({ required: true })
+  idSalesBarang: string;
 
   @ApiProperty({ required: false })
   keterangan: string;
 
   @ApiProperty({ required: true })
-  namaWorkflow: string;
+  namaProduk: string;
 
   @ApiProperty({ required: false })
-  statusField: string;
-
-  @ApiProperty({ required: false })
-  statusWorkflow: string;
+  pajakPersen: number;
 
   @ApiProperty({ required: true })
-  targetDb: string;
+  qty: number;
 
   @ApiProperty({ required: true })
-  targetTable: string;
+  satuan: string;
 
   @ApiProperty({ required: false })
-  updatedAt: string;
+  subtotal: number;
 }

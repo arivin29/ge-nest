@@ -70,6 +70,46 @@ function pascalToSnake(str: string) {
     );
 }
 
+async function pickSyntheticPk(
+    conn: mysql.Connection,
+    schema: string,
+    table: string,
+    cols: any[],
+): Promise<string | null> {
+    // 1) cari dari index yang kolomnya diawali id_
+    const [idx] = await conn.query(
+        `SELECT COLUMN_NAME, INDEX_NAME, SEQ_IN_INDEX
+     FROM information_schema.statistics
+     WHERE table_schema = ? AND table_name = ?
+     ORDER BY CASE WHEN INDEX_NAME='PRIMARY' THEN 0 ELSE 1 END, INDEX_NAME, SEQ_IN_INDEX`,
+        [schema, table],
+    );
+    const rows = (idx as any[]) || [];
+    const idIndexed = rows.filter(r =>
+        String(r.COLUMN_NAME || '').toLowerCase().startsWith('id_'),
+    );
+    if (idIndexed.length) {
+        // ambil kolom pertama di index pertama
+        return String(idIndexed[0].COLUMN_NAME);
+    }
+
+    // 2) fallback: kolom id_<table> atau id
+    const colNamesLower = cols.map(c => String(c.COLUMN_NAME).toLowerCase());
+    const expect1 = `id_${table.toLowerCase()}`;
+    if (colNamesLower.includes(expect1)) return expect1;
+    if (colNamesLower.includes('id')) return 'id';
+
+    // 3) fallback terakhir: kolom pertama yang diawali id_
+    const anyId = cols.find(c =>
+        String(c.COLUMN_NAME).toLowerCase().startsWith('id_'),
+    );
+    if (anyId) return String(anyId.COLUMN_NAME);
+
+    // 4) nggak ada kandidat → null
+    return null;
+}
+
+
 
 (async () => {
     const conn = await mysql.createConnection({
@@ -84,7 +124,7 @@ function pascalToSnake(str: string) {
 
     const dbList = (dbs as any[])
         .map((d) => d.Database)
-        .filter((d) => d.startsWith('erp_') && !excludeSchemas.includes(d));
+        .filter((d) => (d.startsWith('erp_') || d.startsWith('new_')) && !excludeSchemas.includes(d));
  
 
     // DTO umum 
@@ -120,16 +160,40 @@ function pascalToSnake(str: string) {
                 isDefaultCurrent: (col.COLUMN_DEFAULT?.toUpperCase?.() === 'CURRENT_TIMESTAMP')
             }));
 
+
+            let hasPk = fields.some(f => f.isPrimary);
+
+            if (!hasPk) {
+                const synthetic = await pickSyntheticPk(conn as any, schema, table, cols as any[]);
+                if (synthetic) {
+                    fields.forEach(f => {
+                        if (f.dbName.toLowerCase() === synthetic.toLowerCase()) f.isPrimary = true;
+                    });
+                    hasPk = true;
+                    console.warn(`⚠️  ${schema}.${table}: no PK → use synthetic PK on column "${synthetic}"`);
+                } else {
+                    console.warn(`⚠️  ${schema}.${table}: no PK and no id_* column/index → skip entity`);
+                }
+            }
+
             const dtoContent = `import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class ${dtoClassName} {
-${fields.map(f => `  @ApiProperty({ required: ${!f.isNullable} })\n  ${f.name}: ${f.type};`).join('\n\n')}
+${fields.map(f => {
+    const decorators = [
+        `@ApiProperty({ required: ${!f.isNullable}${f.isPrimary ? `, description: 'Primary Key'` : ''} })`,
+        f.isNullable ? `@IsOptional()` : null
+    ].filter(Boolean).join('\n  ');
+
+    const line = `  ${decorators}\n  ${f.name}: ${f.type};`;
+    return f.isPrimary ? `${line} // PK` : line;
+}).join('\n\n')}
 }
 `;
             await fs.writeFile(path.join(dtoDir, dtoFilename), dtoContent);
 
-            if (withEntity) {
+            if (withEntity && hasPk) {
                 const entityContent = `import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: '${table}', schema: '${schema}' })
@@ -195,7 +259,7 @@ ${fields.map(f => {
                 dbName: col.COLUMN_NAME,
                 type: mapMysqlToTs(col.DATA_TYPE),
                 isNullable: col.IS_NULLABLE === 'YES',
-                isPrimary: (col.COLUMN_KEY === 'PRI' || col.COLUMN_NAME == `id_${table}`),
+                isPrimary: (col.COLUMN_KEY === 'PRI'),
             }));
  
 
@@ -291,7 +355,7 @@ export class ${widgetClassName} extends ${dtoClassName} {
     const moduleInserts: any[] = [];
 
     for (const schema of dbList) {
-        const schemaAlias = schema.replace(/^erp_/, '');
+        const schemaAlias = schema.replace(/^erp_/, '').replace(/^new_/, '');
         const [tables] = await conn.query(`SELECT table_name FROM information_schema.tables WHERE table_schema = ?`, [schema]);
 
         for (const tableRow of tables as any[]) {

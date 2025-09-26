@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as ejs from 'ejs';
-import * as yargs from 'yargs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { pascalCase } from 'change-case-all';
 
@@ -35,13 +35,25 @@ const entiryImport = `${schemaPascal}${className}`;
 const dtoPath = `src/dto/${schemaAlias}/${schemaAlias}.${moduleName}.dto`;
 const dtoPath_report = `src/dto/${schemaAlias}/${schemaAlias}.${moduleName}-report.dto`;
 
+function detectPrimaryKeyFieldAndColumn(content: string): { tsName: string; dbName: string } | null {
+    const regex = /@Primary(?:Generated)?Column\s*\(\s*{[^}]*name\s*:\s*['"]([^'"]+)['"][^}]*}\s*\)\s*\n\s*(\w+)\s*:/;
+    const match = content.match(regex);
+    return match ? { dbName: match[1], tsName: match[2] } : null;
+}
+
 // === Utility: Get Join Map from Entity File ===
 function parseEntityJoins(): string[] {
     const content = fs.readFileSync(entityPath, 'utf-8');
+    const primaryKeyField = detectPrimaryKeyFieldAndColumn(content);
+
     const regex = /id_([a-zA-Z0-9_]+)/g;
     const matches = [...content.matchAll(regex)]
         .map((m) => m[1])
-        .filter((field) => field !== moduleName); // exclude PK
+        .filter((field) => {
+            console.log(`🔍 Mencari join untuk field: ${field}`);
+            console.log(`🔍 hasil field: ${primaryKeyField?.dbName}`);
+            return field !== moduleName && field !== primaryKeyField?.dbName.replace('id_','');
+        }); // exclude PK
     return [...new Set(matches)];
 }
 

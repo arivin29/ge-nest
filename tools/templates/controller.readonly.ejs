@@ -48,7 +48,7 @@ export class <%= className %>Controller {
 
     @Get(':id')
     @AutoSwagger(<%= className %>, 'get')
-    async findOne(@Param('id') id: string) {
+    async findOne(@Param('id') id: number) {
         try {
             const result = await this.service.findOne(id);
             if (!result) {

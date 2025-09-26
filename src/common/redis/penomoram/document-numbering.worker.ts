@@ -5,12 +5,12 @@ import { RedisClientType } from 'redis';
 @Injectable()
 export class RedisDocumentNumberingWorkerService implements OnModuleInit {
     constructor(
-        @Inject('REDIS_CLIENT') private readonly redis: RedisClientType,
+        @Inject('REDIS_SUBSCRIBER') private readonly redis: RedisClientType,
         private readonly docNumService: DocumentNumberingService,
     ) { }
 
     async onModuleInit() {
-        await this.redis.connect(); // pastikan terkoneksi
+        // await this.redis.connect(); // pastikan terkoneksi
         await this.redis.subscribe('document_numbering', async (message) => {
             try {
                 const payload = JSON.parse(message);

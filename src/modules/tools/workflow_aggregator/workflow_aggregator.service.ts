@@ -20,7 +20,7 @@ export class WorkflowAggregatorService extends BaseService<ToolsWorkflowAggregat
 
     ) {
         super(aggregatorRepo);
-    }
+    } 
     allow_roles: string[]
     async confirmWorkflow(dto: ConfirmWorkflowDto) {
         const { from_module, from_module_id, id_kantor } = dto;

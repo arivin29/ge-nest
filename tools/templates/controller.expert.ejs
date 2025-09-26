@@ -47,7 +47,7 @@ export class <%= className %>Controller {
 
     @Get(':id')
     @ApiResponseEntity(<%= entiryImport %>Dto, 'get')
-    async findOne(@Param('id') id: string) {
+    async findOne(@Param('id') id: number) {
         try {
             const result = await this.service.findOne(id);
             if (!result) {
@@ -74,7 +74,7 @@ export class <%= className %>Controller {
     @Put(':id')
     @ApiBody({ type: <%= entiryImport %>Dto })
     @ApiResponseEntity(<%= entiryImport %>Dto, 'put')
-    async update(@Param('id') id: string, @Body() body: <%= entiryImport %>Dto) {
+async update(@Param('id') id: number, @Body() body: <%= entiryImport %>Dto) {
         try {
             const result = await this.service.update(id, body);
             return ApiResponseHelper.success(result, 'update');
@@ -85,7 +85,7 @@ export class <%= className %>Controller {
 
     @Delete(':id')
     @ApiResponseEntity(<%= entiryImport %>Dto, 'delete')
-    async remove(@Param('id') id: string) {
+async remove(@Param('id') id: number) {
         try {
             const result = await this.service.remove(id);
             return ApiResponseHelper.success(result, 'delete');

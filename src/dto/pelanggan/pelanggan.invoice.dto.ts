@@ -6,6 +6,12 @@ export class PelangganInvoiceDto {
   alamatPenagihan: string;
 
   @ApiProperty({ required: false })
+  amountPaid: number;
+
+  @ApiProperty({ required: false })
+  billTujuan: string;
+
+  @ApiProperty({ required: false })
   catatan: string;
 
   @ApiProperty({ required: false })
@@ -18,10 +24,19 @@ export class PelangganInvoiceDto {
   dpp: number;
 
   @ApiProperty({ required: false })
-  idContract: string;
+  formModule: string;
+
+  @ApiProperty({ required: false })
+  fromModuleId: string;
+
+  @ApiProperty({ required: false })
+  idClient: string;
 
   @ApiProperty({ required: true })
   idInvoice: string;
+
+  @ApiProperty({ required: false })
+  jatuhTempo: number;
 
   @ApiProperty({ required: false })
   jenisInvoice: string;
@@ -31,6 +46,9 @@ export class PelangganInvoiceDto {
 
   @ApiProperty({ required: false })
   nilaiInvoice: number;
+
+  @ApiProperty({ required: false })
+  nomorFaktur: string;
 
   @ApiProperty({ required: false })
   nomorInvoice: string;
@@ -45,23 +63,35 @@ export class PelangganInvoiceDto {
   picPenagihan: string;
 
   @ApiProperty({ required: false })
+  picPenagihanPhone: string;
+
+  @ApiProperty({ required: false })
   ppn: number;
 
   @ApiProperty({ required: false })
-  statusInvoice: string;
+  rekening: string;
+
+  @ApiProperty({ required: false })
+  remainingAmount: number;
+
+  @ApiProperty({ required: false })
+  statusPembayaran: string;
 
   @ApiProperty({ required: false })
   tanggalDibayar: string;
 
   @ApiProperty({ required: false })
-  tanggalJatuhTempo: string;
+  tanggalTerbit: string;
 
   @ApiProperty({ required: false })
-  tanggalTerbit: string;
+  topCatatan: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;
 
   @ApiProperty({ required: false })
   updatedBy: string;
+
+  @ApiProperty({ required: false })
+  validasi: number;
 }
