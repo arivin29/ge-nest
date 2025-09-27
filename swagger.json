@@ -5304,7 +5304,8 @@
             "type": "string"
           },
           "idUsers": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "lastLogin": {
             "type": "string"
@@ -5340,7 +5341,8 @@
             "type": "string"
           },
           "idUsers": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "lastLogin": {
             "type": "string"
@@ -5483,7 +5485,8 @@
             "type": "string"
           },
           "idUsers": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "lastLogin": {
             "type": "string"
@@ -5571,7 +5574,8 @@
             "type": "string"
           },
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "idUser": {
             "type": "string"
@@ -5626,11 +5630,18 @@
           "forModule": {
             "type": "string"
           },
+          "idIzinJenis": {
+            "type": "number"
+          },
+          "idIzinTipe": {
+            "type": "number"
+          },
           "idKantor": {
             "type": "string"
           },
           "idWorkflow": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "isDefault": {
             "type": "boolean"
@@ -5701,11 +5712,18 @@
           "forModule": {
             "type": "string"
           },
+          "idIzinJenis": {
+            "type": "number"
+          },
+          "idIzinTipe": {
+            "type": "number"
+          },
           "idKantor": {
             "type": "string"
           },
           "idWorkflow": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "isDefault": {
             "type": "boolean"
@@ -5749,11 +5767,18 @@
           "forModule": {
             "type": "string"
           },
+          "idIzinJenis": {
+            "type": "number"
+          },
+          "idIzinTipe": {
+            "type": "number"
+          },
           "idKantor": {
             "type": "string"
           },
           "idWorkflow": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "isDefault": {
             "type": "boolean"
@@ -5816,7 +5841,8 @@
             "type": "string"
           },
           "idWorkflowLog": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "idWorkflowStep": {
             "type": "string"
@@ -5864,7 +5890,8 @@
             "type": "string"
           },
           "idWorkflowLog": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "idWorkflowStep": {
             "type": "string"
@@ -5916,7 +5943,8 @@
             "type": "string"
           },
           "idWorkflowLog": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "idWorkflowStep": {
             "type": "string"
@@ -5961,7 +5989,8 @@
             "type": "string"
           },
           "idWorkflowStep": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "messageBefore": {
             "type": "string"
@@ -6015,7 +6044,8 @@
             "type": "string"
           },
           "idWorkflowStep": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "messageBefore": {
             "type": "string"
@@ -6073,7 +6103,8 @@
             "type": "string"
           },
           "idWorkflowStep": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "messageBefore": {
             "type": "string"
@@ -6121,7 +6152,8 @@
             "type": "string"
           },
           "idUserGroup": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "namaUserGroup": {
             "type": "string"
@@ -6152,7 +6184,8 @@
             "type": "string"
           },
           "idWorkflowAggregator": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "lastApprovalDate": {
             "type": "string"
@@ -6190,7 +6223,8 @@
             "type": "string"
           },
           "idModule": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "isAktif": {
             "type": "boolean"
@@ -6234,7 +6268,8 @@
             "type": "string"
           },
           "idCustomFieldGroup": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "isRepeatable": {
             "type": "boolean"
@@ -6282,7 +6317,8 @@
             "type": "string"
           },
           "idCustomFieldGroup": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "isRepeatable": {
             "type": "boolean"
@@ -6330,7 +6366,8 @@
             "type": "string"
           },
           "idCustomFieldGroup": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "isRepeatable": {
             "type": "boolean"
@@ -6378,7 +6415,8 @@
             "type": "string"
           },
           "idCustomField": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "idCustomFieldGroup": {
             "type": "string"
@@ -6434,7 +6472,8 @@
             "type": "string"
           },
           "idCustomFieldValue": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "kodeField": {
             "type": "string"
@@ -6480,7 +6519,8 @@
             "type": "string"
           },
           "idCustomFieldValue": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "kodeField": {
             "type": "string"
@@ -6526,7 +6566,8 @@
             "type": "string"
           },
           "idCustomFieldValue": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "kodeField": {
             "type": "string"
@@ -6584,7 +6625,8 @@
             "type": "string"
           },
           "idDocumentNumbering": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "isActive": {
             "type": "boolean"
@@ -6635,7 +6677,8 @@
             "type": "string"
           },
           "idDocumentNumberingCounter": {
-            "type": "string"
+            "type": "string",
+            "description": "Primary Key"
           },
           "idKantor": {
             "type": "string"

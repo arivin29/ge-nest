@@ -41,8 +41,15 @@ export function applyDefaultSelect<T extends object>(
     alias: string
 ) {
     const dtoInstance = new dtoClass();
-    const baseFields = Object.keys(dtoInstance);
-    qb.select(baseFields.map(field => `${alias}.${field}`));
+    let baseFields = Object.keys(dtoInstance);
+    // Fallback ke metadata entity jika DTO tidak memiliki properti enumerable
+    if (baseFields.length === 0) {
+        const cols = qb.expressionMap.mainAlias?.metadata.columns ?? [];
+        baseFields = cols.map(c => c.propertyName);
+    }
+    if (baseFields.length > 0) {
+        qb.select(baseFields.map(field => `${alias}.${field}`));
+    }
 }
 
 export async function smartQueryEngineJoinMode<T extends ObjectLiteral>(
@@ -261,12 +268,26 @@ export async function smartQueryRawJoinMode<T extends ObjectLiteral>(
         pagination = { page: 1, limit: 20 },
     } = query;
 
-    const selectFields = dtoClass
-        ? Object.keys(new dtoClass()).map(field => {
-            const dbField = camelToSnake(field);
-            return `${alias}.${dbField} AS ${alias}_${dbField}`;
-        })
-        : [`${alias}.*`];
+    let selectFields: string[] = [];
+    if (dtoClass) {
+        const dtoFields = Object.keys(new dtoClass());
+        if (dtoFields.length > 0) {
+            selectFields = dtoFields.map(field => {
+                const dbField = camelToSnake(field);
+                return `${alias}.${dbField} AS ${alias}_${dbField}`;
+            });
+        } else {
+            // Fallback: gunakan kolom dari metadata repository
+            const cols = repo.metadata.columns;
+            if (cols.length > 0) {
+                selectFields = cols.map(c => `${alias}.${c.databaseName} AS ${alias}_${c.databaseName}`);
+            }
+        }
+    }
+    if (selectFields.length === 0) {
+        selectFields = [`${alias}.*`];
+    }
+ 
 
     const joins: string[] = [];
     const whereClauses: string[] = [];

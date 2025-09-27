@@ -8,6 +8,12 @@ export class ToolsWorkflow {
   @Column({ name: 'for_module' })
   forModule: string;
 
+  @Column({ name: 'id_izin_jenis', nullable: true })
+  idIzinJenis: number;
+
+  @Column({ name: 'id_izin_tipe', nullable: true })
+  idIzinTipe: number;
+
   @Column({ name: 'id_kantor', nullable: true })
   idKantor: string;
 

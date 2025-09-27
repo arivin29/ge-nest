@@ -12,7 +12,7 @@ export const DatabaseAclModule = TypeOrmModule.forRootAsync({
     port: +config.get('DB_PORT'),
     username: config.get('DB_USERNAME'),
     password: config.get('DB_PASSWORD'),
-    database: 'erp_user',
+    database: 'erp_acl',
     entities: AclEntities,
     synchronize: false,
   }),

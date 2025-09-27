@@ -3,18 +3,23 @@ import { IsOptional } from 'class-validator';
 
 export class AclUserGroupAccessDto {
   @ApiProperty({ required: false })
+  @IsOptional()
   canAdd: boolean;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   canDelete: boolean;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   canEdit: boolean;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   canList: boolean;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   createdAt: string;
 
   @ApiProperty({ required: true })
@@ -23,6 +28,6 @@ export class AclUserGroupAccessDto {
   @ApiProperty({ required: true })
   idUserGroup: string;
 
-  @ApiProperty({ required: true })
-  idUserGroupAccess: string;
+  @ApiProperty({ required: true, description: 'Primary Key' })
+  idUserGroupAccess: string; // PK
 }

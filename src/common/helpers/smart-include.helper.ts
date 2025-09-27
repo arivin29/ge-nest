@@ -22,34 +22,68 @@ export async function applySmartInclude(
     for (const inc of include) {
         const relation = inc.name;
         const parent: string = inc.parent!;
-        const camel = toCamel(relation);
         const pascal = pascalCase(relation); // 🔥 fix utama
+        // Jika relation mengandung titik, ambil bagian setelah titik; hilangkan prefix 'm_' jika ada
+        const relationKeyRaw = relation.includes('.') ? relation.split('.')[1] : relation;
+        const relationKey = relationKeyRaw.startsWith('m_') ? relationKeyRaw.slice(2) : relationKeyRaw;
+        const camelKey = toCamel(relationKey);
 
-        // 🔍 Ambil database dari entity (support alias)
-        const foundEntry = Object.entries(EntityDatabaseMap).find(
-            ([entityName, meta]) => {
-                return entityName === pascal || meta.aliases?.includes(relation);
+        // Tentukan repository relasi
+        let relationRepo: any;
+        if (relation.includes('.')) {
+            // Format: dbName.tableOrAlias
+            const [dbName, tableOrAlias] = relation.split('.', 2);
+            if (!dataSourceMap[dbName]) {
+                console.warn(`⚠️ Database source untuk '${dbName}' tidak ditemukan di dataSourceMap.`);
+                continue;
             }
-        );
 
+            // Coba cari entity di db tersebut berdasarkan alias atau nama entity
+            const foundInDb = Object.entries(EntityDatabaseMap).find(([entityName, meta]) => {
+                return (
+                    meta.db === dbName &&
+                    (meta.aliases?.includes(tableOrAlias) || entityName === pascalCase(tableOrAlias))
+                );
+            });
+            const entityName = foundInDb ? foundInDb[0] : pascalCase(tableOrAlias);
+            const ds: any = (dataSourceMap as any)[dbName];
+            if (!ds || typeof ds.getRepository !== 'function') {
+                console.warn(`⚠️ DataSource '${dbName}' belum terdaftar/siap. Pastikan module DB di-import dan dataSourceMap diinisialisasi.`);
+                continue;
+            }
+            relationRepo = ds.getRepository(entityName as any);
+            console.log('relationRepo for', relation, relationRepo ? 'found' : 'not found');
+        } else {
+            // 🔍 Ambil database dari entity (support alias)
+            const foundEntry = Object.entries(EntityDatabaseMap).find(
+                ([entityName, meta]) => {
+                    return entityName === pascal || meta.aliases?.includes(relation);
+                }
+            );
 
-        if (!foundEntry) {
-            console.warn(`⚠️ Repo untuk '${relation}' tidak ditemukan di EntityDatabaseMap.`);
-            continue;
+            if (!foundEntry) {
+                console.warn(`⚠️ Repo untuk '${relation}' tidak ditemukan di EntityDatabaseMap.`);
+                continue;
+            }
+
+            const [entityName, meta] = foundEntry;
+            const dbName = meta.db;
+            if (!dataSourceMap[dbName]) {
+                console.warn(`⚠️ Database source untuk '${dbName}' tidak ditemukan di dataSourceMap.`);
+                continue;
+            }
+            const ds2: any = (dataSourceMap as any)[dbName];
+            if (!ds2 || typeof ds2.getRepository !== 'function') {
+                console.warn(`⚠️ DataSource '${dbName}' belum terdaftar/siap. Pastikan module DB di-import dan dataSourceMap diinisialisasi.`);
+                continue;
+            }
+            relationRepo = ds2.getRepository(entityName);
         }
-
-        const [entityName, meta] = foundEntry;
-        const dbName = meta.db;
-
-        if (!dataSourceMap[dbName]) {
-            console.warn(`⚠️ Database source untuk '${dbName}' tidak ditemukan di dataSourceMap.`);
-            continue;
-        }
-        const relationRepo = dataSourceMap[dbName].getRepository(entityName);
+        if (!relationRepo) continue;
 
         if (inc.type === 'single') {
-            const fk = toCamel(`id_${relation}`);
-            const pk = toCamel(`id_${relation}`);
+            const fk = toCamel(`id_${relationKey}`);
+            const pk = toCamel(`id_${relationKey}`);
 
             const parents = data.flatMap((d) => {
                 const ref = parent === baseAlias ? d : safeGetNested(d, parent);
@@ -68,13 +102,15 @@ export async function applySmartInclude(
             data.forEach(d => {
                 const parentRef = parent === baseAlias ? d : safeGetNested(d, parent);
                 if (!parentRef) return;
-                parentRef[camel] = map.get(parentRef[fk]) ?? null;
+                parentRef[camelKey] = map.get(parentRef[fk]) ?? null;
             });
         }
 
         if (inc.type === 'array') {
             const targetAlias = inc.to ?? baseAlias;
-            const camel = toCamel(inc.name);
+            const raw = inc.name.includes('.') ? inc.name.split('.')[1] : inc.name;
+            const cleaned = raw.startsWith('m_') ? raw.slice(2) : raw;
+            const camel = toCamel(cleaned);
 
             // Step 1: deteksi langsung apakah `data[]` adalah targetAlias
             const possibleKeys = Object.keys(data[0] ?? {});

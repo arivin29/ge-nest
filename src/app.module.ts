@@ -85,7 +85,7 @@ export class AppModule {
     constructor(private moduleRef: ModuleRef) { }
 
     async onModuleInit() {
-        const dbNames = ['acl',  'tools'];
+        const dbNames = ['acl', 'tools', 'new_bpt', 'document'];
 
         for (const db of dbNames) {
             const ds = await this.moduleRef.get(getDataSourceToken(db), { strict: false });

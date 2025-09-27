@@ -3,9 +3,11 @@ import { IsOptional } from 'class-validator';
 
 export class ToolsMasterNotifikasiDto {
   @ApiProperty({ required: false })
+  @IsOptional()
   createdAt: string;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   cronJob: string;
 
   @ApiProperty({ required: true })
@@ -21,21 +23,26 @@ export class ToolsMasterNotifikasiDto {
   forModuleRouter: string;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   icon: string;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   idDepartemen: string;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   idDivisi: string;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   idKantor: string;
 
-  @ApiProperty({ required: true })
-  idMasterNotifikasi: string;
+  @ApiProperty({ required: true, description: 'Primary Key' })
+  idMasterNotifikasi: string; // PK
 
   @ApiProperty({ required: false })
+  @IsOptional()
   idSection: string;
 
   @ApiProperty({ required: true })
@@ -45,8 +52,10 @@ export class ToolsMasterNotifikasiDto {
   namaTabel: string;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   updatedAt: string;
 
   @ApiProperty({ required: false })
+  @IsOptional()
   validasi: number;
 }
