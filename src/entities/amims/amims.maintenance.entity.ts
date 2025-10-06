@@ -2,6 +2,12 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'maintenance', schema: 'erp_amims' })
 export class AmimsMaintenance {
+  @Column({ name: 'alert', nullable: true })
+  alert: number;
+
+  @Column({ name: 'alert_param', nullable: true })
+  alertParam: string;
+
   @Column({ name: 'atachapter', nullable: true })
   atachapter: string;
 

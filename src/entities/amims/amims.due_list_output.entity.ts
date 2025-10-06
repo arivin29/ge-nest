@@ -35,6 +35,9 @@ export class AmimsDueListOutput {
   @PrimaryColumn({ name: 'id_due_list_output' })
   idDueListOutput: string;
 
+  @Column({ name: 'id_maintenance', nullable: true })
+  idMaintenance: string;
+
   @Column({ name: 'id_mpart', nullable: true })
   idMpart: string;
 

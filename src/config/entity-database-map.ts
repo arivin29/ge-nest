@@ -264,6 +264,42 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "maintenance_code_reference"
     ]
   },
+  "AmimsMaintenanceDocument": {
+    "db": "amims",
+    "aliases": [
+      "maintenance_document"
+    ]
+  },
+  "AmimsMaintenanceMaterial": {
+    "db": "amims",
+    "aliases": [
+      "maintenance_material"
+    ]
+  },
+  "AmimsMaintenanceProgram": {
+    "db": "amims",
+    "aliases": [
+      "maintenance_program"
+    ]
+  },
+  "AmimsMaintenanceProgramDocument": {
+    "db": "amims",
+    "aliases": [
+      "maintenance_program_document"
+    ]
+  },
+  "AmimsMaintenanceProgramMaterial": {
+    "db": "amims",
+    "aliases": [
+      "maintenance_program_material"
+    ]
+  },
+  "AmimsMaintenanceProgramTask": {
+    "db": "amims",
+    "aliases": [
+      "maintenance_program_task"
+    ]
+  },
   "AmimsMcurrency": {
     "db": "amims",
     "aliases": [
@@ -618,6 +654,12 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "type_ofwork"
     ]
   },
+  "AmimsUnscheduleMaintenance": {
+    "db": "amims",
+    "aliases": [
+      "unschedule_maintenance"
+    ]
+  },
   "AmimsVDueListOutput": {
     "db": "amims",
     "aliases": [
@@ -628,6 +670,24 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
     "db": "amims",
     "aliases": [
       "warranty"
+    ]
+  },
+  "AmimsWorkCompleted": {
+    "db": "amims",
+    "aliases": [
+      "work_completed"
+    ]
+  },
+  "AmimsWp": {
+    "db": "amims",
+    "aliases": [
+      "wp"
+    ]
+  },
+  "AmimsWpJo": {
+    "db": "amims",
+    "aliases": [
+      "wp_jo"
     ]
   },
   "DocumentDocument": {

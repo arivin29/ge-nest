@@ -3,6 +3,9 @@ import { IsOptional } from 'class-validator';
 
 export class PelangganPurchaseOrderItemDto {
   @ApiProperty({ required: false })
+  createdAt: string;
+
+  @ApiProperty({ required: false })
   diskonNominal: number;
 
   @ApiProperty({ required: false })
@@ -21,13 +24,13 @@ export class PelangganPurchaseOrderItemDto {
   hargaSatuan: number;
 
   @ApiProperty({ required: true })
-  idProduk: string;
-
-  @ApiProperty({ required: true })
   idPurchaseOrder: string;
 
   @ApiProperty({ required: true })
   idPurchaseOrderItem: string;
+
+  @ApiProperty({ required: true })
+  idSalesBarang: string;
 
   @ApiProperty({ required: false })
   keterangan: string;

@@ -6,6 +6,9 @@ export class AmimsMaintenanceCodeDto {
   classification: string;
 
   @ApiProperty({ required: false })
+  createdAt: string;
+
+  @ApiProperty({ required: false })
   descriptionMaintenance: string;
 
   @ApiProperty({ required: true })

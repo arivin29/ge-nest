@@ -32,6 +32,9 @@ export class AmimsVDueListOutputDto {
   @ApiProperty({ required: false })
   idAircraft: string;
 
+  @ApiProperty({ required: false })
+  idDueList: string;
+
   @ApiProperty({ required: true })
   idDueListOutput: string;
 

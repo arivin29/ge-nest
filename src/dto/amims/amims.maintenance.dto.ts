@@ -3,6 +3,12 @@ import { IsOptional } from 'class-validator';
 
 export class AmimsMaintenanceDto {
   @ApiProperty({ required: false })
+  alert: number;
+
+  @ApiProperty({ required: false })
+  alertParam: string;
+
+  @ApiProperty({ required: false })
   atachapter: string;
 
   @ApiProperty({ required: false })

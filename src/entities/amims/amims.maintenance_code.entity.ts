@@ -5,6 +5,9 @@ export class AmimsMaintenanceCode {
   @Column({ name: 'classification', nullable: true })
   classification: string;
 
+  @Column({ name: 'created_at', nullable: true })
+  createdAt: string;
+
   @Column({ name: 'description_maintenance', nullable: true })
   descriptionMaintenance: string;
 

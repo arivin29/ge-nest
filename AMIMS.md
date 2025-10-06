@@ -42,7 +42,7 @@ npm run generator-api -- --fromTable=log_transfer --nama=log_transfer --db=erp_a
 npm run generator-api -- --fromTable=log_tsn_tso --nama=log_tsn_tso --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=log_user --nama=log_user --db=erp_amims --router=amims --out=crud
 npm run generator-api -- --fromTable=maintenance --nama=maintenance --db=erp_amims --router=amims --out=crud,report
-npm run generator-api -- --fromTable=maintenance_code --nama=maintenance_code --db=erp_amims --router=amims --out=crud
+npm run generator-api -- --fromTable=maintenance_code --nama=maintenance_code --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=maintenance_code_form_issued --nama=maintenance_code_form_issued --db=erp_amims --router=amims --out=crud
 npm run generator-api -- --fromTable=maintenance_code_reference --nama=maintenance_code_reference --db=erp_amims --router=amims --out=crud
 npm run generator-api -- --fromTable=mel --nama=mel --db=erp_amims --router=amims --out=crud
@@ -103,3 +103,16 @@ npm run generator-api -- --fromTable=tech_log_jo --nama=tech_log_jo --db=erp_ami
 npm run generator-api -- --fromTable=type_ofwork --nama=type_ofwork --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=warranty --nama=warranty --db=erp_amims --router=amims --out=crud
 npm run generator-api -- --fromTable=v_due_list_output --nama=v_due_list_output --db=erp_amims --router=amims --out=crud,report
+
+npm run generator-api -- --fromTable=maintenance_document --nama=maintenance_document --db=erp_amims --router=amims --out=crud
+npm run generator-api -- --fromTable=maintenance_material --nama=maintenance_material --db=erp_amims --router=amims --out=crud
+
+npm run generator-api -- --fromTable=maintenance_program --nama=maintenance_program --db=erp_amims --router=amims --out=crud,report
+npm run generator-api -- --fromTable=maintenance_program_document --nama=maintenance_program_document --db=erp_amims --router=amims --out=crud
+npm run generator-api -- --fromTable=maintenance_program_material --nama=maintenance_program_material --db=erp_amims --router=amims --out=crud
+npm run generator-api -- --fromTable=maintenance_program_task --nama=maintenance_program_task --db=erp_amims --router=amims --out=crud
+
+npm run generator-api -- --fromTable=wp --nama=wp --db=erp_amims --router=amims --out=crud,report
+npm run generator-api -- --fromTable=wp_jo --nama=wp_jo --db=erp_amims --router=amims --out=crud,report
+npm run generator-api -- --fromTable=work_completed --nama=work_completed --db=erp_amims --router=amims --out=crud,report
+ 

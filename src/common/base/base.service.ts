@@ -136,9 +136,37 @@ export class BaseService<T extends ObjectLiteral, D = Partial<T>> {
         }
 
         sanitizeEmptyStrings(data as any);
-        convertUtcDatesToLocal(data); // ✅ tambahkan ini
+        convertUtcDatesToLocal(data);
+        console.log('data', data)
+        // ✅ Jika ada kolom validasi
+        if ('validasi' in (data as any) && (data as any).validasi === 0) {
+            let where: any = { validasi: 0 };
+
+            if ('formModule' in (data as any) && ((data as any).formModule != null || (data as any).formModule != '')) {
+                where.formModule = (data as any).formModule
+            }
+
+            const existingDraft = await this.repo.findOne({
+                where: where as any,
+                order: { createdAt: 'ASC' } as any,
+            });
+
+            if (existingDraft) {
+                // 🔥 Draft sudah ada → return row itu langsung
+                return existingDraft;
+            }
+        }
+
+        // ✅ Jika tidak ada draft → buat data baru
+        if (!(data as any)[primaryKey]) {
+            (data as any)[primaryKey] = uuidv4();
+        }
+        if (!data['createdAt']) {
+            (data as any).createdAt = new Date();
+        }
 
         return this.repo.save(data as any);
+ 
     }
 
     // update(id: any, data: D): Promise<T> {
@@ -176,7 +204,7 @@ export function convertUtcDatesToLocal(obj: any, timezoneStr = 'Asia/Jakarta') {
         // hanya jika nama field mengandung 'tanggal' dan value mengandung Z
         if (
             typeof obj[key] === 'string' &&
-            key.toLowerCase().includes('tanggal') &&
+            // key.toLowerCase().includes('tanggal') &&
             obj[key].includes('T') &&
             obj[key].endsWith('Z')
         ) {

@@ -44,8 +44,8 @@ export class AmimsDueList {
   @PrimaryColumn({ name: 'id_due_list' })
   idDueList: string;
 
-  @Column({ name: 'id_mantenance', nullable: true })
-  idMantenance: string;
+  @Column({ name: 'id_maintenance', nullable: true })
+  idMaintenance: string;
 
   @Column({ name: 'id_part', nullable: true })
   idPart: string;

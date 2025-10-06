@@ -32,6 +32,9 @@ export class AmimsVDueListOutput {
   @Column({ name: 'id_aircraft', nullable: true })
   idAircraft: string;
 
+  @Column({ name: 'id_due_list', nullable: true })
+  idDueList: string;
+
   @PrimaryColumn({ name: 'id_due_list_output' })
   idDueListOutput: string;
 

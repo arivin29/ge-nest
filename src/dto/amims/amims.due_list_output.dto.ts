@@ -36,6 +36,9 @@ export class AmimsDueListOutputDto {
   idDueListOutput: string;
 
   @ApiProperty({ required: false })
+  idMaintenance: string;
+
+  @ApiProperty({ required: false })
   idMpart: string;
 
   @ApiProperty({ required: false })

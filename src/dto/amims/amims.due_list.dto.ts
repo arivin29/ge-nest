@@ -45,7 +45,7 @@ export class AmimsDueListDto {
   idDueList: string;
 
   @ApiProperty({ required: false })
-  idMantenance: string;
+  idMaintenance: string;
 
   @ApiProperty({ required: false })
   idPart: string;

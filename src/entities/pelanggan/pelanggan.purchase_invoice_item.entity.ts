@@ -11,9 +11,6 @@ export class PelangganPurchaseInvoiceItem {
   @Column({ name: 'harga_satuan' })
   hargaSatuan: number;
 
-  @Column({ name: 'id_produk' })
-  idProduk: string;
-
   @Column({ name: 'id_purchase_invoice' })
   idPurchaseInvoice: string;
 
@@ -22,6 +19,9 @@ export class PelangganPurchaseInvoiceItem {
 
   @Column({ name: 'id_purchase_order_item', nullable: true })
   idPurchaseOrderItem: string;
+
+  @Column({ name: 'id_sales_barang' })
+  idSalesBarang: string;
 
   @Column({ name: 'keterangan', nullable: true })
   keterangan: string;

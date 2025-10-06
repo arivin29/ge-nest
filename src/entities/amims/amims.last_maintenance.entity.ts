@@ -11,14 +11,14 @@ export class AmimsLastMaintenance {
   @Column({ name: 'id_maintenance', nullable: true })
   idMaintenance: string;
 
-  @Column({ name: 'id_mpc_jo', nullable: true })
-  idMpcJo: string;
-
   @Column({ name: 'id_part', nullable: true })
   idPart: string;
 
   @Column({ name: 'id_user', nullable: true })
   idUser: string;
+
+  @Column({ name: 'id_wp_jo', nullable: true })
+  idWpJo: string;
 
   @Column({ name: 'last_cycle', nullable: true })
   lastCycle: number;

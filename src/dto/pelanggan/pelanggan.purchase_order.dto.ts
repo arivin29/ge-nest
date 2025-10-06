@@ -30,7 +30,7 @@ export class PelangganPurchaseOrderDto {
   jenis: string;
 
   @ApiProperty({ required: false })
-  namaClient: number;
+  namaClient: string;
 
   @ApiProperty({ required: true })
   nomorPo: string;

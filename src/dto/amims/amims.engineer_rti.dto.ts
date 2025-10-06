@@ -33,9 +33,6 @@ export class AmimsEngineerRtiDto {
   idEngineerRti: string;
 
   @ApiProperty({ required: false })
-  idMpcJo: string;
-
-  @ApiProperty({ required: false })
   idPart: string;
 
   @ApiProperty({ required: false })
@@ -43,6 +40,9 @@ export class AmimsEngineerRtiDto {
 
   @ApiProperty({ required: false })
   idSite: string;
+
+  @ApiProperty({ required: false })
+  idWpJo: string;
 
   @ApiProperty({ required: false })
   inspectedBy: number;

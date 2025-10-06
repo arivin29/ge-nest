@@ -37,6 +37,12 @@ import { AmimsMaintenance } from './amims.maintenance.entity';
 import { AmimsMaintenanceCode } from './amims.maintenance_code.entity';
 import { AmimsMaintenanceCodeFormIssued } from './amims.maintenance_code_form_issued.entity';
 import { AmimsMaintenanceCodeReference } from './amims.maintenance_code_reference.entity';
+import { AmimsMaintenanceDocument } from './amims.maintenance_document.entity';
+import { AmimsMaintenanceMaterial } from './amims.maintenance_material.entity';
+import { AmimsMaintenanceProgram } from './amims.maintenance_program.entity';
+import { AmimsMaintenanceProgramDocument } from './amims.maintenance_program_document.entity';
+import { AmimsMaintenanceProgramMaterial } from './amims.maintenance_program_material.entity';
+import { AmimsMaintenanceProgramTask } from './amims.maintenance_program_task.entity';
 import { AmimsMcurrency } from './amims.mcurrency.entity';
 import { AmimsMel } from './amims.mel.entity';
 import { AmimsMpart } from './amims.mpart.entity';
@@ -96,8 +102,12 @@ import { AmimsTechLogEngineCheck } from './amims.tech_log_engine_check.entity';
 import { AmimsTechLogItem } from './amims.tech_log_item.entity';
 import { AmimsTechLogJo } from './amims.tech_log_jo.entity';
 import { AmimsTypeOfwork } from './amims.type_ofwork.entity';
+import { AmimsUnscheduleMaintenance } from './amims.unschedule_maintenance.entity';
 import { AmimsVDueListOutput } from './amims.v_due_list_output.entity';
 import { AmimsWarranty } from './amims.warranty.entity';
+import { AmimsWorkCompleted } from './amims.work_completed.entity';
+import { AmimsWp } from './amims.wp.entity';
+import { AmimsWpJo } from './amims.wp_jo.entity';
 
 export const AmimsEntities = [
   AmimsActype,
@@ -139,6 +149,12 @@ export const AmimsEntities = [
   AmimsMaintenanceCode,
   AmimsMaintenanceCodeFormIssued,
   AmimsMaintenanceCodeReference,
+  AmimsMaintenanceDocument,
+  AmimsMaintenanceMaterial,
+  AmimsMaintenanceProgram,
+  AmimsMaintenanceProgramDocument,
+  AmimsMaintenanceProgramMaterial,
+  AmimsMaintenanceProgramTask,
   AmimsMcurrency,
   AmimsMel,
   AmimsMpart,
@@ -198,8 +214,12 @@ export const AmimsEntities = [
   AmimsTechLogItem,
   AmimsTechLogJo,
   AmimsTypeOfwork,
+  AmimsUnscheduleMaintenance,
   AmimsVDueListOutput,
-  AmimsWarranty
+  AmimsWarranty,
+  AmimsWorkCompleted,
+  AmimsWp,
+  AmimsWpJo
 ];
 
 export * from './amims.actype.entity';
@@ -241,6 +261,12 @@ export * from './amims.maintenance.entity';
 export * from './amims.maintenance_code.entity';
 export * from './amims.maintenance_code_form_issued.entity';
 export * from './amims.maintenance_code_reference.entity';
+export * from './amims.maintenance_document.entity';
+export * from './amims.maintenance_material.entity';
+export * from './amims.maintenance_program.entity';
+export * from './amims.maintenance_program_document.entity';
+export * from './amims.maintenance_program_material.entity';
+export * from './amims.maintenance_program_task.entity';
 export * from './amims.mcurrency.entity';
 export * from './amims.mel.entity';
 export * from './amims.mpart.entity';
@@ -300,5 +326,9 @@ export * from './amims.tech_log_engine_check.entity';
 export * from './amims.tech_log_item.entity';
 export * from './amims.tech_log_jo.entity';
 export * from './amims.type_ofwork.entity';
+export * from './amims.unschedule_maintenance.entity';
 export * from './amims.v_due_list_output.entity';
 export * from './amims.warranty.entity';
+export * from './amims.work_completed.entity';
+export * from './amims.wp.entity';
+export * from './amims.wp_jo.entity';

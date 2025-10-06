@@ -1,3 +1,13 @@
+import { WorkCompletedModule } from './modules/amims/work_completed/work_completed.module';
+import { WpModule } from './modules/amims/wp/wp.module';
+import { WpJoModule } from './modules/amims/wp_jo/wp_jo.module';
+import { MaintenanceProgramTaskModule } from './modules/amims/maintenance_program_task/maintenance_program_task.module';
+import { MaintenanceProgramMaterialModule } from './modules/amims/maintenance_program_material/maintenance_program_material.module';
+import { MaintenanceProgramDocumentModule } from './modules/amims/maintenance_program_document/maintenance_program_document.module';
+import { MaintenanceProgramModule } from './modules/amims/maintenance_program/maintenance_program.module';
+import { MaintenanceMaterialModule } from './modules/amims/maintenance_material/maintenance_material.module';
+import { MaintenanceDocumentModule } from './modules/amims/maintenance_document/maintenance_document.module';
+import { UnscheduleMaintenanceModule } from './modules/amims/unschedule_maintenance/unschedule_maintenance.module';
 import { VDueListOutputModule } from './modules/amims/v_due_list_output/v_due_list_output.module';
 import { StockModule } from './modules/amims/stock/stock.module';
 import { McurrencyModule } from './modules/amims/mcurrency/mcurrency.module';
@@ -50,17 +60,12 @@ import { PartCategoryModule } from './modules/amims/part_category/part_category.
 import { PartAtaModule } from './modules/amims/part_ata/part_ata.module';
 import { PartAlternativeModule } from './modules/amims/part_alternative/part_alternative.module';
 import { PartActypeModule } from './modules/amims/part_actype/part_actype.module';
-import { PartModule } from './modules/amims/part/part.module';
-import { MpcWpModule } from './modules/amims/mpc_wp/mpc_wp.module';
+import { PartModule } from './modules/amims/part/part.module'; 
 import { MpcSelfMaintenanceModule } from './modules/amims/mpc_self_maintenance/mpc_self_maintenance.module';
 import { MpcPiroItemModule } from './modules/amims/mpc_piro_item/mpc_piro_item.module';
-import { MpcPiroModule } from './modules/amims/mpc_piro/mpc_piro.module';
-import { MpcJoOperatorModule } from './modules/amims/mpc_jo_operator/mpc_jo_operator.module';
-import { MpcJoModule } from './modules/amims/mpc_jo/mpc_jo.module';
+import { MpcPiroModule } from './modules/amims/mpc_piro/mpc_piro.module'; 
 import { MpcGseModule } from './modules/amims/mpc_gse/mpc_gse.module';
-import { MelModule } from './modules/amims/mel/mel.module';
-import { MaintenanceCodeReferenceModule } from './modules/amims/maintenance_code_reference/maintenance_code_reference.module';
-import { MaintenanceCodeFormIssuedModule } from './modules/amims/maintenance_code_form_issued/maintenance_code_form_issued.module';
+import { MelModule } from './modules/amims/mel/mel.module'; 
 import { MaintenanceCodeModule } from './modules/amims/maintenance_code/maintenance_code.module';
 import { MaintenanceModule } from './modules/amims/maintenance/maintenance.module';
 import { LogUserModule } from './modules/amims/log_user/log_user.module';
@@ -70,9 +75,7 @@ import { LogSpModule } from './modules/amims/log_sp/log_sp.module';
 import { LogProcessModule } from './modules/amims/log_process/log_process.module';
 import { LocationFlightModule } from './modules/amims/location_flight/location_flight.module';
 import { LifeTimeLimitModule } from './modules/amims/life_time_limit/life_time_limit.module';
-import { LibUploadModule } from './modules/amims/lib_upload/lib_upload.module';
-import { LibReferenceModule } from './modules/amims/lib_reference/lib_reference.module';
-import { LibFormIssuedModule } from './modules/amims/lib_form_issued/lib_form_issued.module';
+import { LibUploadModule } from './modules/amims/lib_upload/lib_upload.module'; 
 import { LastMaintenanceModule } from './modules/amims/last_maintenance/last_maintenance.module';
 import { InternalGrnItemModule } from './modules/amims/internal_grn_item/internal_grn_item.module';
 import { InternalGrnModule } from './modules/amims/internal_grn/internal_grn.module';
@@ -152,9 +155,7 @@ export const routerConfig = [
             { path: 'inspection', module: InspectionModule },
             { path: 'internal_grn', module: InternalGrnModule },
             { path: 'internal_grn_item', module: InternalGrnItemModule },
-            { path: 'last_maintenance', module: LastMaintenanceModule },
-            { path: 'lib_form_issued', module: LibFormIssuedModule },
-            { path: 'lib_reference', module: LibReferenceModule },
+            { path: 'last_maintenance', module: LastMaintenanceModule }, 
             { path: 'lib_upload', module: LibUploadModule },
             { path: 'life_time_limit', module: LifeTimeLimitModule },
             { path: 'location_flight', module: LocationFlightModule },
@@ -164,17 +165,12 @@ export const routerConfig = [
             { path: 'log_tsn_tso', module: LogTsnTsoModule },
             { path: 'log_user', module: LogUserModule },
             { path: 'maintenance', module: MaintenanceModule },
-            { path: 'maintenance_code', module: MaintenanceCodeModule },
-            { path: 'maintenance_code_form_issued', module: MaintenanceCodeFormIssuedModule },
-            { path: 'maintenance_code_reference', module: MaintenanceCodeReferenceModule },
+            { path: 'maintenance_code', module: MaintenanceCodeModule }, 
             { path: 'mel', module: MelModule },
-            { path: 'mpc_gse', module: MpcGseModule },
-            { path: 'mpc_jo', module: MpcJoModule },
-            { path: 'mpc_jo_operator', module: MpcJoOperatorModule },
+            { path: 'mpc_gse', module: MpcGseModule }, 
             { path: 'mpc_piro', module: MpcPiroModule },
             { path: 'mpc_piro_item', module: MpcPiroItemModule },
-            { path: 'mpc_self_maintenance', module: MpcSelfMaintenanceModule },
-            { path: 'mpc_wp', module: MpcWpModule },
+            { path: 'mpc_self_maintenance', module: MpcSelfMaintenanceModule }, 
             { path: 'part', module: PartModule },
             { path: 'part_actype', module: PartActypeModule },
             { path: 'part_alternative', module: PartAlternativeModule },
@@ -227,7 +223,17 @@ export const routerConfig = [
             { path: 'mpart', module: MpartModule },
             { path: 'mcurrency', module: McurrencyModule },
             { path: 'stock', module: StockModule },
-            { path: 'v_due_list_output', module: VDueListOutputModule }]
+            { path: 'v_due_list_output', module: VDueListOutputModule },
+      { path: 'unschedule_maintenance', module: UnscheduleMaintenanceModule },
+      { path: 'maintenance_document', module: MaintenanceDocumentModule },
+      { path: 'maintenance_material', module: MaintenanceMaterialModule },
+      { path: 'maintenance_program', module: MaintenanceProgramModule },
+      { path: 'maintenance_program_document', module: MaintenanceProgramDocumentModule },
+      { path: 'maintenance_program_material', module: MaintenanceProgramMaterialModule },
+      { path: 'maintenance_program_task', module: MaintenanceProgramTaskModule },
+      { path: 'wp_jo', module: WpJoModule },
+      { path: 'wp', module: WpModule },
+      { path: 'work_completed', module: WorkCompletedModule }]
     },
     {
         path: 'auth',

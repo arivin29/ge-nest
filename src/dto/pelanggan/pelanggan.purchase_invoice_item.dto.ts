@@ -12,9 +12,6 @@ export class PelangganPurchaseInvoiceItemDto {
   hargaSatuan: number;
 
   @ApiProperty({ required: true })
-  idProduk: string;
-
-  @ApiProperty({ required: true })
   idPurchaseInvoice: string;
 
   @ApiProperty({ required: true })
@@ -22,6 +19,9 @@ export class PelangganPurchaseInvoiceItemDto {
 
   @ApiProperty({ required: false })
   idPurchaseOrderItem: string;
+
+  @ApiProperty({ required: true })
+  idSalesBarang: string;
 
   @ApiProperty({ required: false })
   keterangan: string;

@@ -57,9 +57,7 @@ import { FigureIndexModule } from './modules/amims/figure_index/figure_index.mod
 import { InspectionModule } from './modules/amims/inspection/inspection.module';
 import { InternalGrnModule } from './modules/amims/internal_grn/internal_grn.module';
 import { InternalGrnItemModule } from './modules/amims/internal_grn_item/internal_grn_item.module';
-import { LastMaintenanceModule } from './modules/amims/last_maintenance/last_maintenance.module';
-import { LibFormIssuedModule } from './modules/amims/lib_form_issued/lib_form_issued.module';
-import { LibReferenceModule } from './modules/amims/lib_reference/lib_reference.module';
+import { LastMaintenanceModule } from './modules/amims/last_maintenance/last_maintenance.module'; 
 import { LibUploadModule } from './modules/amims/lib_upload/lib_upload.module';
 import { LifeTimeLimitModule } from './modules/amims/life_time_limit/life_time_limit.module';
 import { LocationFlightModule } from './modules/amims/location_flight/location_flight.module';
@@ -69,17 +67,12 @@ import { LogTransferModule } from './modules/amims/log_transfer/log_transfer.mod
 import { LogTsnTsoModule } from './modules/amims/log_tsn_tso/log_tsn_tso.module';
 import { LogUserModule } from './modules/amims/log_user/log_user.module';
 import { MaintenanceModule } from './modules/amims/maintenance/maintenance.module';
-import { MaintenanceCodeModule } from './modules/amims/maintenance_code/maintenance_code.module';
-import { MaintenanceCodeFormIssuedModule } from './modules/amims/maintenance_code_form_issued/maintenance_code_form_issued.module';
-import { MaintenanceCodeReferenceModule } from './modules/amims/maintenance_code_reference/maintenance_code_reference.module';
+import { MaintenanceCodeModule } from './modules/amims/maintenance_code/maintenance_code.module'; 
 import { MelModule } from './modules/amims/mel/mel.module';
-import { MpcGseModule } from './modules/amims/mpc_gse/mpc_gse.module';
-import { MpcJoModule } from './modules/amims/mpc_jo/mpc_jo.module';
-import { MpcJoOperatorModule } from './modules/amims/mpc_jo_operator/mpc_jo_operator.module';
+import { MpcGseModule } from './modules/amims/mpc_gse/mpc_gse.module'; 
 import { MpcPiroModule } from './modules/amims/mpc_piro/mpc_piro.module';
 import { MpcPiroItemModule } from './modules/amims/mpc_piro_item/mpc_piro_item.module';
-import { MpcSelfMaintenanceModule } from './modules/amims/mpc_self_maintenance/mpc_self_maintenance.module';
-import { MpcWpModule } from './modules/amims/mpc_wp/mpc_wp.module';
+import { MpcSelfMaintenanceModule } from './modules/amims/mpc_self_maintenance/mpc_self_maintenance.module'; 
 import { PartModule } from './modules/amims/part/part.module';
 import { PartActypeModule } from './modules/amims/part_actype/part_actype.module';
 import { PartAlternativeModule } from './modules/amims/part_alternative/part_alternative.module';
@@ -133,6 +126,16 @@ import { MpartModule } from './modules/amims/mpart/mpart.module';
 import { McurrencyModule } from './modules/amims/mcurrency/mcurrency.module';
 import { StockModule } from './modules/amims/stock/stock.module';
 import { VDueListOutputModule } from './modules/amims/v_due_list_output/v_due_list_output.module';
+import { UnscheduleMaintenanceModule } from './modules/amims/unschedule_maintenance/unschedule_maintenance.module';
+import { MaintenanceDocumentModule } from './modules/amims/maintenance_document/maintenance_document.module';
+import { MaintenanceMaterialModule } from './modules/amims/maintenance_material/maintenance_material.module';
+import { MaintenanceProgramModule } from './modules/amims/maintenance_program/maintenance_program.module';
+import { MaintenanceProgramDocumentModule } from './modules/amims/maintenance_program_document/maintenance_program_document.module';
+import { MaintenanceProgramMaterialModule } from './modules/amims/maintenance_program_material/maintenance_program_material.module';
+import { MaintenanceProgramTaskModule } from './modules/amims/maintenance_program_task/maintenance_program_task.module';
+import { WpJoModule } from './modules/amims/wp_jo/wp_jo.module';
+import { WpModule } from './modules/amims/wp/wp.module';
+import { WorkCompletedModule } from './modules/amims/work_completed/work_completed.module';
 const COM = [
   ActypeModule,
   AircraftModule,
@@ -158,8 +161,6 @@ const COM = [
   InternalGrnModule,
   InternalGrnItemModule,
   LastMaintenanceModule,
-  LibFormIssuedModule,
-  LibReferenceModule,
   LibUploadModule,
   LifeTimeLimitModule,
   LocationFlightModule,
@@ -170,16 +171,11 @@ const COM = [
   LogUserModule,
   MaintenanceModule,
   MaintenanceCodeModule,
-  MaintenanceCodeFormIssuedModule,
-  MaintenanceCodeReferenceModule,
   MelModule,
   MpcGseModule,
-  MpcJoModule,
-  MpcJoOperatorModule,
   MpcPiroModule,
   MpcPiroItemModule,
   MpcSelfMaintenanceModule,
-  MpcWpModule,
   PartModule,
   PartActypeModule,
   PartAlternativeModule,
@@ -232,7 +228,17 @@ const COM = [
   MpartModule,
   McurrencyModule,
   StockModule,
-  VDueListOutputModule
+  VDueListOutputModule,
+  UnscheduleMaintenanceModule,
+  MaintenanceDocumentModule,
+  MaintenanceMaterialModule,
+  MaintenanceProgramModule,
+  MaintenanceProgramDocumentModule,
+  MaintenanceProgramMaterialModule,
+  MaintenanceProgramTaskModule,
+  WpJoModule,
+  WpModule,
+  WorkCompletedModule
 ];
 
 @Module({

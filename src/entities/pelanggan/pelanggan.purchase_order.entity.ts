@@ -30,7 +30,7 @@ export class PelangganPurchaseOrder {
   jenis: string;
 
   @Column({ name: 'nama_client', nullable: true })
-  namaClient: number;
+  namaClient: string;
 
   @Column({ name: 'nomor_po' })
   nomorPo: string;

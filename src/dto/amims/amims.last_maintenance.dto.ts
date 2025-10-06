@@ -12,13 +12,13 @@ export class AmimsLastMaintenanceDto {
   idMaintenance: string;
 
   @ApiProperty({ required: false })
-  idMpcJo: string;
-
-  @ApiProperty({ required: false })
   idPart: string;
 
   @ApiProperty({ required: false })
   idUser: string;
+
+  @ApiProperty({ required: false })
+  idWpJo: string;
 
   @ApiProperty({ required: false })
   lastCycle: number;

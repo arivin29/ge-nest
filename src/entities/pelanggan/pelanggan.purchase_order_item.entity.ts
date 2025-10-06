@@ -2,6 +2,9 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'purchase_order_item', schema: 'erp_pelanggan' })
 export class PelangganPurchaseOrderItem {
+  @Column({ name: 'created_at', nullable: true })
+  createdAt: string;
+
   @Column({ name: 'diskon_nominal', nullable: true })
   diskonNominal: number;
 
@@ -20,14 +23,14 @@ export class PelangganPurchaseOrderItem {
   @Column({ name: 'harga_satuan' })
   hargaSatuan: number;
 
-  @Column({ name: 'id_produk' })
-  idProduk: string;
-
   @Column({ name: 'id_purchase_order' })
   idPurchaseOrder: string;
 
   @PrimaryColumn({ name: 'id_purchase_order_item' })
   idPurchaseOrderItem: string;
+
+  @Column({ name: 'id_sales_barang' })
+  idSalesBarang: string;
 
   @Column({ name: 'keterangan', nullable: true })
   keterangan: string;

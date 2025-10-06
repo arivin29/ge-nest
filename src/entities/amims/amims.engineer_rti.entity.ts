@@ -32,9 +32,6 @@ export class AmimsEngineerRti {
   @PrimaryColumn({ name: 'id_engineer_rti' })
   idEngineerRti: string;
 
-  @Column({ name: 'id_mpc_jo', nullable: true })
-  idMpcJo: string;
-
   @Column({ name: 'id_part', nullable: true })
   idPart: string;
 
@@ -43,6 +40,9 @@ export class AmimsEngineerRti {
 
   @Column({ name: 'id_site', nullable: true })
   idSite: string;
+
+  @Column({ name: 'id_wp_jo', nullable: true })
+  idWpJo: string;
 
   @Column({ name: 'inspected_by', nullable: true })
   inspectedBy: number;
