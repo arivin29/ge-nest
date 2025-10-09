@@ -63,34 +63,9 @@ export class UsersController {
             return ApiResponseHelper.failed(null, 'Terjadi kesalahan', 500, error);
         }
     }
+ 
 
-    @Post()
-    @ApiBody({ type: AclUsersDto })
-    @ApiResponseEntity(AclUsersDto, 'post')
-    async create(@Body() body: AclUsersDto) {
-        try {
-            const result = await this.service.create(body);
-            return ApiResponseHelper.success(result, 'create');
-        } catch (error) {
-            return ApiResponseHelper.failed(null, 'Gagal menambahkan data', 500, error);
-        }
-    }
-
-    @Put(':id')
-    @ApiBody({ type: AclUsersDto })
-    @ApiResponseEntity(AclUsersDto, 'put')
-    async update(@Param('id') id: string, @Body() body: AclUsersDto) {
-        try { 
-            if (body.password === undefined || body.password === null || body.password === ''){
-                delete (body as any).password;
-            }
-            const result = await this.service.update(id, body);
-            return ApiResponseHelper.success(result, 'update');
-        } catch (error) {
-            return ApiResponseHelper.failed(null, 'Gagal memperbarui data', 500, error);
-        }
-    }
-
+    
     @Delete(':id')
     @ApiResponseEntity(AclUsersDto, 'delete')
     async remove(@Param('id') id: string) {

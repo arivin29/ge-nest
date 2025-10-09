@@ -38,14 +38,14 @@ export class AuthService {
             throw new UnauthorizedException('Email atau password salah');
         }
 
-        if (user.status === 'suspend' || user.status === 'non-aktif') {
+        if (user.status === 'lock' || user.status === 'disable') {
             throw new ForbiddenException('Akun tidak aktif');
         }
 
-        if (user.status === 'pending' || user.wajibResetPassword) {
+        if (!user.activated) {
             return {
-                code: 'FORCE_PASSWORD_UPDATE',
-                message: 'Silakan ubah password terlebih dahulu',
+                code: 'ACCOUNT_INACTIVE',
+                message: 'Akun belum diaktifkan',
             };
         }
 
@@ -53,7 +53,7 @@ export class AuthService {
 
         await this.userTokenRepo.save({
             id: uuidv4(),
-            idUser: user.idUsers,
+            idUser: String(user.idUsers),
             refresh_token: tokens.refreshToken,
             user_agent: req.headers['user-agent'],
             ip_address: (req.headers['x-forwarded-for'] || req.socket.remoteAddress) as string,
@@ -114,7 +114,7 @@ export class AuthService {
         // ✅ 6. Simpan token baru
         await this.userTokenRepo.save({
             id: uuidv4(),
-            id_user: user.idUsers,
+            idUser: String(user.idUsers),
             refresh_token: tokens.refreshToken,
             user_agent: 'refresh-rotation',
             ip_address: null,

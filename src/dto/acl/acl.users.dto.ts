@@ -2,37 +2,44 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AclUsersDto {
+  @ApiProperty({ required: true, description: 'Primary Key' })
+  idUsers: string;
+
+  @ApiProperty({ required: true })
+  nama: string;
+
   @ApiProperty({ required: false })
   @IsOptional()
-  createdAt: string;
+  username?: string;
 
   @ApiProperty({ required: true })
   email: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  idUserGroup: string;
-
-  @ApiProperty({ required: true, description: 'Primary Key' })
-  idUsers: string; // PK
+  idUserGroup?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  lastLogin: string;
+  status?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  nama: string;
+  tipe?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  password: string;
+  foto?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  status: string;
+  activated?: number;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  wajibResetPassword: boolean;
+  createdAt?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  updatedAt?: string;
 }

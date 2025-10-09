@@ -26,11 +26,9 @@ import { CustomFieldValueModule } from './modules/tools/custom_field_value/custo
 import { DocumentNumberingModule } from './modules/tools/document_numbering/document_numbering.module';
 import { DocumentNumberingCounterModule } from './modules/tools/document_numbering_counter/document_numbering_counter.module';
 // import { RedisModule } from './common/redis/redis.module';
-// import { RedisDocumentNumberingWorkerService } from './common/redis/penomoram/document-numbering.worker';
-import { UserTokensModule } from './modules/acl/user_tokens/user_tokens.module';
+// import { RedisDocumentNumberingWorkerService } from './common/redis/penomoram/document-numbering.worker'; 
 import { UsersModule } from './modules/acl/users/users.module';
-import { ModuleModule } from './modules/acl/module/module.module';
-import { UserGroupModule } from './modules/acl/user_group/user_group.module';
+import { ModuleModule } from './modules/acl/module/module.module'; 
 
  
 const COM = [
@@ -57,8 +55,8 @@ const COM = [
     ...DatabaseProviders,
     RouterModule.register(routerConfig),
         AuthModule, AuthProtectedModule,
-        UserTokensModule, UsersModule,  
-        WorkflowModule, WorkflowLogModule, WorkflowStepModule, UserGroupModule,
+         UsersModule,  
+        WorkflowModule, WorkflowLogModule, WorkflowStepModule, 
         WorkflowAggregatorModule, ModuleModule,
         CustomFieldGroupModule, CustomFieldModule, CustomFieldValueModule,
         DocumentNumberingModule, DocumentNumberingCounterModule,

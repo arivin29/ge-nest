@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity({ name: 'user_tokens', schema: 'erp_acl' })
+@Entity({ name: 'user_tokens', schema: 'erp_user' })
 export class AclUserTokens {
   @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;

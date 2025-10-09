@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity({ name: 'user_group_access', schema: 'erp_acl' })
+@Entity({ name: 'user_group_access', schema: 'erp_user' })
 export class AclUserGroupAccess {
   @Column({ name: 'can_add', nullable: true })
   canAdd: boolean;

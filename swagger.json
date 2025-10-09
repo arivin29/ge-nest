@@ -271,47 +271,6 @@
         "tags": [
           "users"
         ]
-      },
-      "post": {
-        "operationId": "UsersController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AclUsersDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Create AclUsersDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/AclUsersDto"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "users"
-        ]
       }
     },
     "/users/{id}": {
@@ -330,56 +289,6 @@
         "responses": {
           "200": {
             "description": "Success response for get AclUsersDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/AclUsersDto"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "users"
-        ]
-      },
-      "put": {
-        "operationId": "UsersController_update",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AclUsersDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success response for put AclUsersDto",
             "content": {
               "application/json": {
                 "schema": {
@@ -2484,294 +2393,6 @@
         },
         "tags": [
           "workflow_step_widget"
-        ]
-      }
-    },
-    "/user_group": {
-      "get": {
-        "operationId": "UserGroupController_findAll",
-        "parameters": [
-          {
-            "name": "pageIndex",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "example": 1,
-              "type": "number"
-            }
-          },
-          {
-            "name": "pageSize",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "example": 10,
-              "type": "number"
-            }
-          },
-          {
-            "name": "filter",
-            "required": false,
-            "in": "query",
-            "description": "JSON.stringify({})",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "sortKey",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "example": "created_at",
-              "type": "string"
-            }
-          },
-          {
-            "name": "sortValue",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "example": "asc",
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
-            }
-          },
-          {
-            "name": "search_field",
-            "required": false,
-            "in": "query",
-            "description": "Array of searchable fields",
-            "schema": {
-              "example": [
-                "nama",
-                "alamat"
-              ],
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "search_keyword",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "example": "makmur",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success response for list AclUserGroupDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AclUserGroupDto"
-                      }
-                    },
-                    "total": {
-                      "type": "number",
-                      "example": 123
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "user_group"
-        ]
-      },
-      "post": {
-        "operationId": "UserGroupController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AclUserGroupDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Create AclUserGroupDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/AclUserGroupDto"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "user_group"
-        ]
-      }
-    },
-    "/user_group/{id}": {
-      "get": {
-        "operationId": "UserGroupController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success response for get AclUserGroupDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/AclUserGroupDto"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "user_group"
-        ]
-      },
-      "put": {
-        "operationId": "UserGroupController_update",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AclUserGroupDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success response for put AclUserGroupDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/AclUserGroupDto"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "user_group"
-        ]
-      },
-      "delete": {
-        "operationId": "UserGroupController_remove",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success response for delete AclUserGroupDto",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "code": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "pesan": {
-                      "type": "string",
-                      "example": "Berhasil"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/AclUserGroupDto"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "user_group"
         ]
       }
     },
@@ -5294,7 +4915,14 @@
       "AclUsersDto": {
         "type": "object",
         "properties": {
-          "createdAt": {
+          "idUsers": {
+            "type": "string",
+            "description": "Primary Key"
+          },
+          "nama": {
+            "type": "string"
+          },
+          "username": {
             "type": "string"
           },
           "email": {
@@ -5303,35 +4931,42 @@
           "idUserGroup": {
             "type": "string"
           },
-          "idUsers": {
-            "type": "string",
-            "description": "Primary Key"
-          },
-          "lastLogin": {
-            "type": "string"
-          },
-          "nama": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
           "status": {
             "type": "string"
           },
-          "wajibResetPassword": {
-            "type": "boolean"
+          "tipe": {
+            "type": "string"
+          },
+          "foto": {
+            "type": "string"
+          },
+          "activated": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
           }
         },
         "required": [
-          "email",
-          "idUsers"
+          "idUsers",
+          "nama",
+          "email"
         ]
       },
       "AclUsersReportDto": {
         "type": "object",
         "properties": {
-          "createdAt": {
+          "idUsers": {
+            "type": "string",
+            "description": "Primary Key"
+          },
+          "nama": {
+            "type": "string"
+          },
+          "username": {
             "type": "string"
           },
           "email": {
@@ -5340,29 +4975,29 @@
           "idUserGroup": {
             "type": "string"
           },
-          "idUsers": {
-            "type": "string",
-            "description": "Primary Key"
-          },
-          "lastLogin": {
-            "type": "string"
-          },
-          "nama": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
           "status": {
             "type": "string"
           },
-          "wajibResetPassword": {
-            "type": "boolean"
+          "tipe": {
+            "type": "string"
+          },
+          "foto": {
+            "type": "string"
+          },
+          "activated": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
           }
         },
         "required": [
-          "email",
-          "idUsers"
+          "idUsers",
+          "nama",
+          "email"
         ]
       },
       "BaseQueryDtoSmart": {
@@ -5475,7 +5110,14 @@
       "AclUsersWidgetDto": {
         "type": "object",
         "properties": {
-          "createdAt": {
+          "idUsers": {
+            "type": "string",
+            "description": "Primary Key"
+          },
+          "nama": {
+            "type": "string"
+          },
+          "username": {
             "type": "string"
           },
           "email": {
@@ -5484,32 +5126,32 @@
           "idUserGroup": {
             "type": "string"
           },
-          "idUsers": {
-            "type": "string",
-            "description": "Primary Key"
-          },
-          "lastLogin": {
-            "type": "string"
-          },
-          "nama": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
           "status": {
             "type": "string"
           },
-          "wajibResetPassword": {
-            "type": "boolean"
+          "tipe": {
+            "type": "string"
+          },
+          "foto": {
+            "type": "string"
+          },
+          "activated": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
           },
           "total": {
             "type": "number"
           }
         },
         "required": [
-          "email",
-          "idUsers"
+          "idUsers",
+          "nama",
+          "email"
         ]
       },
       "Object": {
@@ -6140,32 +5782,6 @@
           "statusFrom",
           "statusTo",
           "urutan"
-        ]
-      },
-      "AclUserGroupDto": {
-        "type": "object",
-        "properties": {
-          "createdAt": {
-            "type": "string"
-          },
-          "deskripsi": {
-            "type": "string"
-          },
-          "idUserGroup": {
-            "type": "string",
-            "description": "Primary Key"
-          },
-          "namaUserGroup": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "idUserGroup",
-          "namaUserGroup",
-          "status"
         ]
       },
       "ToolsWorkflowAggregatorDto": {

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity({ name: 'user_group', schema: 'erp_acl' })
+@Entity({ name: 'user_group', schema: 'erp_user' })
 export class AclUserGroup {
   @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;

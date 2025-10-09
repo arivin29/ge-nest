@@ -20,6 +20,6 @@ export class UsersService extends BaseService<AclUsers> {
 
     async findAllSmart(query: SmartQueryInput) {
     // return smartQueryEngineJoinMode(this.repo, 'e', query,AclUsersDto);
-    return smartQueryRawJoinMode(this.repo, 'e', query,AclUsersDto);
+    return smartQueryRawJoinMode(this.repo, 'e', query, AclUsers);
     }
 }
