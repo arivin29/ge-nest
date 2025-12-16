@@ -74,6 +74,9 @@ export class AmimsWpJo {
   @Column({ name: 'id_tech_log', nullable: true })
   idTechLog: string;
 
+  @Column({ name: 'id_unschedule_maintenance', nullable: true })
+  idUnscheduleMaintenance: string;
+
   @Column({ name: 'id_user', nullable: true })
   idUser: string;
 
@@ -114,7 +117,7 @@ export class AmimsWpJo {
   statusWpJo: string;
 
   @Column({ name: 'time_range_from', nullable: true })
-  timeRangeFrom: number;
+  timeRangeFrom: string;
 
   @Column({ name: 'time_range_to', nullable: true })
   timeRangeTo: number;

@@ -75,6 +75,9 @@ export class AmimsWpJoDto {
   idTechLog: string;
 
   @ApiProperty({ required: false })
+  idUnscheduleMaintenance: string;
+
+  @ApiProperty({ required: false })
   idUser: string;
 
   @ApiProperty({ required: false })
@@ -114,7 +117,7 @@ export class AmimsWpJoDto {
   statusWpJo: string;
 
   @ApiProperty({ required: false })
-  timeRangeFrom: number;
+  timeRangeFrom: string;
 
   @ApiProperty({ required: false })
   timeRangeTo: number;

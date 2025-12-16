@@ -70958,6 +70958,9 @@
           "idTechLog": {
             "type": "string"
           },
+          "idUnscheduleMaintenance": {
+            "type": "string"
+          },
           "idUser": {
             "type": "string"
           },
@@ -70998,7 +71001,7 @@
             "type": "string"
           },
           "timeRangeFrom": {
-            "type": "number"
+            "type": "string"
           },
           "timeRangeTo": {
             "type": "number"
@@ -71187,6 +71190,9 @@
           "idTechLog": {
             "type": "string"
           },
+          "idUnscheduleMaintenance": {
+            "type": "string"
+          },
           "idUser": {
             "type": "string"
           },
@@ -71227,7 +71233,7 @@
             "type": "string"
           },
           "timeRangeFrom": {
-            "type": "number"
+            "type": "string"
           },
           "timeRangeTo": {
             "type": "number"
@@ -71351,6 +71357,9 @@
           "idTechLog": {
             "type": "string"
           },
+          "idUnscheduleMaintenance": {
+            "type": "string"
+          },
           "idUser": {
             "type": "string"
           },
@@ -71391,7 +71400,7 @@
             "type": "string"
           },
           "timeRangeFrom": {
-            "type": "number"
+            "type": "string"
           },
           "timeRangeTo": {
             "type": "number"
