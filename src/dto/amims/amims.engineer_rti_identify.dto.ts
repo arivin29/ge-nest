@@ -2,35 +2,20 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsEngineerRtiIdentifyDto {
-  @ApiProperty({ required: false })
-  dateInstall: string;
-
-  @ApiProperty({ required: false })
-  idEngineerRti: string;
-
   @ApiProperty({ required: true })
   idEngineerRtiIdentify: string;
 
   @ApiProperty({ required: false })
-  idPart: string;
+  idEngineerRti: string;
 
   @ApiProperty({ required: false })
   idPartInstall: string;
 
   @ApiProperty({ required: false })
+  idPart: string;
+
+  @ApiProperty({ required: false })
   parent: string;
-
-  @ApiProperty({ required: false })
-  tsiCycle: number;
-
-  @ApiProperty({ required: false })
-  tsiHours: number;
-
-  @ApiProperty({ required: false })
-  tsiVal: number;
-
-  @ApiProperty({ required: false })
-  tsiVar: string;
 
   @ApiProperty({ required: false })
   tsnCycle: number;
@@ -39,10 +24,10 @@ export class AmimsEngineerRtiIdentifyDto {
   tsnHours: number;
 
   @ApiProperty({ required: false })
-  tsnVal: number;
+  tsnVar: string;
 
   @ApiProperty({ required: false })
-  tsnVar: string;
+  tsnVal: number;
 
   @ApiProperty({ required: false })
   tsoCycle: number;
@@ -51,20 +36,35 @@ export class AmimsEngineerRtiIdentifyDto {
   tsoHours: number;
 
   @ApiProperty({ required: false })
-  tsoVal: number;
-
-  @ApiProperty({ required: false })
   tsoVar: string;
 
   @ApiProperty({ required: false })
-  warantyStartCycle: number;
+  tsoVal: number;
+
+  @ApiProperty({ required: false })
+  tsiCycle: number;
+
+  @ApiProperty({ required: false })
+  tsiHours: number;
+
+  @ApiProperty({ required: false })
+  tsiVar: string;
+
+  @ApiProperty({ required: false })
+  tsiVal: number;
 
   @ApiProperty({ required: false })
   warantyStartDate: string;
 
   @ApiProperty({ required: false })
+  warantyStartHours: number;
+
+  @ApiProperty({ required: false })
   warantyStartDays: number;
 
   @ApiProperty({ required: false })
-  warantyStartHours: number;
+  warantyStartCycle: number;
+
+  @ApiProperty({ required: false })
+  dateInstall: string;
 }

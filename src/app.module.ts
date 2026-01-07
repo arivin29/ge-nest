@@ -136,6 +136,8 @@ import { MaintenanceProgramTaskModule } from './modules/amims/maintenance_progra
 import { WpJoModule } from './modules/amims/wp_jo/wp_jo.module';
 import { WpModule } from './modules/amims/wp/wp.module';
 import { WorkCompletedModule } from './modules/amims/work_completed/work_completed.module';
+import { MaintenanceProgramItemModule } from './modules/amims/maintenance_program_item/maintenance_program_item.module';
+import { StoreThresholdModule } from './modules/amims/store_threshold/store_threshold.module';
 const COM = [
   ActypeModule,
   AircraftModule,
@@ -238,7 +240,9 @@ const COM = [
   MaintenanceProgramTaskModule,
   WpJoModule,
   WpModule,
-  WorkCompletedModule
+  WorkCompletedModule,
+  MaintenanceProgramItemModule,
+  StoreThresholdModule
 ];
 
 @Module({

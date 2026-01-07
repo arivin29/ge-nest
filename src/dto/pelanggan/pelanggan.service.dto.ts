@@ -2,20 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class PelangganServiceDto {
-  @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
-  deskripsi: string;
-
-  @ApiProperty({ required: false })
-  hargaDefault: number;
-
   @ApiProperty({ required: true })
   idService: string;
-
-  @ApiProperty({ required: false })
-  isAktif: boolean;
 
   @ApiProperty({ required: false })
   kodeService: string;
@@ -24,7 +12,19 @@ export class PelangganServiceDto {
   namaService: string;
 
   @ApiProperty({ required: false })
+  deskripsi: string;
+
+  @ApiProperty({ required: false })
   satuan: string;
+
+  @ApiProperty({ required: false })
+  hargaDefault: number;
+
+  @ApiProperty({ required: false })
+  isAktif: boolean;
+
+  @ApiProperty({ required: false })
+  createdAt: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;

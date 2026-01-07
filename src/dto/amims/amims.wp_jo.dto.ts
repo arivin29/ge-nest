@@ -2,23 +2,35 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsWpJoDto {
-  @ApiProperty({ required: false })
-  carriedOutDate: string;
+  @ApiProperty({ required: true })
+  idWpJo: string;
 
   @ApiProperty({ required: false })
-  completedAt: string;
+  idWorkCompleted: string;
 
   @ApiProperty({ required: false })
-  compliteCycle: number;
+  idUnscheduleMaintenance: string;
 
   @ApiProperty({ required: false })
-  compliteDate: string;
+  idWp: string;
 
   @ApiProperty({ required: false })
-  compliteHours: number;
+  assignedTo: string;
 
   @ApiProperty({ required: false })
-  createdAt: string;
+  numberJo: string;
+
+  @ApiProperty({ required: false })
+  typeOfwork: string;
+
+  @ApiProperty({ required: false })
+  completionHours: number;
+
+  @ApiProperty({ required: false })
+  completionCycle: number;
+
+  @ApiProperty({ required: false })
+  completionDate: string;
 
   @ApiProperty({ required: false })
   cycleFrom: number;
@@ -27,94 +39,10 @@ export class AmimsWpJoDto {
   cycleTo: number;
 
   @ApiProperty({ required: false })
-  dateJo: string;
+  hoursFrom: number;
 
   @ApiProperty({ required: false })
-  enginerApprovedBy: string;
-
-  @ApiProperty({ required: false })
-  enginerApprovedDate: string;
-
-  @ApiProperty({ required: false })
-  enginerApprovedNote: number;
-
-  @ApiProperty({ required: false })
-  formNo: string;
-
-  @ApiProperty({ required: false })
-  hourseFrom: number;
-
-  @ApiProperty({ required: false })
-  hourseTo: number;
-
-  @ApiProperty({ required: false })
-  idAircraft: string;
-
-  @ApiProperty({ required: false })
-  idDueListOutput: string;
-
-  @ApiProperty({ required: false })
-  idMaintenance: string;
-
-  @ApiProperty({ required: false })
-  idMaintenanceCode: string;
-
-  @ApiProperty({ required: false })
-  idMaintenanceProgram: string;
-
-  @ApiProperty({ required: false })
-  idMpart: string;
-
-  @ApiProperty({ required: false })
-  idPart: string;
-
-  @ApiProperty({ required: false })
-  idSite: string;
-
-  @ApiProperty({ required: false })
-  idTechLog: string;
-
-  @ApiProperty({ required: false })
-  idUnscheduleMaintenance: string;
-
-  @ApiProperty({ required: false })
-  idUser: string;
-
-  @ApiProperty({ required: false })
-  idWorkCompleted: string;
-
-  @ApiProperty({ required: false })
-  idWp: string;
-
-  @ApiProperty({ required: true })
-  idWpJo: string;
-
-  @ApiProperty({ required: false })
-  inspectorApprovedAt: string;
-
-  @ApiProperty({ required: false })
-  inspectorApprovedBy: string;
-
-  @ApiProperty({ required: false })
-  inspectorApprovedNote: string;
-
-  @ApiProperty({ required: false })
-  noteJo: string;
-
-  @ApiProperty({ required: false })
-  numberJo: string;
-
-  @ApiProperty({ required: false })
-  parentEquipmentType: string;
-
-  @ApiProperty({ required: false })
-  priority: string;
-
-  @ApiProperty({ required: false })
-  reference: string;
-
-  @ApiProperty({ required: false })
-  statusWpJo: string;
+  hoursTo: number;
 
   @ApiProperty({ required: false })
   timeRangeFrom: string;
@@ -126,14 +54,95 @@ export class AmimsWpJoDto {
   timeVariable: string;
 
   @ApiProperty({ required: false })
-  totalHoursWork: number;
+  idAircraft: string;
 
   @ApiProperty({ required: false })
-  typeOfwork: string;
+  noteJo: string;
+
+  @ApiProperty({ required: false })
+  idPart: string;
+
+  @ApiProperty({ required: false })
+  idMpart: string;
+
+  @ApiProperty({ required: false })
+  workDue: string;
+
+  @ApiProperty({ required: false })
+  idMaintenance: string;
+
+  @ApiProperty({ required: false })
+  idMaintenanceCode: string;
+
+  @ApiProperty({ required: false })
+  statusWpJo: string;
+
+  @ApiProperty({ required: false })
+  idUser: string;
+
+  @ApiProperty({ required: false })
+  createdAt: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;
 
   @ApiProperty({ required: false })
-  workDue: string;
+  idSite: string;
+
+  @ApiProperty({ required: false })
+  idDueListOutput: string;
+
+  @ApiProperty({ required: false })
+  dateJo: string;
+
+  @ApiProperty({ required: false })
+  formNo: string;
+
+  @ApiProperty({ required: false })
+  reference: string;
+
+  @ApiProperty({ required: false })
+  priority: string;
+
+  @ApiProperty({ required: false })
+  estimatedHours: number;
+
+  @ApiProperty({ required: false })
+  actualHours: number;
+
+  @ApiProperty({ required: false })
+  idTechLog: string;
+
+  @ApiProperty({ required: false })
+  inspectorApprovedBy: string;
+
+  @ApiProperty({ required: false })
+  inspectorApprovedAt: string;
+
+  @ApiProperty({ required: false })
+  inspectorNote: string;
+
+  @ApiProperty({ required: false })
+  engineerApprovedBy: string;
+
+  @ApiProperty({ required: false })
+  engineerApprovedAt: string;
+
+  @ApiProperty({ required: false })
+  engineerNote: string;
+
+  @ApiProperty({ required: false })
+  carriedOutDate: string;
+
+  @ApiProperty({ required: false })
+  completedAt: string;
+
+  @ApiProperty({ required: false })
+  parentEquipmentType: string;
+
+  @ApiProperty({ required: false })
+  totalHoursWork: number;
+
+  @ApiProperty({ required: false })
+  idMaintenanceProgramItem: string;
 }

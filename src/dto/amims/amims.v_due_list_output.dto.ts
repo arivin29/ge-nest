@@ -3,13 +3,25 @@ import { IsOptional } from 'class-validator';
 
 export class AmimsVDueListOutputDto {
   @ApiProperty({ required: false })
-  atInstallCy: string;
+  idPart: string;
 
   @ApiProperty({ required: false })
-  atInstallDy: string;
+  noteDue: string;
 
   @ApiProperty({ required: false })
-  atInstallHr: string;
+  idAircraft: string;
+
+  @ApiProperty({ required: false })
+  idMpart: string;
+
+  @ApiProperty({ required: false })
+  keyword: string;
+
+  @ApiProperty({ required: false })
+  partNumber: string;
+
+  @ApiProperty({ required: false })
+  sn: string;
 
   @ApiProperty({ required: false })
   ata: string;
@@ -18,34 +30,43 @@ export class AmimsVDueListOutputDto {
   code: string;
 
   @ApiProperty({ required: false })
-  createdAt: string;
+  atInstallHr: string;
 
   @ApiProperty({ required: false })
-  dueAtCy: string;
-
-  @ApiProperty({ required: false })
-  dueAtDy: string;
+  toDueHr: number;
 
   @ApiProperty({ required: false })
   dueAtHr: string;
 
   @ApiProperty({ required: false })
-  idAircraft: string;
+  remainingHr: number;
 
   @ApiProperty({ required: false })
-  idDueList: string;
-
-  @ApiProperty({ required: true })
-  idDueListOutput: string;
+  atInstallDy: string;
 
   @ApiProperty({ required: false })
-  idMpart: string;
+  toDueDy: number;
 
   @ApiProperty({ required: false })
-  idPart: string;
+  dueAtDy: string;
 
   @ApiProperty({ required: false })
-  keyword: string;
+  remainingDy: number;
+
+  @ApiProperty({ required: false })
+  atInstallCy: string;
+
+  @ApiProperty({ required: false })
+  toDueCy: number;
+
+  @ApiProperty({ required: false })
+  dueAtCy: string;
+
+  @ApiProperty({ required: false })
+  remainingCy: number;
+
+  @ApiProperty({ required: false })
+  partPrice: number;
 
   @ApiProperty({ required: false })
   lastPrice: number;
@@ -54,37 +75,7 @@ export class AmimsVDueListOutputDto {
   lastPriceCurrency: string;
 
   @ApiProperty({ required: false })
-  noteDue: string;
-
-  @ApiProperty({ required: false })
-  partNumber: string;
-
-  @ApiProperty({ required: false })
-  partPrice: number;
-
-  @ApiProperty({ required: false })
-  peruntukan: string;
-
-  @ApiProperty({ required: false })
-  remainingCy: number;
-
-  @ApiProperty({ required: false })
-  remainingDy: number;
-
-  @ApiProperty({ required: false })
-  remainingHr: number;
-
-  @ApiProperty({ required: false })
-  sn: string;
-
-  @ApiProperty({ required: false })
-  toDueCy: number;
-
-  @ApiProperty({ required: false })
-  toDueDy: number;
-
-  @ApiProperty({ required: false })
-  toDueHr: number;
+  createdAt: string;
 
   @ApiProperty({ required: false })
   typeDue: string;
@@ -94,4 +85,13 @@ export class AmimsVDueListOutputDto {
 
   @ApiProperty({ required: false })
   variabel: string;
+
+  @ApiProperty({ required: false })
+  peruntukan: string;
+
+  @ApiProperty({ required: false })
+  idDueList: string;
+
+  @ApiProperty({ required: true })
+  idDueListOutput: string;
 }

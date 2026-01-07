@@ -2,14 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class PelangganTeknisiDto {
-  @ApiProperty({ required: false })
-  createdAt: string;
+  @ApiProperty({ required: true })
+  idTeknisi: string;
 
   @ApiProperty({ required: false })
   idPegawai: string;
-
-  @ApiProperty({ required: true })
-  idTeknisi: string;
 
   @ApiProperty({ required: false })
   idUser: string;
@@ -18,8 +15,11 @@ export class PelangganTeknisiDto {
   namaTeknisi: string;
 
   @ApiProperty({ required: false })
-  statusTeknisi: string;
+  createdAt: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;
+
+  @ApiProperty({ required: false })
+  statusTeknisi: string;
 }

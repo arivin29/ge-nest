@@ -1,11 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { RedisService } from 'nestjs-redis'; // pastikan pakai nestjs-redis atau ioredis langsung
+import { RedisClientType } from 'redis';
+
+const isRedisEnabled = () =>
+    (process.env.REDIS_ENABLED ?? 'true').toLowerCase() !== 'false';
 
 @Injectable()
 export class RedisPublishHelperPenormoran {
     constructor(
         @Inject('REDIS_CLIENT')
-        private readonly redisClient: any, // pakai ioredis type kalau ada
+        private readonly redisClient: RedisClientType,
     ) { }
 
     async publishDocumentNumberingEvent(payload: {
@@ -14,6 +17,11 @@ export class RedisPublishHelperPenormoran {
         id_users: string;
         trigger?: string; // optional, misal: 'update', 'workflow'
     }) {
+        if (!isRedisEnabled()) {
+            console.warn('⚠️ Redis publish skipped (Redis disabled)');
+            return;
+        }
+
         await this.redisClient.publish('document_numbering', JSON.stringify(payload));
     }
 }

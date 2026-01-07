@@ -2,29 +2,44 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsWorkCompletedDto {
-  @ApiProperty({ required: false })
-  accountCode: string;
+  @ApiProperty({ required: true })
+  idWorkCompleted: string;
+
+  @ApiProperty({ required: true })
+  workCompletedNumber: string;
+
+  @ApiProperty({ required: true })
+  idAircraft: string;
+
+  @ApiProperty({ required: true })
+  completionDate: string;
 
   @ApiProperty({ required: false })
-  actualWorkHours: number;
+  location: string;
 
   @ApiProperty({ required: false })
-  adSbNumber: string;
-
-  @ApiProperty({ required: false })
-  adminNotes: string;
+  itemType: string;
 
   @ApiProperty({ required: false })
   ataCode: string;
 
   @ApiProperty({ required: false })
+  reference: string;
+
+  @ApiProperty({ required: false })
   authority: string;
 
   @ApiProperty({ required: false })
-  caseNumber: string;
+  adSbNumber: string;
 
-  @ApiProperty({ required: true })
-  completionDate: string;
+  @ApiProperty({ required: false })
+  requirementType: string;
+
+  @ApiProperty({ required: false })
+  disposition: string;
+
+  @ApiProperty({ required: false })
+  caseNumber: string;
 
   @ApiProperty({ required: false })
   complianceDate: string;
@@ -36,25 +51,16 @@ export class AmimsWorkCompletedDto {
   complianceLandings: number;
 
   @ApiProperty({ required: false })
-  createdAt: string;
+  nextDueDate: string;
 
   @ApiProperty({ required: false })
-  disposition: string;
+  nextDueHours: number;
 
   @ApiProperty({ required: false })
-  engineerSign: string;
-
-  @ApiProperty({ required: true })
-  idAircraft: string;
+  nextDueLandings: number;
 
   @ApiProperty({ required: false })
-  idPart: string;
-
-  @ApiProperty({ required: true })
-  idWorkCompleted: string;
-
-  @ApiProperty({ required: false })
-  inspectorSign: string;
+  intervalMonths: number;
 
   @ApiProperty({ required: false })
   intervalDays: number;
@@ -66,28 +72,19 @@ export class AmimsWorkCompletedDto {
   intervalLandings: number;
 
   @ApiProperty({ required: false })
-  intervalMonths: number;
+  workSummary: string;
 
   @ApiProperty({ required: false })
-  itemType: string;
+  actualWorkHours: number;
 
   @ApiProperty({ required: false })
-  location: string;
+  accountCode: string;
 
   @ApiProperty({ required: false })
-  nextDueDate: string;
+  engineerSign: string;
 
   @ApiProperty({ required: false })
-  nextDueHours: number;
-
-  @ApiProperty({ required: false })
-  nextDueLandings: number;
-
-  @ApiProperty({ required: false })
-  reference: string;
-
-  @ApiProperty({ required: false })
-  regularNotes: string;
+  inspectorSign: string;
 
   @ApiProperty({ required: false })
   releaseStatement: string;
@@ -96,14 +93,41 @@ export class AmimsWorkCompletedDto {
   remarks: string;
 
   @ApiProperty({ required: false })
-  requirementType: string;
+  regularNotes: string;
+
+  @ApiProperty({ required: false })
+  adminNotes: string;
+
+  @ApiProperty({ required: false })
+  createdAt: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;
 
-  @ApiProperty({ required: true })
-  workCompletedNumber: string;
+  @ApiProperty({ required: false })
+  idPart: string;
 
   @ApiProperty({ required: false })
-  workSummary: string;
+  idWpJo: string;
+
+  @ApiProperty({ required: false })
+  engineerSignDate: string;
+
+  @ApiProperty({ required: false })
+  inspectorSignDate: string;
+
+  @ApiProperty({ required: false })
+  status: string;
+
+  @ApiProperty({ required: false })
+  isVoid: boolean;
+
+  @ApiProperty({ required: false })
+  voidDate: string;
+
+  @ApiProperty({ required: false })
+  voidReason: string;
+
+  @ApiProperty({ required: false })
+  voidedBy: string;
 }

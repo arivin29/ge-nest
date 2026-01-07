@@ -2,12 +2,6 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'user_group', schema: 'erp_acl' })
 export class AclUserGroup {
-  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: string;
-
-  @Column({ name: 'deskripsi', nullable: true })
-  deskripsi: string;
-
   @PrimaryColumn({ name: 'id_user_group' })
   idUserGroup: string;
 
@@ -16,4 +10,10 @@ export class AclUserGroup {
 
   @Column({ name: 'status' })
   status: string;
+
+  @Column({ name: 'deskripsi', nullable: true })
+  deskripsi: string;
+
+  @Column({ name: 'created_at', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: string;
 }

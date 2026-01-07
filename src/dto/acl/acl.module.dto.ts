@@ -2,23 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AclModuleDto {
-  @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
-  deskripsi: string;
-
   @ApiProperty({ required: true })
   idModule: string;
 
   @ApiProperty({ required: false })
-  isAktif: boolean;
-
-  @ApiProperty({ required: false })
   kodeModule: string;
-
-  @ApiProperty({ required: false })
-  namaDb: string;
 
   @ApiProperty({ required: false })
   namaModule: string;
@@ -27,8 +15,20 @@ export class AclModuleDto {
   namaTabel: string;
 
   @ApiProperty({ required: false })
-  updatedAt: string;
+  namaDb: string;
+
+  @ApiProperty({ required: false })
+  deskripsi: string;
+
+  @ApiProperty({ required: false })
+  isAktif: boolean;
 
   @ApiProperty({ required: false })
   urutan: number;
+
+  @ApiProperty({ required: false })
+  createdAt: string;
+
+  @ApiProperty({ required: false })
+  updatedAt: string;
 }

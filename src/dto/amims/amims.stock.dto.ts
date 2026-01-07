@@ -3,16 +3,22 @@ import { IsOptional } from 'class-validator';
 
 export class AmimsStockDto {
   @ApiProperty({ required: false })
-  bin: string;
-
-  @ApiProperty({ required: false })
-  codeAta: string;
+  statusOnInventory: string;
 
   @ApiProperty({ required: true })
   idMpart: string;
 
   @ApiProperty({ required: false })
+  qty: number;
+
+  @ApiProperty({ required: false })
+  partNumber: string;
+
+  @ApiProperty({ required: false })
   keyword: string;
+
+  @ApiProperty({ required: false })
+  unit: string;
 
   @ApiProperty({ required: false })
   mfigureIndex: string;
@@ -21,17 +27,11 @@ export class AmimsStockDto {
   mitemIndex: string;
 
   @ApiProperty({ required: false })
-  partNumber: string;
+  codeAta: string;
 
   @ApiProperty({ required: false })
   partid: string;
 
   @ApiProperty({ required: false })
-  qty: number;
-
-  @ApiProperty({ required: false })
-  statusOnInventory: string;
-
-  @ApiProperty({ required: false })
-  unit: string;
+  bin: string;
 }

@@ -2,21 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsPurGrnDto {
-  @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
-  dateGrn: string;
-
-  @ApiProperty({ required: false })
-  dateQa: string;
-
-  @ApiProperty({ required: false })
-  dateQaClose: string;
-
-  @ApiProperty({ required: false })
-  grnKe: number;
-
   @ApiProperty({ required: true })
   idPurGrn: string;
 
@@ -24,10 +9,25 @@ export class AmimsPurGrnDto {
   idPurVendor: string;
 
   @ApiProperty({ required: false })
-  idSite: string;
+  numberGrn: string;
+
+  @ApiProperty({ required: false })
+  dateGrn: string;
 
   @ApiProperty({ required: false })
   idUser: string;
+
+  @ApiProperty({ required: false })
+  idSite: string;
+
+  @ApiProperty({ required: false })
+  grnKe: number;
+
+  @ApiProperty({ required: false })
+  createdAt: string;
+
+  @ApiProperty({ required: false })
+  updatedAt: string;
 
   @ApiProperty({ required: false })
   isDeleted: number;
@@ -36,14 +36,14 @@ export class AmimsPurGrnDto {
   noIndex: number;
 
   @ApiProperty({ required: false })
+  validasi: number;
+
+  @ApiProperty({ required: false })
   noteGrn: string;
 
   @ApiProperty({ required: false })
-  numberGrn: string;
+  dateQa: string;
 
   @ApiProperty({ required: false })
-  updatedAt: string;
-
-  @ApiProperty({ required: false })
-  validasi: number;
+  dateQaClose: string;
 }

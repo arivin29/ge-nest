@@ -2,20 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsEngineerPmtrItemDto {
-  @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
-  figureIndex: string;
-
-  @ApiProperty({ required: false })
-  idEngineerPmtr: string;
-
   @ApiProperty({ required: true })
   idEngineerPmtrItem: string;
 
   @ApiProperty({ required: false })
   idMpart: string;
+
+  @ApiProperty({ required: false })
+  qtyPmtr: number;
 
   @ApiProperty({ required: false })
   noteItemPmtr: string;
@@ -24,8 +18,14 @@ export class AmimsEngineerPmtrItemDto {
   priority: string;
 
   @ApiProperty({ required: false })
-  qtyPmtr: number;
+  createdAt: string;
 
   @ApiProperty({ required: false })
   updatedAt: string;
+
+  @ApiProperty({ required: false })
+  idEngineerPmtr: string;
+
+  @ApiProperty({ required: false })
+  figureIndex: string;
 }

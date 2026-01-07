@@ -9,7 +9,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     app.enableCors({
-        origin: ['http://localhost:4200','https://amims-v3.web.app'], // atau '*' untuk semua origin (tidak disarankan untuk production)
+        origin: ['http://localhost:4200', 'http://localhost:4100','https://amims-v3.web.app'], // atau '*' untuk semua origin (tidak disarankan untuk production)
         credentials: true,
     });
     const config = new DocumentBuilder()

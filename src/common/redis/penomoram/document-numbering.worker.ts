@@ -2,6 +2,9 @@ import { Injectable, OnModuleInit, Inject } from '@nestjs/common';
 import { DocumentNumberingService } from 'src/modules/tools/document_numbering/document_numbering.service';
 import { RedisClientType } from 'redis';
 
+const isRedisEnabled = () =>
+    (process.env.REDIS_ENABLED ?? 'true').toLowerCase() !== 'false';
+
 @Injectable()
 export class RedisDocumentNumberingWorkerService implements OnModuleInit {
     constructor(
@@ -10,6 +13,11 @@ export class RedisDocumentNumberingWorkerService implements OnModuleInit {
     ) { }
 
     async onModuleInit() {
+        if (!isRedisEnabled()) {
+            console.warn('⚠️ RedisDocumentNumberingWorkerService skipped (Redis disabled)');
+            return;
+        }
+
         await this.redis.connect(); // pastikan terkoneksi
         await this.redis.subscribe('document_numbering', async (message) => {
             try {

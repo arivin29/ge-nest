@@ -14,6 +14,7 @@ import { ApiResponseHelper } from 'src/common/helpers/response.helper';
 import { ApiTags, ApiBody } from '@nestjs/swagger';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
 import { BaseQueryDto } from 'src/common/dto/base-query.dto';
+import { User } from 'src/auth/user.decorator';
 
 import { AmimsWpDto } from 'src/dto/amims/amims.wp.dto';; 
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
@@ -62,8 +63,32 @@ export class WpController {
     @Post()
     @ApiBody({ type: AmimsWpDto }) 
     @ApiResponseEntity(AmimsWpDto, 'post')
-    async create(@Body() body: AmimsWpDto) {
+    async create(@Body() body: AmimsWpDto, @User() user: any) {
         try {
+            // 🔥 Inject id_user dari JWT kalau body.idUser null
+            if (!body.idUser && user?.id_user) {
+                body.idUser = user.id_user;
+            }
+
+            // 🔥 Cek apakah user punya draft yang belum selesai (validasi=0)
+            if (body.idUser) {
+                const existingDraft = await this.service.findOne({
+                    where: {
+                        idUser: body.idUser,
+                        validasi: 0
+                    }
+                } as any);
+
+                // Kalau ada draft, return draft tersebut supaya frontend bisa lanjutkan
+                if (existingDraft) {
+                    return ApiResponseHelper.success(
+                        existingDraft, 
+                        'get',
+                        'Anda memiliki draft yang belum selesai. Silakan selesaikan draft tersebut terlebih dahulu.'
+                    );
+                }
+            }
+
             const result = await this.service.create(body);
             return ApiResponseHelper.success(result, 'create');
         } catch (error) {
@@ -76,8 +101,12 @@ export class WpController {
     @ApiResponseEntity(AmimsWpDto, 'put')
     async update(@Param('id') id: string, @Body() body: AmimsWpDto) {
         try {
-            const result = await this.service.update(id, body);
-            return ApiResponseHelper.success(result, 'update');
+            await this.service.update(id, body);
+            
+            // 🔥 Fetch fresh data setelah update
+            const updatedWp = await this.service.findOne(id);
+            
+            return ApiResponseHelper.success(updatedWp, 'update');
         } catch (error) {
             return ApiResponseHelper.failed(null, 'Gagal memperbarui data', 500, error);
         }

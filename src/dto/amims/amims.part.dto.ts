@@ -2,158 +2,167 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsPartDto {
-  @ApiProperty({ required: false })
-  bin: string;
-
-  @ApiProperty({ required: false })
-  certificationNo: string;
-
-  @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
-  dateOrder: string;
-
-  @ApiProperty({ required: false })
-  endOfLife: string;
-
-  @ApiProperty({ required: false })
-  firstInstallC: number;
-
-  @ApiProperty({ required: false })
-  firstInstallDate: string;
-
-  @ApiProperty({ required: false })
-  firstInstallH: number;
-
-  @ApiProperty({ required: false })
-  groupStatus: string;
-
-  @ApiProperty({ required: false })
-  idConditionMonitoring: string;
-
-  @ApiProperty({ required: false })
-  idCurrency: string;
-
-  @ApiProperty({ required: false })
-  idLifeTimeLimit: string;
-
-  @ApiProperty({ required: false })
-  idMpart: string;
-
   @ApiProperty({ required: true })
   idPart: string;
 
   @ApiProperty({ required: false })
-  idPartCondition: string;
-
-  @ApiProperty({ required: false })
-  idPurGrn: string;
-
-  @ApiProperty({ required: false })
-  idPurPoItem: string;
-
-  @ApiProperty({ required: false })
-  idPurPrcl: string;
-
-  @ApiProperty({ required: false })
-  idPurVendor: string;
-
-  @ApiProperty({ required: false })
-  idSite: string;
-
-  @ApiProperty({ required: false })
-  idTypeOfwork: string;
-
-  @ApiProperty({ required: false })
-  idUser: string;
-
-  @ApiProperty({ required: false })
-  idWarranty: string;
-
-  @ApiProperty({ required: false })
-  isDeleted: number;
-
-  @ApiProperty({ required: false })
-  lifeLimitCycle: number;
-
-  @ApiProperty({ required: false })
-  lifeLimitHours: number;
-
-  @ApiProperty({ required: false })
-  lifeLimitVal: number;
-
-  @ApiProperty({ required: false })
-  lifeLimitVar: string;
-
-  @ApiProperty({ required: false })
-  manufacture: string;
-
-  @ApiProperty({ required: false })
-  manufactureDate: string;
-
-  @ApiProperty({ required: false })
-  newFirstInstallH: number;
-
-  @ApiProperty({ required: false })
-  oldId: string;
-
-  @ApiProperty({ required: false })
-  oldParent: string;
-
-  @ApiProperty({ required: false })
-  partParent: string;
-
-  @ApiProperty({ required: false })
-  position: string;
-
-  @ApiProperty({ required: false })
-  price: number;
-
-  @ApiProperty({ required: false })
-  purchaseDate: string;
-
-  @ApiProperty({ required: false })
-  qty: number;
+  idMpart: string;
 
   @ApiProperty({ required: false })
   sn: string;
 
   @ApiProperty({ required: false })
-  startInstallC: number;
+  manufacture: string;
 
   @ApiProperty({ required: false })
-  startInstallDate: string;
+  qty: number;
 
   @ApiProperty({ required: false })
-  startInstallH: number;
+  idPartCondition: string;
+
+  @ApiProperty({ required: false })
+  idConditionMonitoring: string;
+
+  @ApiProperty({ required: false })
+  idTypeOfwork: string;
+
+  @ApiProperty({ required: false })
+  idPurVendor: string;
+
+  @ApiProperty({ required: false })
+  idWarranty: string;
+
+  @ApiProperty({ required: false })
+  purchaseDate: string;
+
+  @ApiProperty({ required: false })
+  idPurGrn: string;
+
+  @ApiProperty({ required: false })
+  idLifeTimeLimit: string;
+
+  @ApiProperty({ required: false })
+  idPurPrcl: string;
+
+  @ApiProperty({ required: false })
+  endOfLife: string;
+
+  @ApiProperty({ required: false })
+  idSite: string;
 
   @ApiProperty({ required: false })
   statusOnInventory: string;
 
   @ApiProperty({ required: false })
-  tbiCycle: number;
+  createdAt: string;
 
   @ApiProperty({ required: false })
-  tbiHours: number;
+  updatedAt: string;
 
   @ApiProperty({ required: false })
-  tbiVal: number;
+  isDeleted: number;
 
   @ApiProperty({ required: false })
-  tbiVar: string;
+  tsnCycle: number;
+
+  @ApiProperty({ required: false })
+  tsnVar: string;
+
+  @ApiProperty({ required: false })
+  tsnVal: number;
+
+  @ApiProperty({ required: false })
+  tsnHours: number;
+
+  @ApiProperty({ required: false })
+  tsoCycle: number;
+
+  @ApiProperty({ required: false })
+  tsoVar: string;
+
+  @ApiProperty({ required: false })
+  tsoVal: number;
+
+  @ApiProperty({ required: false })
+  tsoHours: number;
+
+  @ApiProperty({ required: false })
+  warrantyStartDate: string;
+
+  @ApiProperty({ required: false })
+  warrantyStartCycle: number;
+
+  @ApiProperty({ required: false })
+  warrantyVal: number;
+
+  @ApiProperty({ required: false })
+  certificationNo: string;
+
+  @ApiProperty({ required: false })
+  serviceContractType: string;
+
+  @ApiProperty({ required: false })
+  serviceContractProvider: string;
+
+  @ApiProperty({ required: false })
+  serviceContractNumber: string;
+
+  @ApiProperty({ required: false })
+  serviceContractStart: string;
+
+  @ApiProperty({ required: false })
+  serviceContractEnd: string;
+
+  @ApiProperty({ required: false })
+  idAircraftContract: string;
+
+  @ApiProperty({ required: false })
+  serviceContractNote: string;
+
+  @ApiProperty({ required: false })
+  warrantyCycle: number;
+
+  @ApiProperty({ required: false })
+  warrantyHours: number;
+
+  @ApiProperty({ required: false })
+  warrantyDays: number;
+
+  @ApiProperty({ required: false })
+  warrantyYears: number;
+
+  @ApiProperty({ required: false })
+  position: string;
 
   @ApiProperty({ required: false })
   tboCycle: number;
 
   @ApiProperty({ required: false })
-  tboHours: number;
+  tboVar: string;
 
   @ApiProperty({ required: false })
   tboVal: number;
 
   @ApiProperty({ required: false })
-  tboVar: string;
+  tboHours: number;
+
+  @ApiProperty({ required: false })
+  lifeLimitCycle: number;
+
+  @ApiProperty({ required: false })
+  lifeLimitVar: string;
+
+  @ApiProperty({ required: false })
+  lifeLimitVal: number;
+
+  @ApiProperty({ required: false })
+  lifeLimitHours: number;
+
+  @ApiProperty({ required: false })
+  manufactureDate: string;
+
+  @ApiProperty({ required: false })
+  bin: string;
 
   @ApiProperty({ required: false })
   tempUse: number;
@@ -162,62 +171,74 @@ export class AmimsPartDto {
   tsiCycle: number;
 
   @ApiProperty({ required: false })
-  tsiHours: number;
+  tsiVar: string;
 
   @ApiProperty({ required: false })
   tsiVal: number;
 
   @ApiProperty({ required: false })
-  tsiVar: string;
+  tsiHours: number;
 
   @ApiProperty({ required: false })
-  tsnCycle: number;
+  oldId: string;
 
   @ApiProperty({ required: false })
-  tsnHours: number;
+  partParent: string;
 
   @ApiProperty({ required: false })
-  tsnVal: number;
+  groupStatus: string;
 
   @ApiProperty({ required: false })
-  tsnVar: string;
+  tbiCycle: number;
 
   @ApiProperty({ required: false })
-  tsoCycle: number;
+  tbiHours: number;
 
   @ApiProperty({ required: false })
-  tsoHours: number;
+  tbiVar: string;
 
   @ApiProperty({ required: false })
-  tsoVal: number;
+  tbiVal: number;
 
   @ApiProperty({ required: false })
-  tsoVar: string;
+  oldParent: string;
 
   @ApiProperty({ required: false })
-  updatedAt: string;
+  firstInstallC: number;
+
+  @ApiProperty({ required: false })
+  firstInstallDate: string;
+
+  @ApiProperty({ required: false })
+  idUser: string;
 
   @ApiProperty({ required: false })
   useableStatus: string;
 
   @ApiProperty({ required: false })
-  warrantyCycle: number;
+  startInstallDate: string;
 
   @ApiProperty({ required: false })
-  warrantyDays: number;
+  startInstallC: number;
 
   @ApiProperty({ required: false })
-  warrantyHours: number;
+  startInstallH: number;
 
   @ApiProperty({ required: false })
-  warrantyStartCycle: number;
+  price: number;
 
   @ApiProperty({ required: false })
-  warrantyStartDate: string;
+  idCurrency: string;
 
   @ApiProperty({ required: false })
-  warrantyVal: number;
+  idPurPoItem: string;
 
   @ApiProperty({ required: false })
-  warrantyYears: number;
+  dateOrder: string;
+
+  @ApiProperty({ required: false })
+  newFirstInstallH: number;
+
+  @ApiProperty({ required: false })
+  firstInstallH: number;
 }

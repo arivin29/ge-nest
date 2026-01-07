@@ -41,6 +41,7 @@ import { AmimsMaintenanceDocument } from './amims.maintenance_document.entity';
 import { AmimsMaintenanceMaterial } from './amims.maintenance_material.entity';
 import { AmimsMaintenanceProgram } from './amims.maintenance_program.entity';
 import { AmimsMaintenanceProgramDocument } from './amims.maintenance_program_document.entity';
+import { AmimsMaintenanceProgramItem } from './amims.maintenance_program_item.entity';
 import { AmimsMaintenanceProgramMaterial } from './amims.maintenance_program_material.entity';
 import { AmimsMaintenanceProgramTask } from './amims.maintenance_program_task.entity';
 import { AmimsMcurrency } from './amims.mcurrency.entity';
@@ -87,6 +88,7 @@ import { AmimsShipping } from './amims.shipping.entity';
 import { AmimsSite } from './amims.site.entity';
 import { AmimsStock } from './amims.stock.entity';
 import { AmimsStoreDestroy } from './amims.store_destroy.entity';
+import { AmimsStoreThreshold } from './amims.store_threshold.entity';
 import { AmimsStoreTransfer } from './amims.store_transfer.entity';
 import { AmimsStoreTransferItem } from './amims.store_transfer_item.entity';
 import { AmimsTd } from './amims.td.entity';
@@ -153,6 +155,7 @@ export const AmimsEntities = [
   AmimsMaintenanceMaterial,
   AmimsMaintenanceProgram,
   AmimsMaintenanceProgramDocument,
+  AmimsMaintenanceProgramItem,
   AmimsMaintenanceProgramMaterial,
   AmimsMaintenanceProgramTask,
   AmimsMcurrency,
@@ -199,6 +202,7 @@ export const AmimsEntities = [
   AmimsSite,
   AmimsStock,
   AmimsStoreDestroy,
+  AmimsStoreThreshold,
   AmimsStoreTransfer,
   AmimsStoreTransferItem,
   AmimsTd,
@@ -265,6 +269,7 @@ export * from './amims.maintenance_document.entity';
 export * from './amims.maintenance_material.entity';
 export * from './amims.maintenance_program.entity';
 export * from './amims.maintenance_program_document.entity';
+export * from './amims.maintenance_program_item.entity';
 export * from './amims.maintenance_program_material.entity';
 export * from './amims.maintenance_program_task.entity';
 export * from './amims.mcurrency.entity';
@@ -311,6 +316,7 @@ export * from './amims.shipping.entity';
 export * from './amims.site.entity';
 export * from './amims.stock.entity';
 export * from './amims.store_destroy.entity';
+export * from './amims.store_threshold.entity';
 export * from './amims.store_transfer.entity';
 export * from './amims.store_transfer_item.entity';
 export * from './amims.td.entity';

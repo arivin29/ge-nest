@@ -2,9 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AclUserTokensDto {
-  @ApiProperty({ required: false })
-  createdAt: string;
-
   @ApiProperty({ required: true })
   id: string;
 
@@ -12,11 +9,14 @@ export class AclUserTokensDto {
   idUser: string;
 
   @ApiProperty({ required: false })
-  ipAddress: string;
-
-  @ApiProperty({ required: false })
   refreshToken: string;
 
   @ApiProperty({ required: false })
   userAgent: string;
+
+  @ApiProperty({ required: false })
+  ipAddress: string;
+
+  @ApiProperty({ required: false })
+  createdAt: string;
 }

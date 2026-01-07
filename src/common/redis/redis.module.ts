@@ -1,6 +1,29 @@
 import { Module, Global } from '@nestjs/common';
-import Redis from 'ioredis';
-import { createClient } from 'redis';
+import { createClient, RedisClientType } from 'redis';
+
+const isRedisEnabled = () =>
+    (process.env.REDIS_ENABLED ?? 'true').toLowerCase() !== 'false';
+
+const createDisabledClient = (): RedisClientType => {
+    const noopAsync = async () => undefined;
+    const noop = () => undefined;
+
+    console.warn('⚠️ Redis disabled via REDIS_ENABLED flag');
+
+    return {
+        connect: noopAsync,
+        publish: async () => {
+            console.warn('⚠️ Redis publish skipped (disabled)');
+            return 0;
+        },
+        subscribe: async () => {
+            console.warn('⚠️ Redis subscribe skipped (disabled)');
+        },
+        on: noop,
+        quit: noopAsync,
+        disconnect: noopAsync,
+    } as unknown as RedisClientType;
+};
 
 @Global()
 @Module({
@@ -8,6 +31,10 @@ import { createClient } from 'redis';
         {
             provide: 'REDIS_CLIENT',
             useFactory: async () => {
+                if (!isRedisEnabled()) {
+                    return createDisabledClient();
+                }
+
                 const client = createClient({
                     socket: {
                         host: process.env.REDIS_HOST || 'localhost',

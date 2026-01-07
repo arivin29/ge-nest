@@ -2,27 +2,27 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsPurReturnItemDto {
-  @ApiProperty({ required: false })
-  idMpart: string;
+  @ApiProperty({ required: true })
+  idPurReturnItem: string;
 
   @ApiProperty({ required: false })
-  idPurGrnItem: string;
+  idPurReturn: string;
 
   @ApiProperty({ required: false })
   idPurPoItem: string;
 
   @ApiProperty({ required: false })
-  idPurReturn: string;
-
-  @ApiProperty({ required: true })
-  idPurReturnItem: string;
+  qtyReturn: number;
 
   @ApiProperty({ required: false })
   noteReturnItem: string;
 
   @ApiProperty({ required: false })
-  qtyReturn: number;
+  idPurGrnItem: string;
 
   @ApiProperty({ required: false })
   statusItem: number;
+
+  @ApiProperty({ required: false })
+  idMpart: string;
 }

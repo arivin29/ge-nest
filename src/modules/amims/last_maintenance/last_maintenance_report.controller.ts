@@ -7,12 +7,19 @@ import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decor
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity'; 
 import { SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
 import { applySmartInclude } from 'src/common/helpers/smart-include.helper';  
-import { AmimsLastMaintenanceReportDto } from 'src/dto/amims/amims.last_maintenance-report.dto';;
+import { AmimsLastMaintenanceReportDto } from 'src/dto/amims/amims.last_maintenance-report.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AmimsMaintenanceCode } from 'src/entities/amims';
 
 @ApiTags('last_maintenance_report')
 @Controller('last_maintenance_report')
 export class LastMaintenanceReportController {
-    constructor(private readonly service: LastMaintenanceService) { }
+    constructor(
+        private readonly service: LastMaintenanceService,
+        @InjectRepository(AmimsMaintenanceCode, 'amims')
+        private readonly maintenanceCodeRepo: Repository<AmimsMaintenanceCode>,
+    ) { }
 
     @Post('list')
     @ApiResponseEntity(AmimsLastMaintenanceReportDto, 'list') 
@@ -53,7 +60,20 @@ export class LastMaintenanceReportController {
         try {
             const result = await this.service.findAllSmart(parsed); 
             // ⬇️ Inject include handler 
-            await applySmartInclude(result.data, parsed.include, this.service['repo'].manager); 
+            await applySmartInclude(result.data, parsed.include, this.service['repo'].manager);
+            
+            // 🔥 Manual inject maintenance dari maintenance_code
+            if (result.data && result.data.length > 0) {
+                for (const item of result.data) {
+                    if ((item as any).idMaintenance) {
+                        const maintenanceCode = await this.maintenanceCodeRepo.findOne({
+                            where: { idMaintenanceCode: (item as any).idMaintenance }
+                        });
+                        (item as any).maintenance = maintenanceCode || null;
+                    }
+                }
+            }
+            
             return ApiResponseHelper.success(result.data, 'list', undefined, result.total);
 
         } catch (error) {
@@ -92,6 +112,15 @@ export class LastMaintenanceReportController {
             
             // Jalankan include
             await applySmartInclude([result], filteredIncludes, this.service['repo'].manager);
+            
+            // 🔥 Manual inject maintenance dari maintenance_code
+            if (result && (result as any).idMaintenance) {
+                const maintenanceCode = await this.maintenanceCodeRepo.findOne({
+                    where: { idMaintenanceCode: (result as any).idMaintenance }
+                });
+                (result as any).maintenance = maintenanceCode || null;
+            }
+            
             return ApiResponseHelper.success(result, 'get');
         } catch (error) {
             return ApiResponseHelper.failed(null, 'Terjadi kesalahan', 500, error);

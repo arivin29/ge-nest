@@ -7,12 +7,19 @@ import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decor
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity'; 
 import { SmartQueryInput } from 'src/common/helpers/smart-query-engine-join-mode';
 import { applySmartInclude } from 'src/common/helpers/smart-include.helper';  
-import { AmimsTechLogItemReportDto } from 'src/dto/amims/amims.tech_log_item-report.dto';;
+import { AmimsTechLogItemReportDto } from 'src/dto/amims/amims.tech_log_item-report.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AmimsPilot } from 'src/entities/amims';
 
 @ApiTags('tech_log_item_report')
 @Controller('tech_log_item_report')
 export class TechLogItemReportController {
-    constructor(private readonly service: TechLogItemService) { }
+    constructor(
+        private readonly service: TechLogItemService,
+        @InjectRepository(AmimsPilot, 'amims')
+        private readonly pilotRepo: Repository<AmimsPilot>,
+    ) { }
 
     @Post('list')
     @ApiResponseEntity(AmimsTechLogItemReportDto, 'list') 
@@ -43,18 +50,38 @@ export class TechLogItemReportController {
                 limit: parseInt(String((source as any).pageSize ?? (source as any).pagination?.limit ?? '10'), 10),
             },
             include: (source as any).include ?? [
-                                                { name: 'tech_log', type: 'single' },
-                                                { name: 'captain', type: 'single' },
-                                ],   // mohon di isi dengan default dari id_xxx
+                { name: 'tech_log', type: 'single' },
+            ],
         };
 
         try {
             const result = await this.service.findAllSmart(parsed); 
+
             // ⬇️ Inject include handler 
             await applySmartInclude(result.data, parsed.include, this.service['repo'].manager); 
-            return ApiResponseHelper.success(result.data, 'list', undefined, result.total);
+            
+            // 🔥 Manual inject captain & copilot dari tabel pilot
+            if (result.data && result.data.length > 0) {
+                for (const item of result.data) {
+                    // Inject captain (dari id_captain)
+                    if ((item as any).idCaptain) {
+                        const captain = await this.pilotRepo.findOne({
+                            where: { idPilot: (item as any).idCaptain }
+                        });
+                        (item as any).captain = captain || null;
+                    }
 
-        } catch (error) {
+                    // Inject copilot (dari coca_captain)
+                    if ((item as any).cocaCaptain) {
+                        const copilot = await this.pilotRepo.findOne({
+                            where: { idPilot: (item as any).cocaCaptain }
+                        });
+                        (item as any).copilot = copilot || null;
+                    }
+                }
+            }
+            
+            return ApiResponseHelper.success(result.data, 'list', undefined, result.total);        } catch (error) {
             return ApiResponseHelper.failed(null, 'Gagal mengambil data', 500, error);
         }
     }
@@ -71,9 +98,8 @@ export class TechLogItemReportController {
 
             // Include semua relasi (bisa dari default config atau didefinisikan di controller)
             const allIncludes: SmartQueryInput['include'] = [
-                                                { name: 'tech_log', type: 'single' },
-                                                { name: 'captain', type: 'single' },
-                                ];
+                { name: 'tech_log', type: 'single' },
+            ];
 
             // Filter hanya yang punya id_<name> di data
             const toCamel = (s: string) => s.replace(/_([a-z])/g, (_, g) => g.toUpperCase());
@@ -88,6 +114,22 @@ export class TechLogItemReportController {
             
             // Jalankan include
             await applySmartInclude([result], filteredIncludes, this.service['repo'].manager);
+
+            // 🔥 Manual inject captain & copilot dari tabel pilot
+            if ((result as any).idCaptain) {
+                const captain = await this.pilotRepo.findOne({
+                    where: { idPilot: (result as any).idCaptain }
+                });
+                (result as any).captain = captain || null;
+            }
+
+            if ((result as any).cocaCaptain) {
+                const copilot = await this.pilotRepo.findOne({
+                    where: { idPilot: (result as any).cocaCaptain }
+                });
+                (result as any).copilot = copilot || null;
+            }
+
             return ApiResponseHelper.success(result, 'get');
         } catch (error) {
             return ApiResponseHelper.failed(null, 'Terjadi kesalahan', 500, error);

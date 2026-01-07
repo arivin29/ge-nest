@@ -2,30 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsPurPoDto {
-  @ApiProperty({ required: false })
-  approveDirector: number;
-
-  @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
-  dateAcc: string;
-
-  @ApiProperty({ required: false })
-  dateAccDirector: string;
-
-  @ApiProperty({ required: false })
-  dateDeadline: string;
-
-  @ApiProperty({ required: false })
-  datePo: string;
-
-  @ApiProperty({ required: false })
-  idCurrency: string;
-
-  @ApiProperty({ required: false })
-  idPosition: string;
-
   @ApiProperty({ required: true })
   idPurPo: string;
 
@@ -33,25 +9,52 @@ export class AmimsPurPoDto {
   idPurVendor: string;
 
   @ApiProperty({ required: false })
-  idPurVendorContact: string;
+  numberPo: string;
 
   @ApiProperty({ required: false })
   idSite: string;
 
   @ApiProperty({ required: false })
+  approveDirector: number;
+
+  @ApiProperty({ required: false })
+  dateAcc: string;
+
+  @ApiProperty({ required: false })
+  datePo: string;
+
+  @ApiProperty({ required: false })
   idUser: string;
 
   @ApiProperty({ required: false })
-  idUserDirector: string;
+  priceTotal: number;
 
   @ApiProperty({ required: false })
-  idUserManager: string;
+  vat: number;
+
+  @ApiProperty({ required: false })
+  dateDeadline: string;
+
+  @ApiProperty({ required: false })
+  idPosition: string;
+
+  @ApiProperty({ required: false })
+  statusPo: string;
+
+  @ApiProperty({ required: false })
+  validasi: number;
+
+  @ApiProperty({ required: false })
+  createdAt: string;
+
+  @ApiProperty({ required: false })
+  updatedAt: string;
+
+  @ApiProperty({ required: false })
+  idCurrency: string;
 
   @ApiProperty({ required: false })
   isDeleted: number;
-
-  @ApiProperty({ required: false })
-  modeOfTransport: string;
 
   @ApiProperty({ required: false })
   noIndex: number;
@@ -60,38 +63,35 @@ export class AmimsPurPoDto {
   notePo: string;
 
   @ApiProperty({ required: false })
-  numberPo: string;
+  typePo: string;
 
   @ApiProperty({ required: false })
-  oldPo: string;
+  idPurVendorContact: string;
 
   @ApiProperty({ required: false })
-  priceTotal: number;
-
-  @ApiProperty({ required: false })
-  quotationDate: string;
+  modeOfTransport: string;
 
   @ApiProperty({ required: false })
   quotationNumber: string;
 
   @ApiProperty({ required: false })
-  shipping: string;
-
-  @ApiProperty({ required: false })
-  statusPo: string;
+  quotationDate: string;
 
   @ApiProperty({ required: false })
   term: string;
 
   @ApiProperty({ required: false })
-  typePo: string;
+  shipping: string;
 
   @ApiProperty({ required: false })
-  updatedAt: string;
+  dateAccDirector: string;
 
   @ApiProperty({ required: false })
-  validasi: number;
+  idUserManager: string;
 
   @ApiProperty({ required: false })
-  vat: number;
+  idUserDirector: string;
+
+  @ApiProperty({ required: false })
+  oldPo: string;
 }

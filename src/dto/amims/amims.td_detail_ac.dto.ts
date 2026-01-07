@@ -2,6 +2,18 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsTdDetailAcDto {
+  @ApiProperty({ required: true })
+  idTdDetailAc: string;
+
+  @ApiProperty({ required: false })
+  idTdDetail: string;
+
+  @ApiProperty({ required: false })
+  idAircraft: string;
+
+  @ApiProperty({ required: false })
+  complianceH: number;
+
   @ApiProperty({ required: false })
   complianceC: number;
 
@@ -9,7 +21,13 @@ export class AmimsTdDetailAcDto {
   complianceD: string;
 
   @ApiProperty({ required: false })
-  complianceH: number;
+  noteDetail: string;
+
+  @ApiProperty({ required: false })
+  isActive: string;
+
+  @ApiProperty({ required: false })
+  compliteH: number;
 
   @ApiProperty({ required: false })
   compliteC: number;
@@ -18,35 +36,17 @@ export class AmimsTdDetailAcDto {
   compliteD: string;
 
   @ApiProperty({ required: false })
-  compliteH: number;
+  idTechLog: string;
+
+  @ApiProperty({ required: false })
+  updatedAt: string;
+
+  @ApiProperty({ required: false })
+  noteClose: string;
 
   @ApiProperty({ required: false })
   compliteUser: string;
 
   @ApiProperty({ required: false })
   engineer: string;
-
-  @ApiProperty({ required: false })
-  idAircraft: string;
-
-  @ApiProperty({ required: false })
-  idTdDetail: string;
-
-  @ApiProperty({ required: true })
-  idTdDetailAc: string;
-
-  @ApiProperty({ required: false })
-  idTechLog: string;
-
-  @ApiProperty({ required: false })
-  isActive: string;
-
-  @ApiProperty({ required: false })
-  noteClose: string;
-
-  @ApiProperty({ required: false })
-  noteDetail: string;
-
-  @ApiProperty({ required: false })
-  updatedAt: string;
 }

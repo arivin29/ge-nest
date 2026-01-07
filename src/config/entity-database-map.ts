@@ -288,6 +288,12 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
       "maintenance_program_document"
     ]
   },
+  "AmimsMaintenanceProgramItem": {
+    "db": "amims",
+    "aliases": [
+      "maintenance_program_item"
+    ]
+  },
   "AmimsMaintenanceProgramMaterial": {
     "db": "amims",
     "aliases": [
@@ -562,6 +568,12 @@ export const EntityDatabaseMap: Record<string, { db: string; aliases: string[] }
     "db": "amims",
     "aliases": [
       "store_destroy"
+    ]
+  },
+  "AmimsStoreThreshold": {
+    "db": "amims",
+    "aliases": [
+      "store_threshold"
     ]
   },
   "AmimsStoreTransfer": {

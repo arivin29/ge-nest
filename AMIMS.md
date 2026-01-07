@@ -108,10 +108,12 @@ npm run generator-api -- --fromTable=maintenance_document --nama=maintenance_doc
 npm run generator-api -- --fromTable=maintenance_material --nama=maintenance_material --db=erp_amims --router=amims --out=crud
 
 npm run generator-api -- --fromTable=maintenance_program --nama=maintenance_program --db=erp_amims --router=amims --out=crud,report
+npm run generator-api -- --fromTable=maintenance_program_item --nama=maintenance_program_item --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=maintenance_program_document --nama=maintenance_program_document --db=erp_amims --router=amims --out=crud
 npm run generator-api -- --fromTable=maintenance_program_material --nama=maintenance_program_material --db=erp_amims --router=amims --out=crud
 npm run generator-api -- --fromTable=maintenance_program_task --nama=maintenance_program_task --db=erp_amims --router=amims --out=crud
 
+npm run generator-api -- --fromTable=store_threshold --nama=store_threshold --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=wp --nama=wp --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=wp_jo --nama=wp_jo --db=erp_amims --router=amims --out=crud,report
 npm run generator-api -- --fromTable=work_completed --nama=work_completed --db=erp_amims --router=amims --out=crud,report

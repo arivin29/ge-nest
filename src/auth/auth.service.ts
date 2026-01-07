@@ -54,9 +54,9 @@ export class AuthService {
         await this.userTokenRepo.save({
             id: uuidv4(),
             idUser: user.idUsers,
-            refresh_token: tokens.refreshToken,
-            user_agent: req.headers['user-agent'],
-            ip_address: (req.headers['x-forwarded-for'] || req.socket.remoteAddress) as string,
+            refreshToken: tokens.refreshToken,
+            userAgent: req.headers['user-agent'],
+            ipAddress: (req.headers['x-forwarded-for'] || req.socket.remoteAddress) as string,
         });
 
         // return format lebih clean
@@ -114,10 +114,10 @@ export class AuthService {
         // ✅ 6. Simpan token baru
         await this.userTokenRepo.save({
             id: uuidv4(),
-            id_user: user.idUsers,
-            refresh_token: tokens.refreshToken,
-            user_agent: 'refresh-rotation',
-            ip_address: null,
+            idUser: user.idUsers,
+            refreshToken: tokens.refreshToken,
+            userAgent: 'refresh-rotation',
+            ipAddress: '',
         });
 
         // ✅ 7. Return access & refresh token baru

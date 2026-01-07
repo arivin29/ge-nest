@@ -1,21 +1,15 @@
 import {
     Controller,
     Get,
-    Post,
-    Body,
     Param,
-    Put,
-    Delete,
     Query,
 } from '@nestjs/common';
 import { MaintenanceProgramMaterialService } from './maintenance_program_material.service'; 
-import { BaseRequestPipe } from 'src/common/pipes/base-request.pipe';
 import { ApiResponseHelper } from 'src/common/helpers/response.helper'; 
-import { ApiTags, ApiBody } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { AutoSwaggerQuery } from 'src/common/decorators/auto-swagger-query.decorator';
 import { BaseQueryDto } from 'src/common/dto/base-query.dto';
-
-import { AmimsMaintenanceProgramMaterialDto } from 'src/dto/amims/amims.maintenance_program_material.dto';; 
+import { AmimsMaintenanceProgramMaterialDto } from 'src/dto/amims/amims.maintenance_program_material.dto'; 
 import { ApiResponseEntity } from 'src/common/decorators/api-response-entity';
  
 @ApiTags('maintenance_program_material')
@@ -56,41 +50,6 @@ export class MaintenanceProgramMaterialController {
             return ApiResponseHelper.success(result, 'get');
         } catch (error) {
             return ApiResponseHelper.failed(null, 'Terjadi kesalahan', 500, error);
-        }
-    }
-
-    @Post()
-    @ApiBody({ type: AmimsMaintenanceProgramMaterialDto }) 
-    @ApiResponseEntity(AmimsMaintenanceProgramMaterialDto, 'post')
-    async create(@Body() body: AmimsMaintenanceProgramMaterialDto) {
-        try {
-            const result = await this.service.create(body);
-            return ApiResponseHelper.success(result, 'create');
-        } catch (error) {
-            return ApiResponseHelper.failed(null, 'Gagal menambahkan data', 500, error);
-        }
-    }
-
-    @Put(':id')
-    @ApiBody({ type: AmimsMaintenanceProgramMaterialDto })
-    @ApiResponseEntity(AmimsMaintenanceProgramMaterialDto, 'put')
-    async update(@Param('id') id: string, @Body() body: AmimsMaintenanceProgramMaterialDto) {
-        try {
-            const result = await this.service.update(id, body);
-            return ApiResponseHelper.success(result, 'update');
-        } catch (error) {
-            return ApiResponseHelper.failed(null, 'Gagal memperbarui data', 500, error);
-        }
-    }
-
-    @Delete(':id')
-    @ApiResponseEntity(AmimsMaintenanceProgramMaterialDto, 'delete')
-    async remove(@Param('id') id: string) {
-        try {
-            const result = await this.service.remove(id);
-            return ApiResponseHelper.success(result, 'delete');
-        } catch (error) {
-            return ApiResponseHelper.failed(null, 'Gagal menghapus data', 500, error);
         }
     }
 }

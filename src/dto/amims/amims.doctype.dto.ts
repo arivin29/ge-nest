@@ -3,16 +3,16 @@ import { IsOptional } from 'class-validator';
 
 export class AmimsDoctypeDto {
   @ApiProperty({ required: false })
-  childname: string;
+  doctype: string;
 
   @ApiProperty({ required: false })
   description: string;
 
-  @ApiProperty({ required: false })
-  doctype: string;
-
   @ApiProperty({ required: true })
   idDoctype: string;
+
+  @ApiProperty({ required: false })
+  childname: string;
 
   @ApiProperty({ required: false })
   lastupdatestamp: string;

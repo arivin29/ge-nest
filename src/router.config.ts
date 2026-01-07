@@ -1,3 +1,5 @@
+import { StoreThresholdModule } from './modules/amims/store_threshold/store_threshold.module';
+import { MaintenanceProgramItemModule } from './modules/amims/maintenance_program_item/maintenance_program_item.module';
 import { WorkCompletedModule } from './modules/amims/work_completed/work_completed.module';
 import { WpModule } from './modules/amims/wp/wp.module';
 import { WpJoModule } from './modules/amims/wp_jo/wp_jo.module';
@@ -233,7 +235,9 @@ export const routerConfig = [
       { path: 'maintenance_program_task', module: MaintenanceProgramTaskModule },
       { path: 'wp_jo', module: WpJoModule },
       { path: 'wp', module: WpModule },
-      { path: 'work_completed', module: WorkCompletedModule }]
+      { path: 'work_completed', module: WorkCompletedModule },
+      { path: 'maintenance_program_item', module: MaintenanceProgramItemModule },
+      { path: 'store_threshold', module: StoreThresholdModule }]
     },
     {
         path: 'auth',

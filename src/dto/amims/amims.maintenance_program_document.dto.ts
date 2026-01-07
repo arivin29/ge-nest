@@ -2,36 +2,24 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class AmimsMaintenanceProgramDocumentDto {
-  @ApiProperty({ required: false })
-  createdAt: string;
-
-  @ApiProperty({ required: false })
-  from: string;
-
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, description: 'ID maintenance document' })
   idMaintenanceDocument: string;
 
-  @ApiProperty({ required: true })
-  idMaintenanceProgram: string;
+  @ApiProperty({ required: false, description: 'Type of document: form or reference' })
+  documentType: string;
 
-  @ApiProperty({ required: true })
-  idMaintenanceProgramDocument: string;
+  @ApiProperty({ required: false, description: 'Document title' })
+  documentTitle: string;
 
-  @ApiProperty({ required: false })
-  keterangan: string;
-
-  @ApiProperty({ required: false })
-  reference: string;
-
-  @ApiProperty({ required: false })
-  revisi: string;
-
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, description: 'Document revision' })
   revision: string;
 
-  @ApiProperty({ required: false })
-  title: string;
+  @ApiProperty({ required: false, description: 'Active status: yes or no' })
+  statusAktif: string;
 
-  @ApiProperty({ required: false })
-  workshetForm: string;
+  @ApiProperty({ required: false, description: 'ID maintenance' })
+  idMaintenance: string;
+
+  @ApiProperty({ required: false, description: 'ID maintenance program item' })
+  idMaintenanceProgramItem: string;
 }
